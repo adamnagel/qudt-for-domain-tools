@@ -1,7 +1,7 @@
 qudt-for-domain-tools
 =====================
 
-Establishing consistent component identities in a world of whirling chaos.
+Establishing consistent unit identities in a world of whirling chaos.
 
 It turns out that many of the software tools used in the world of engineering 
 use their own unit naming conventions. This makes translation of data between 
