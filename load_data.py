@@ -25,5 +25,5 @@ def LoadDirectoryOfOWLFiles(path):
             print "EXCEPTION loading DB: ", r.status_code
 
 LoadDirectoryOfOWLFiles('qudt-owl')
-LoadDirectoryOfOWLFiles('extensions-owl')
+LoadDirectoryOfOWLFiles('modelica')
 
