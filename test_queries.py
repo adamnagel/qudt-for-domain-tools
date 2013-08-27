@@ -33,7 +33,7 @@ def sparqlUpdate(update, baseURL):
     }
     querypart=urllib.urlencode(params)
     response = urllib.urlopen(baseURL,querypart).read()
-    
+
 # SELECT -- return unit and modelica class
 # WHERE -- ?unit has "modelicaClass" DataProperty of ?moClass
 query_GetAllModelicaUnitClasses="""PREFIX avm: <http://avm.org/unitLib#>
