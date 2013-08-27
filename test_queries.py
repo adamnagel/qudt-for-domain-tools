@@ -36,7 +36,7 @@ def sparqlUpdate(update, baseURL):
     
 # SELECT -- return unit and modelica class
 # WHERE -- ?unit has "modelicaClass" DataProperty of ?moClass
-query_GetAllModelicaClasses="""PREFIX avm: <http://avm.org/unitLib#>
+query_GetAllModelicaUnitClasses="""PREFIX avm: <http://avm.org/unitLib#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX qudt: <http://qudt.org/schema/qudt#>
@@ -49,7 +49,7 @@ WHERE {
 ?s a modelica:ModelicaUnitClass
 }
 ORDER BY ASC(?s)"""
-json_Response = sparqlQuery(query_GetAllModelicaClasses,url_query)
+json_Response = sparqlQuery(query_GetAllModelicaUnitClasses,url_query)
 print json.dumps(json_Response, indent=4, sort_keys=True)
 
 # QUERIES BELOW THIS LINE DON'T WORK -- NEED TO BE UPDATED
