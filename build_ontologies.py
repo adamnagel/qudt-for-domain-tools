@@ -9,6 +9,7 @@ import shutil
 import time
 import glob
 import requests
+import fusekiutils
 
 p_ScriptPathRoot = os.path.dirname(__file__)
 
@@ -33,31 +34,8 @@ print ""
 fuseki_url = "http://localhost:3030"
 fuseki_upload_url = fuseki_url + '/qudt4dt/upload'
 
-def LaunchFuseki():
-    fuseki_dir = os.getcwd() + "/jena-fuseki-0.2.7"
-    fuseki_executable = fuseki_dir + "/fuseki-server"
-    f_log = open("fuseki.log","w")
-    fuseki = Popen( args=shlex.split("-q --update --loc=../fuseki-data /qudt4dt"),
-                    executable=fuseki_executable,
-                    cwd=fuseki_dir,
-                    stdout=f_log)
-    f_log.close()
-
-    PollFusekiLaunch()
-
-    return fuseki
-
-def PollFusekiLaunch():
-    while True:
-        try:
-            urllib.urlopen(fuseki_url)
-            return
-        except IOError:
-            print "polling..."
-            time.sleep(1)
-
 print "Launching fuseki..."
-fuseki = LaunchFuseki()
+fuseki = fusekiutils.LaunchFuseki()
 print "done"
 
 print ""
@@ -78,13 +56,17 @@ def LoadDirectoryOfOWLFiles(path):
         if r.status_code != 200:
             print "EXCEPTION loading DB: ", r.status_code
 
+try:
+    print "Loading ontologies into Fuseki..."
+    LoadDirectoryOfOWLFiles('qudt-owl')
+    LoadDirectoryOfOWLFiles('modelica')
+    print "done"
 
-print "Loading ontologies into Fuseki..."
-LoadDirectoryOfOWLFiles('qudt-owl')
-LoadDirectoryOfOWLFiles('modelica')
-print "done"
+finally:
+    print ""
+    print "Terminating fuseki..."
+    fuseki.terminate()
+    print "done"
+    print ""
 
-print ""
-
-fuseki.terminate()
 print "finished"
