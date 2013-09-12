@@ -10,9 +10,9 @@ class Barbara:
 
     def __set_server_urls(self,server_url):
         self.__url_base = server_url
-        self.__url_upload = server_url + '/ds/upload'
-        self.__url_query = server_url + '/ds/query?'
-        self.__url_update = server_url + '/ds/update?'
+        self.__url_upload = server_url + '/qudt4dt/upload'
+        self.__url_query = server_url + '/qudt4dt/query?'
+        self.__url_update = server_url + '/qudt4dt/update?'
 
     def __get_num_triples_in_database(self):
         query = """
