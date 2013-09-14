@@ -61,17 +61,50 @@ class Barbara:
         return unitClasses
 
 
+    def _jsonGetUri(name):
+        def decorate(func):
+	    def ret(*arg,**karg):
+                t = func(*arg,**karg)
+                result = []
+                for i in t['results']['bindings']:
+		    result.append(i[name]['value'])
+	        return result
+            return ret
+        return decorate
+  
+    @_jsonGetUri('class')
     def get_unit_class(self,UnitURI):
-        # Stub
-        return self.list_all_units()[0]
-
+        query = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                   PREFIX owl: <http://www.w3.org/2002/07/owl#>
+	           SELECT
+	           ?class 
+	           WHERE
+	           {
+		     <%s> rdf:type ?class. 
+		     FILTER NOT EXISTS{?class rdf:type owl:DeprecatedClass}
+		   }"""
+        query = query %UnitURI
+        result = sparql.query(query,self.__url_query)
+        return result
+      
+    @_jsonGetUri('unit')
     def get_units_in_class(self,ClassURI):
-        # Stub
-        return self.list_all_unit_classes()[0]
-
+        query = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                   SELECT
+                   ?unit 
+                   WHERE 
+                   {
+		     ?unit rdf:type <%s> 
+		   }"""
+        query = query % ClassURI
+        result = sparql.query(query, self.__url_query)
+        return result
+  
     def get_units_in_same_class(self,UnitURI):
-        # Stub
-        return self.list_all_units()[1:5]
+        result = []
+        for i in self.get_unit_class(UnitURI):
+            result = result + self.get_units_in_class(i)
+        return result
 
     def convert_value(self,source_unit_uri,destination_unit_uri,source_value):
         # Stub

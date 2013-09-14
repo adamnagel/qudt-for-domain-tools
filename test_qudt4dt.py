@@ -21,19 +21,24 @@ try:
 
 
     print "Get Unit Class"
-    print barb.get_unit_class("Unit1")
+    uc = barb.get_unit_class("http://qudt.org/vocab/unit#Inch")[0]
+    print uc
     print ""
 
-    print "Get Units in Class"
-    print barb.get_units_in_class("Unit1")
+    print "Units in Class:"
+    units_in_class = barb.get_units_in_class(uc)
+    for uic in units_in_class:
+        print uic
     print ""
 
-    print "Get Units in Same Class"
-    print barb.get_units_in_same_class("Unit1")
+    print "Units in Same Class:"
+    units_in_same_class = barb.get_units_in_same_class("http://qudt.org/vocab/unit#Inch")
+    for uisc in units_in_same_class:
+        print uisc
     print ""
 
     print "Convert Value"
-    print barb.convert_value("Unit1","Unit2",3.4)
+    print barb.convert_value("http://qudt.org/vocab/unit#Inch","http://qudt.org/vocab/unit#Meter",3.4)
 
 finally:
     print ""
