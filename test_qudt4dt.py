@@ -26,8 +26,8 @@ class TestQudt(unittest.TestCase):
                  u'http://qudt.org/vocab/unit#DegreeCentigrade',
                  u'http://qudt.org/vocab/unit#DegreeCelsius',
                  u'http://qudt.org/vocab/unit#DegreeRankine']
-        
-        self.assertEqual(result, units)
+        print result
+        self.assertItemsEqual(result, units)
         
     def test_get_units_in_same_class(self):
         result = self.barb.get_units_in_same_class(u'http://qudt.org/vocab/unit#DegreeCelsius')
@@ -37,7 +37,8 @@ class TestQudt(unittest.TestCase):
                  u'http://qudt.org/vocab/unit#DegreeCentigrade',
                  u'http://qudt.org/vocab/unit#DegreeCelsius',
                  u'http://qudt.org/vocab/unit#DegreeRankine']
-        self.assertEqual(result, units)
+        print result
+        self.assertItemsEqual(result, units)
         
     def test_convert_value(self):
         convert_value = self.barb.convert_value
@@ -55,7 +56,7 @@ class TestQudt(unittest.TestCase):
 def main():
     try:
         print "launching fuseki..."
-        fuski = fusekiutils.LaunchFuseki()
+        fuseki = fusekiutils.LaunchFuseki()
         unittest.main()
         print ""
         
