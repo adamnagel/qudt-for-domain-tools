@@ -62,6 +62,7 @@ try:
     print "Loading ontologies into Fuseki..."
     LoadDirectoryOfOWLFiles('qudt-owl')
     LoadDirectoryOfOWLFiles('modelica')
+    LoadDirectoryOfOWLFiles('ontologies')
     print "done"
 
 finally:
