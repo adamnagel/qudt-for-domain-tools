@@ -15,8 +15,8 @@
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-    <Ontology rdf:about="http://metamorphinc.com/ontology/modelica">
-        <versionIRI rdf:resource="http://metamorphinc.com/ontology/modelica/1.0.0"/>
+    <Ontology rdf:about="http://modelica.org/msl/SIUnits#">
+        <versionIRI rdf:resource="http://modelica.org/msl/SIUnits/1.0.0"/>
     </Ontology>
     
 
@@ -32,71 +32,71 @@
     
 
 
-    <!-- http://metamorphinc.com/ontology/modelica#ClassPath -->
+    <!-- http://modelica.org/msl/SIUnits#ClassPath -->
 
-    <DatatypeProperty rdf:about="http://metamorphinc.com/ontology/modelica#ClassPath">
+    <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits#ClassPath">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://metamorphinc.com/ontology/modelica#ModelicaClass"/>
+        <rdfs:domain rdf:resource="http://modelica.org/msl/SIUnits#ModelicaClass"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </DatatypeProperty>
     
 
 
-    <!-- http://metamorphinc.com/ontology/modelica#UnitDataType -->
+    <!-- http://modelica.org/msl/SIUnits#UnitDataType -->
 
-    <DatatypeProperty rdf:about="http://metamorphinc.com/ontology/modelica#UnitDataType">
+    <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits#UnitDataType">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://metamorphinc.com/ontology/modelica#ModelicaUnitClass"/>
+        <rdfs:domain rdf:resource="http://modelica.org/msl/SIUnits#ModelicaUnitClass"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </DatatypeProperty>
     
 
 
-    <!-- http://metamorphinc.com/ontology/modelica#UnitDisplayUnit -->
+    <!-- http://modelica.org/msl/SIUnits#UnitDisplayUnit -->
 
-    <DatatypeProperty rdf:about="http://metamorphinc.com/ontology/modelica#UnitDisplayUnit">
+    <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits#UnitDisplayUnit">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://metamorphinc.com/ontology/modelica#ModelicaUnitClass"/>
+        <rdfs:domain rdf:resource="http://modelica.org/msl/SIUnits#ModelicaUnitClass"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </DatatypeProperty>
     
 
 
-    <!-- http://metamorphinc.com/ontology/modelica#UnitMin -->
+    <!-- http://modelica.org/msl/SIUnits#UnitMin -->
 
-    <DatatypeProperty rdf:about="http://metamorphinc.com/ontology/modelica#UnitMin">
+    <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits#UnitMin">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://metamorphinc.com/ontology/modelica#ModelicaUnitClass"/>
+        <rdfs:domain rdf:resource="http://modelica.org/msl/SIUnits#ModelicaUnitClass"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </DatatypeProperty>
     
 
 
-    <!-- http://metamorphinc.com/ontology/modelica#UnitQuantity -->
+    <!-- http://modelica.org/msl/SIUnits#UnitQuantity -->
 
-    <DatatypeProperty rdf:about="http://metamorphinc.com/ontology/modelica#UnitQuantity">
+    <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits#UnitQuantity">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://metamorphinc.com/ontology/modelica#ModelicaUnitClass"/>
+        <rdfs:domain rdf:resource="http://modelica.org/msl/SIUnits#ModelicaUnitClass"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </DatatypeProperty>
     
 
 
-    <!-- http://metamorphinc.com/ontology/modelica#UnitStart -->
+    <!-- http://modelica.org/msl/SIUnits#UnitStart -->
 
-    <DatatypeProperty rdf:about="http://metamorphinc.com/ontology/modelica#UnitStart">
+    <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits#UnitStart">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://metamorphinc.com/ontology/modelica#ModelicaUnitClass"/>
+        <rdfs:domain rdf:resource="http://modelica.org/msl/SIUnits#ModelicaUnitClass"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </DatatypeProperty>
     
 
 
-    <!-- http://metamorphinc.com/ontology/modelica#UnitUnit -->
+    <!-- http://modelica.org/msl/SIUnits#UnitUnit -->
 
-    <DatatypeProperty rdf:about="http://metamorphinc.com/ontology/modelica#UnitUnit">
+    <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits#UnitUnit">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://metamorphinc.com/ontology/modelica#ModelicaUnitClass"/>
+        <rdfs:domain rdf:resource="http://modelica.org/msl/SIUnits#ModelicaUnitClass"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </DatatypeProperty>
     
@@ -113,13 +113,13 @@
     
 
 
-    <!-- http://metamorphinc.com/ontology/modelica#ModelicaClass -->
+    <!-- http://modelica.org/msl/SIUnits#ModelicaClass -->
 
-    <Class rdf:about="http://metamorphinc.com/ontology/modelica#ModelicaClass">
+    <Class rdf:about="http://modelica.org/msl/SIUnits#ModelicaClass">
         <rdfs:label xml:lang="en">ModelicaClass</rdfs:label>
         <rdfs:subClassOf>
             <Restriction>
-                <onProperty rdf:resource="http://metamorphinc.com/ontology/modelica#ClassPath"/>
+                <onProperty rdf:resource="http://modelica.org/msl/SIUnits#ClassPath"/>
                 <qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</qualifiedCardinality>
                 <onDataRange rdf:resource="&xsd;anyURI"/>
             </Restriction>
@@ -128,10 +128,10 @@
     
 
 
-    <!-- http://metamorphinc.com/ontology/modelica#ModelicaUnitClass -->
+    <!-- http://modelica.org/msl/SIUnits#ModelicaUnitClass -->
 
-    <Class rdf:about="http://metamorphinc.com/ontology/modelica#ModelicaUnitClass">
-        <rdfs:subClassOf rdf:resource="http://metamorphinc.com/ontology/modelica#ModelicaClass"/>
+    <Class rdf:about="http://modelica.org/msl/SIUnits#ModelicaUnitClass">
+        <rdfs:subClassOf rdf:resource="http://modelica.org/msl/SIUnits#ModelicaClass"/>
     </Class>
 </rdf:RDF>
 
