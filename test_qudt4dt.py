@@ -26,7 +26,6 @@ class TestQudt(unittest.TestCase):
                  u'http://qudt.org/vocab/unit#DegreeCentigrade',
                  u'http://qudt.org/vocab/unit#DegreeCelsius',
                  u'http://qudt.org/vocab/unit#DegreeRankine']
-        print result
         self.assertItemsEqual(result, units)
         
     def test_get_units_in_same_class(self):
@@ -37,7 +36,6 @@ class TestQudt(unittest.TestCase):
                  u'http://qudt.org/vocab/unit#DegreeCentigrade',
                  u'http://qudt.org/vocab/unit#DegreeCelsius',
                  u'http://qudt.org/vocab/unit#DegreeRankine']
-        print result
         self.assertItemsEqual(result, units)
         
     def test_convert_value(self):
