@@ -15,7 +15,7 @@
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-    <owl:Ontology rdf:about="http://qudt4dt.org/classes">
+    <owl:Ontology rdf:about="http://qudt4dt.org/ontology">
         <owl:imports rdf:resource="http://modelica.org/msl/SIUnits#"/>
         <owl:imports rdf:resource="http://qudt.org/1.1/vocab/unit"/>
     </owl:Ontology>
@@ -33,11 +33,13 @@
     
 
 
-    <!-- http://qudt4dt.org/classes#domainUnitEquivalent -->
+    <!-- http://qudt4dt.org/ontology#equivalentOf -->
 
-    <owl:ObjectProperty rdf:about="http://qudt4dt.org/classes#domainUnitEquivalent">
-        <rdfs:domain rdf:resource="http://qudt.org/schema/qudt#Unit"/>
-        <rdfs:range rdf:resource="http://qudt4dt.org/classes#DomainToolUnit"/>
+    <owl:ObjectProperty rdf:about="http://qudt4dt.org/ontology#equivalentOf">
+        <rdf:type rdf:resource="&owl;SymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+        <rdfs:range rdf:resource="http://qudt4dt.org/ontology#Unit"/>
+        <rdfs:domain rdf:resource="http://qudt4dt.org/ontology#Unit"/>
     </owl:ObjectProperty>
     
 
@@ -56,14 +58,22 @@
     <!-- http://modelica.org/msl/SIUnits#ModelicaUnitClass -->
 
     <owl:Class rdf:about="http://modelica.org/msl/SIUnits#ModelicaUnitClass">
-        <rdfs:subClassOf rdf:resource="http://qudt4dt.org/classes#DomainToolUnit"/>
+        <rdfs:subClassOf rdf:resource="http://qudt4dt.org/ontology#DomainToolUnit"/>
     </owl:Class>
     
 
 
-    <!-- http://qudt4dt.org/classes#DomainToolUnit -->
+    <!-- http://qudt4dt.org/ontology#DomainToolUnit -->
 
-    <owl:Class rdf:about="http://qudt4dt.org/classes#DomainToolUnit"/>
+    <owl:Class rdf:about="http://qudt4dt.org/ontology#DomainToolUnit">
+        <rdfs:subClassOf rdf:resource="http://qudt4dt.org/ontology#Unit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://qudt4dt.org/ontology#Unit -->
+
+    <owl:Class rdf:about="http://qudt4dt.org/ontology#Unit"/>
 </rdf:RDF>
 
 

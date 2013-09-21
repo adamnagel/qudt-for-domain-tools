@@ -62,7 +62,7 @@ class Barbara:
         
     def list_domain_tool_unit_classes(self):
         query = """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-                   PREFIX qudt4dt: <http://qudt4dt.org/classes#>
+                   PREFIX qudt4dt: <http://qudt4dt.org/ontology#>
                    SELECT
                    ?class
                    WHERE
