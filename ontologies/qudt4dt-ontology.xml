@@ -63,6 +63,14 @@
     
 
 
+    <!-- http://qudt.org/schema/qudt#Unit -->
+
+    <rdf:Description rdf:about="http://qudt.org/schema/qudt#Unit">
+        <rdfs:subClassOf rdf:resource="http://qudt4dt.org/ontology#Unit"/>
+    </rdf:Description>
+    
+
+
     <!-- http://qudt4dt.org/ontology#DomainToolUnit -->
 
     <owl:Class rdf:about="http://qudt4dt.org/ontology#DomainToolUnit">
