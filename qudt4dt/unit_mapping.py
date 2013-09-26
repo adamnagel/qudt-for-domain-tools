@@ -1,11 +1,12 @@
 import csv
+import sys
 
 class UnitMapping(object):
     """
     Create a UnitMapping from 3rd part Unit lib to QUDT
     """
     
-    def __init__(self,sourceClassName,fileName):
+    def __init__(self, fileName, sourceClassName):
         """
         Default XML template
         """
@@ -45,7 +46,6 @@ class UnitMapping(object):
     <rdf:Description rdf:about="{sourceUnitURI}">
         <ontology:equivalentOf rdf:resource="{destUnitURI}"/>
     </rdf:Description>
-</rdf:RDF>
 
 '''
         
@@ -65,12 +65,18 @@ class UnitMapping(object):
                 s_unit = s_uri + line[0]
                 d_unit = d_uri + line[1]
                 f.write(self.body.format(sourceUnitURI = s_unit, destUnitURI = d_unit))
-
+            f.write("</rdf:RDF>")
+            
     def run(self):
         self.__getClassURI()
         self.__createOWL()
 
 
-if __name__ == '__main__':
-    mapping = UnitMapping("modelica","mapping-to-qudt.csv")
+def createMapping(filename, classname):
+    mapping = UnitMapping(filename, classname)
     mapping.run()
+
+    
+if __name__ == '__main__':
+    #filename = sys.argv[1]
+    createMapping("mapping-to-qudt.csv","modelica")
