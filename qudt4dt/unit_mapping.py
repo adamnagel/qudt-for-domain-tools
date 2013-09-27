@@ -35,8 +35,9 @@ class UnitMapping(object):
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:ontology="http://qudt4dt.org/ontology#">
     <owl:Ontology rdf:about="http://www.qudt4dt.org/ontology/{sourceClassName}-to-qudt">
-        <owl:imports rdf:resource="{sourceClassURI}#"/>
-        <owl:imports rdf:resource="http://qudt4dt.org/ontology#"/>
+        <owl:imports rdf:resource="{sourceClassURI}"/>
+	<owl:imports rdf:resource="{destClassURI}"/>
+        <owl:imports rdf:resource="http://qudt4dt.org/ontology"/>
     </owl:Ontology>
     
 '''
@@ -60,7 +61,7 @@ class UnitMapping(object):
         s_uri = self.sourceClassURI
         d_uri = self.destClassURI
         with open(filename,'w') as f:
-            f.write(self.head.format(sourceClassName = classname,sourceClassURI = s_uri))
+            f.write(self.head.format(sourceClassName = classname,sourceClassURI = s_uri,destClassURI = d_uri))
             for line in self.reader:
                 s_unit = s_uri + line[0]
                 d_unit = d_uri + line[1]
