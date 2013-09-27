@@ -14,8 +14,7 @@ class UnitMapping(object):
         self.sourceClassName = sourceClassName
         self.sourceClassURI = '' 
         self.destClassURI = ''
-        self.head = '''
-<?xml version="1.0"?>
+        self.head = '''<?xml version="1.0"?>
 
 
 <!DOCTYPE rdf:RDF [
@@ -24,6 +23,7 @@ class UnitMapping(object):
     <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
     <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
     <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY modelica "http://modelica.org/msl/SIUnits/vocabulary#" >
 ]>
 
 
@@ -35,8 +35,8 @@ class UnitMapping(object):
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:ontology="http://qudt4dt.org/ontology#">
     <owl:Ontology rdf:about="http://www.qudt4dt.org/ontology/{sourceClassName}-to-qudt">
-        <owl:imports rdf:resource="{sourceClassURI}"/>
-        <owl:imports rdf:resource="http://qudt4dt.org/ontology"/>
+        <owl:imports rdf:resource="{sourceClassURI}#"/>
+        <owl:imports rdf:resource="http://qudt4dt.org/ontology#"/>
     </owl:Ontology>
     
 '''

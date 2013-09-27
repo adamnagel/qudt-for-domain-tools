@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <uri id="User Entered Import Resolution" name="http://qudt4dt.org/ontology#" uri="file:/Users/adam/git/qudt-for-domain-tools/ontologies/qudt4dt-ontology.xml"/>
+    <uri id="Imports Wizard Entry" name="http://modelica.org/msl/SIUnits/individuals" uri="modelica-individuals.xml"/>
+    <uri id="User Entered Import Resolution" name="http://qudt4dt.org/ontology" uri="file:/Users/adam/git/qudt-for-domain-tools/ontologies/qudt4dt-ontology.xml"/>
+    <uri id="Imports Wizard Entry" name="http://modelica.org/msl/SIUnits/vocabulary#" uri="modelica.xml"/>
+    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
+        <uri id="Automatically generated entry, Timestamp=1380262542761" name="http://www.qudt4dt.org/ontology/modelica-to-qudt" uri="modelica%20to%20qudt.xml"/>
+        <uri id="Automatically generated entry, Timestamp=1380262542761" name="duplicate:http://www.w3.org/2002/07/owl" uri="modelica-individuals.xml"/>
+        <uri id="Automatically generated entry, Timestamp=1380262542761" name="duplicate:http://www.w3.org/2002/07/owl" uri="modelica.xml"/>
+    </group>
+</catalog>
