@@ -3,6 +3,7 @@ __author__ = 'adam'
 import json
 import os
 import sparqlcommands as sparql
+from unit_mapping import createMapping
 
 class Barbara:
     def __init__(self,server_url):
