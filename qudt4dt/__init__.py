@@ -3,6 +3,7 @@ __author__ = 'adam'
 import json
 import os
 import sparqlcommands as sparql
+from unit_mapping import createMapping
 
 class Barbara:
     def __init__(self,server_url):
@@ -54,6 +55,22 @@ class Barbara:
                     { <http://qudt.org/schema/qudt#Unit> ^rdfs:subClassOf+ ?class
                     }"""
         result = sparql.query(query,self.__url_query)
+        unitClasses = []
+        for item in result["results"]["bindings"]:
+            classURI = item["class"]["value"]
+            unitClasses.append( classURI )
+        return unitClasses
+        
+    def list_domain_tool_unit_classes(self):
+        query = """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                   PREFIX qudt4dt: <http://qudt4dt.org/ontology#>
+                   SELECT
+                   ?class
+                   WHERE
+                   { 
+                     qudt4dt:DomainToolUnit ^rdfs:subClassOf+ ?class
+                   }"""
+        result = sparql.query(query, self.__url_query)
         unitClasses = []
         for item in result["results"]["bindings"]:
             classURI = item["class"]["value"]

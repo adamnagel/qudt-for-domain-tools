@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+import re
 import sys
 import os
 sys.path.append(os.path.abspath('modelica'))
@@ -12,6 +12,7 @@ import time
 import glob
 import requests
 import fusekiutils
+import qudt4dt
 
 p_ScriptPathRoot = os.path.dirname(__file__)
 
@@ -58,10 +59,19 @@ def LoadDirectoryOfOWLFiles(path):
         if r.status_code != 200:
             print "EXCEPTION loading DB: ", r.status_code
 
+def CreateOWLFilesFromCSV(sourceFilePath ,objFilePath):
+    s_file = re.search('[^/]+?\.csv',sourceFilePath).group()
+    o_file = re.search('[^/]+?\.xml',objFilePath).group()
+    print 'coverting %s to %s' %(s_file, o_file)
+    qudt4dt.unit_mapping.createMapping(sourceFilePath, objFilePath)
+            
 try:
+    print "Creating ontologies from CSV file..."
+    CreateOWLFilesFromCSV('modelica/mapping-to-qudt.csv','modelica/modelica-qudt.xml')
     print "Loading ontologies into Fuseki..."
     LoadDirectoryOfOWLFiles('qudt-owl')
     LoadDirectoryOfOWLFiles('modelica')
+    LoadDirectoryOfOWLFiles('ontologies')
     print "done"
 
 finally:
