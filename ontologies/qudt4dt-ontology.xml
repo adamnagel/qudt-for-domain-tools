@@ -16,7 +16,7 @@
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
     <owl:Ontology rdf:about="http://qudt4dt.org/ontology">
-        <owl:imports rdf:resource="http://modelica.org/msl/SIUnits#"/>
+        <owl:imports rdf:resource="http://modelica.org/msl/SIUnits/vocabulary#"/>
         <owl:imports rdf:resource="http://qudt.org/1.1/vocab/unit"/>
     </owl:Ontology>
     
@@ -55,9 +55,9 @@
     
 
 
-    <!-- http://modelica.org/msl/SIUnits#ModelicaUnitClass -->
+    <!-- http://modelica.org/msl/SIUnits/vocabulary#ModelicaUnitClass -->
 
-    <owl:Class rdf:about="http://modelica.org/msl/SIUnits#ModelicaUnitClass">
+    <owl:Class rdf:about="http://modelica.org/msl/SIUnits/vocabulary#ModelicaUnitClass">
         <rdfs:subClassOf rdf:resource="http://qudt4dt.org/ontology#DomainToolUnit"/>
     </owl:Class>
     

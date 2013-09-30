@@ -15,8 +15,8 @@
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-    <Ontology rdf:about="http://modelica.org/msl/SIUnits#">
-        <versionIRI rdf:resource="http://modelica.org/msl/SIUnits/1.0.0"/>
+    <Ontology rdf:about="http://modelica.org/msl/SIUnits/vocabulary#">
+        <versionIRI rdf:resource="http://modelica.org/msl/SIUnits/vocabulary/1.0.0"/>
     </Ontology>
     
 
@@ -34,9 +34,9 @@
 
     <!-- http://modelica.org/msl/SIUnits#ClassPath -->
 
-    <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits#ClassPath">
+    <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits/vocabulary#ClassPath">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://modelica.org/msl/SIUnits#ModelicaClass"/>
+        <rdfs:domain rdf:resource="http://modelica.org/msl/SIUnits/vocabulary#ModelicaClass"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </DatatypeProperty>
     
@@ -44,9 +44,9 @@
 
     <!-- http://modelica.org/msl/SIUnits#UnitDataType -->
 
-    <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits#UnitDataType">
+    <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits/vocabulary#UnitDataType">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://modelica.org/msl/SIUnits#ModelicaUnitClass"/>
+        <rdfs:domain rdf:resource="http://modelica.org/msl/SIUnits/vocabulary#ModelicaUnitClass"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </DatatypeProperty>
     
@@ -54,9 +54,9 @@
 
     <!-- http://modelica.org/msl/SIUnits#UnitDisplayUnit -->
 
-    <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits#UnitDisplayUnit">
+    <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits/vocabulary#UnitDisplayUnit">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://modelica.org/msl/SIUnits#ModelicaUnitClass"/>
+        <rdfs:domain rdf:resource="http://modelica.org/msl/SIUnits/vocabulary#ModelicaUnitClass"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </DatatypeProperty>
     
@@ -64,9 +64,9 @@
 
     <!-- http://modelica.org/msl/SIUnits#UnitMin -->
 
-    <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits#UnitMin">
+    <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits/vocabulary#UnitMin">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://modelica.org/msl/SIUnits#ModelicaUnitClass"/>
+        <rdfs:domain rdf:resource="http://modelica.org/msl/SIUnits/vocabulary#ModelicaUnitClass"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </DatatypeProperty>
     
@@ -74,9 +74,9 @@
 
     <!-- http://modelica.org/msl/SIUnits#UnitQuantity -->
 
-    <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits#UnitQuantity">
+    <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits/vocabulary#UnitQuantity">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://modelica.org/msl/SIUnits#ModelicaUnitClass"/>
+        <rdfs:domain rdf:resource="http://modelica.org/msl/SIUnits/vocabulary#ModelicaUnitClass"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </DatatypeProperty>
     
@@ -84,9 +84,9 @@
 
     <!-- http://modelica.org/msl/SIUnits#UnitStart -->
 
-    <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits#UnitStart">
+    <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits/vocabulary#UnitStart">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://modelica.org/msl/SIUnits#ModelicaUnitClass"/>
+        <rdfs:domain rdf:resource="http://modelica.org/msl/SIUnits/vocabulary#ModelicaUnitClass"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </DatatypeProperty>
     
@@ -94,9 +94,9 @@
 
     <!-- http://modelica.org/msl/SIUnits#UnitUnit -->
 
-    <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits#UnitUnit">
+    <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits/vocabulary#UnitUnit">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://modelica.org/msl/SIUnits#ModelicaUnitClass"/>
+        <rdfs:domain rdf:resource="http://modelica.org/msl/SIUnits/vocabulary#ModelicaUnitClass"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </DatatypeProperty>
     
@@ -115,11 +115,11 @@
 
     <!-- http://modelica.org/msl/SIUnits#ModelicaClass -->
 
-    <Class rdf:about="http://modelica.org/msl/SIUnits#ModelicaClass">
+    <Class rdf:about="http://modelica.org/msl/SIUnits/vocabulary#ModelicaClass">
         <rdfs:label xml:lang="en">ModelicaClass</rdfs:label>
         <rdfs:subClassOf>
             <Restriction>
-                <onProperty rdf:resource="http://modelica.org/msl/SIUnits#ClassPath"/>
+                <onProperty rdf:resource="http://modelica.org/msl/SIUnits/vocabulary#ClassPath"/>
                 <qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</qualifiedCardinality>
                 <onDataRange rdf:resource="&xsd;anyURI"/>
             </Restriction>
@@ -130,8 +130,8 @@
 
     <!-- http://modelica.org/msl/SIUnits#ModelicaUnitClass -->
 
-    <Class rdf:about="http://modelica.org/msl/SIUnits#ModelicaUnitClass">
-        <rdfs:subClassOf rdf:resource="http://modelica.org/msl/SIUnits#ModelicaClass"/>
+    <Class rdf:about="http://modelica.org/msl/SIUnits/vocabulary#ModelicaUnitClass">
+        <rdfs:subClassOf rdf:resource="http://modelica.org/msl/SIUnits/vocabulary#ModelicaClass"/>
     </Class>
 </rdf:RDF>
 

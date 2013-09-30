@@ -12,14 +12,11 @@ class UnitMapping(object):
         """
         self.reader = csv.reader(file(sourceFile,'rU'))
         if libName == None: self.libName = re.search("([^/]+?)\.xml", objFile).group(1)
- #       self.libName = re.match("(.+?)\.xml", f).group(0)
         print self.libName
         self.objFile = objFile
         self.sourceClassURI = '' 
         self.objClassURI = ''
-        self.head = '''
-<?xml version="1.0"?>
-
+        self.head = '''<?xml version="1.0"?>
 
 <!DOCTYPE rdf:RDF [
     <!ENTITY ontology "http://qudt4dt.org/ontology#" >
@@ -27,6 +24,7 @@ class UnitMapping(object):
     <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
     <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
     <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY modelica "http://modelica.org/msl/SIUnits/vocabulary#" >
 ]>
 
 
@@ -39,6 +37,7 @@ class UnitMapping(object):
      xmlns:ontology="http://qudt4dt.org/ontology#">
     <owl:Ontology rdf:about="http://www.qudt4dt.org/ontology/{libName}">
         <owl:imports rdf:resource="{sourceClassURI}"/>
+	<owl:imports rdf:resource="{objClassURI}"/>
         <owl:imports rdf:resource="http://qudt4dt.org/ontology"/>
     </owl:Ontology>
     
@@ -63,7 +62,7 @@ class UnitMapping(object):
         s_uri = self.sourceClassURI
         o_uri = self.objClassURI
         with open(filename,'w') as f:
-            f.write(self.head.format(libName = self.libName,sourceClassURI = s_uri))
+            f.write(self.head.format(libName = self.libName,sourceClassURI = s_uri,objClassURI = o_uri))
             for line in self.reader:
                 s_unit = s_uri + line[0]
                 o_unit = o_uri + line[1]
