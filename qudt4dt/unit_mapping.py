@@ -1,19 +1,22 @@
 import csv
 import sys
-
+import re
 class UnitMapping(object):
     """
-    Create a UnitMapping from 3rd part Unit lib to QUDT
+    Create a UnitMapping from 3rd part unit lib to QUDT
     """
     
-    def __init__(self, fileName, sourceClassName):
+    def __init__(self, sourceFile, objFile, libName = None):
         """
-        Default XML template
+        init XML template
         """
-        self.reader = csv.reader(file(fileName,'rU'))
-        self.sourceClassName = sourceClassName
+        self.reader = csv.reader(file(sourceFile,'rU'))
+        if libName == None: self.libName = re.search("([^/]+?)\.xml", objFile).group(1)
+ #       self.libName = re.match("(.+?)\.xml", f).group(0)
+        print self.libName
+        self.objFile = objFile
         self.sourceClassURI = '' 
-        self.destClassURI = ''
+        self.objClassURI = ''
         self.head = '''
 <?xml version="1.0"?>
 
@@ -27,14 +30,14 @@ class UnitMapping(object):
 ]>
 
 
-<rdf:RDF xmlns="http://www.qudt4dt.org/ontology/{sourceClassName}-to-qudt#"
-     xml:base="http://www.qudt4dt.org/ontology/{sourceClassName}-to-qudt"
+<rdf:RDF xmlns="http://www.qudt4dt.org/ontology/{libName}#"
+     xml:base="http://www.qudt4dt.org/ontology/{libName}"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:ontology="http://qudt4dt.org/ontology#">
-    <owl:Ontology rdf:about="http://www.qudt4dt.org/ontology/{sourceClassName}-to-qudt">
+    <owl:Ontology rdf:about="http://www.qudt4dt.org/ontology/{libName}">
         <owl:imports rdf:resource="{sourceClassURI}"/>
         <owl:imports rdf:resource="http://qudt4dt.org/ontology"/>
     </owl:Ontology>
@@ -44,7 +47,7 @@ class UnitMapping(object):
     <!-- {sourceUnitURI} -->
 
     <rdf:Description rdf:about="{sourceUnitURI}">
-        <ontology:equivalentOf rdf:resource="{destUnitURI}"/>
+        <ontology:equivalentOf rdf:resource="{objUnitURI}"/>
     </rdf:Description>
 
 '''
@@ -52,19 +55,19 @@ class UnitMapping(object):
     def __getClassURI(self):
         firstLn = self.reader.next()
         self.sourceClassURI = firstLn[0]
-        self.destClassURI = firstLn[1]
+        self.objClassURI = firstLn[1]
 
     def __createOWL(self):
-        filename = self.sourceClassName + " to qudt.xml"
-        classname = self.sourceClassName
+        filename = self.objFile
+        classname = self.libName
         s_uri = self.sourceClassURI
-        d_uri = self.destClassURI
+        o_uri = self.objClassURI
         with open(filename,'w') as f:
-            f.write(self.head.format(sourceClassName = classname,sourceClassURI = s_uri))
+            f.write(self.head.format(libName = self.libName,sourceClassURI = s_uri))
             for line in self.reader:
                 s_unit = s_uri + line[0]
-                d_unit = d_uri + line[1]
-                f.write(self.body.format(sourceUnitURI = s_unit, destUnitURI = d_unit))
+                o_unit = o_uri + line[1]
+                f.write(self.body.format(sourceUnitURI = s_unit, objUnitURI = o_unit))
             f.write("</rdf:RDF>")
             
     def run(self):
@@ -72,11 +75,11 @@ class UnitMapping(object):
         self.__createOWL()
 
 
-def createMapping(filename, classname):
-    mapping = UnitMapping(filename, classname)
+def createMapping(sourceFile, objFile, libName = None):
+    mapping = UnitMapping(sourceFile, objFile, libName)
     mapping.run()
 
     
 if __name__ == '__main__':
     #filename = sys.argv[1]
-    createMapping("mapping-to-qudt.csv","modelica")
+    createMapping("../modelica/mapping-to-qudt.csv","../../modelica-qudt.xml")
