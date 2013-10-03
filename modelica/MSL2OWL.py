@@ -71,7 +71,6 @@ def GenerateOWLIndividualFileContent(d_Units):
 
 def GenerateOWLIndividualFile(jsonSIUnitsFile,OutputFile):
     d_TypeStatements = ExtractUnitsFromJson(jsonSIUnitsFile)
-    print d_TypeStatements
     xml_IndividualFile = GenerateOWLIndividualFileContent(d_TypeStatements)
     with open(OutputFile,'w') as f:
         f.write(xml_IndividualFile)
