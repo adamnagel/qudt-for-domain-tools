@@ -12,16 +12,17 @@ def ExtractUnitsFromJson(jsonSIUnitsFile):
                'start':'UnitStart'}
     for unit in jsonSIUnits:
        # print unit
+        if not unit['class'] == 'type': continue
         result = {}
         result['ClassPath'] = unit['name']
-        if result['ClassPath'] == 'Modelica.SIunits': continue
-        unitName = re.match('Modelica.SIunits.(.+)',result['ClassPath']).group(1)
+        unitName = re.match('.*?([^\.]+)$',result['ClassPath']).group(1)
         if unit['modifiers']:
             result['UnitDataType'] = unit['modifiers'][0]['className']
             for element in unit['modifiers'][0]['values']:
                 m = mapping.get(element['name'],None)
                 if not m == None:
-                    result[m] = element['value']
+                    value = re.compile('["= ]').sub('', element['value'])
+                    result[m] = value
         #print unitName,result
         yield (unitName,result)
     
@@ -74,6 +75,7 @@ def GenerateOWLIndividualFile(jsonSIUnitsFile,OutputFile):
     xml_IndividualFile = GenerateOWLIndividualFileContent(d_TypeStatements)
     with open(OutputFile,'w') as f:
         f.write(xml_IndividualFile)
-        
-GenerateOWLIndividualFile('modelica_units.json','example.xml')
+
+if __name__ == '__main__':
+    GenerateOWLIndividualFile('modelica_units.json','example.xml')
 
