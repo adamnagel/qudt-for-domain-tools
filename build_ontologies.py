@@ -14,7 +14,7 @@ import fusekiutils
 p_ScriptPathRoot = os.path.dirname(__file__)
 
 ### Generate Modelica Unit Ontology
-p_SIUnits = os.path.join(p_ScriptPathRoot,'modelica/SIunits.mo')
+p_SIUnits = os.path.join(p_ScriptPathRoot,'modelica/modelica_units.json')
 p_ModelicaUnitOntology = os.path.join(p_ScriptPathRoot,'modelica/modelica-individuals.xml')
 print "Generating Modelica Unit ontology"
 MSL2OWL.GenerateOWLIndividualFile(p_SIUnits,p_ModelicaUnitOntology)
