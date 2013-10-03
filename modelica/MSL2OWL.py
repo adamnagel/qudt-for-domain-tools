@@ -76,6 +76,6 @@ def GenerateOWLIndividualFile(jsonSIUnitsFile,OutputFile):
     with open(OutputFile,'w') as f:
         f.write(xml_IndividualFile)
 
+
 if __name__ == '__main__':
     GenerateOWLIndividualFile('modelica_units.json','example.xml')
-
