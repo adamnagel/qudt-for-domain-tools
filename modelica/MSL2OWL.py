@@ -31,7 +31,7 @@ def ExtractUnitsFromJson(jsonSIUnitsFile):
      
 
 def GenerateOWLNode(s_Name, d_Unit):
-    xml_OWLNode = '\n  <NamedIndividual rdf:about="http://metamorphinc.com/ontology/modelica/individuals#' + s_Name + '">\n'
+    xml_OWLNode = '\n  <NamedIndividual rdf:about="http://modelica.org/msl/SIUnits/individuals#' + s_Name + '">\n'
     xml_OWLNode += '    <rdf:type rdf:resource="&modelica;ModelicaUnitClass"/>\n'
     for key,value in d_Unit.iteritems():
         xml_OWLNode += '    <modelica:' + key + ' rdf:datatype="&xsd;string">' + value + "</modelica:" + key + ">\n"
@@ -46,18 +46,18 @@ def GenerateOWLIndividualFileContent(d_Units):
     <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
     <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
     <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
-    <!ENTITY modelica "http://metamorphinc.com/ontology/modelica#" >
+    <!ENTITY modelica "http://modelica.org/msl/SIUnits/vocabulary#" >
     <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
 ]>
     <rdf:RDF xmlns="http://www.w3.org/2002/07/owl#"
      xml:base="http://www.w3.org/2002/07/owl"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     xmlns:modelica="http://metamorphinc.com/ontology/modelica#"
+     xmlns:modelica="http://modelica.org/msl/SIUnits/vocabulary#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-    <Ontology rdf:about="http://metamorphinc.com/ontology/modelica/individuals">
-        <imports rdf:resource="http://metamorphinc.com/ontology/modelica"/>
+    <Ontology rdf:about="http://modelica.org/msl/SIUnits/individuals">
+        <imports rdf:resource="http://modelica.org/msl/SIUnits/vocabulary#"/>
     </Ontology>'''
     
     xml_Footer = '''
