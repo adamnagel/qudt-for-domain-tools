@@ -17,8 +17,14 @@ import qudt4dt
 p_ScriptPathRoot = os.path.dirname(__file__)
 
 ### Generate Modelica Unit Ontology
-p_SIUnits = os.path.join(p_ScriptPathRoot,'modelica/SIunits.mo')
+p_SIUnits = os.path.join(p_ScriptPathRoot,'modelica/modelica_units.json')
 p_ModelicaUnitOntology = os.path.join(p_ScriptPathRoot,'modelica/modelica-individuals.xml')
+
+if not os.path.exists(p_SIUnits):
+    print "Generating Modelica ast json file"
+    os.system('cd modelica&&python export_modelica_units.py')
+    print "done"
+    
 print "Generating Modelica Unit ontology"
 MSL2OWL.GenerateOWLIndividualFile(p_SIUnits,p_ModelicaUnitOntology)
 print "complete"
