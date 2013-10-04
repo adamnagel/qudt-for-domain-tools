@@ -245,6 +245,9 @@ class OMCSession(object):
     def getDerivedClassModifierValue(self, className, modifierName):
         return self.ask('getDerivedClassModifierValue', '{0}, {1}'.format(className, modifierName))
 
+    def typeNameStrings(self, className):
+        return self.ask('typeNameStrings', className)
+
     def getComponents(self, className):
         return self.ask('getComponents', className)
 
