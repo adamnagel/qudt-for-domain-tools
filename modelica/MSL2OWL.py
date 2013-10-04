@@ -17,13 +17,14 @@ def ExtractUnitsFromJson(jsonSIUnitsFile):
         result['ClassPath'] = unit['name']
         unitName = re.match('.*?([^\.]+)$',result['ClassPath']).group(1)
         if unit['modifiers']:
-            result['UnitDataType'] = unit['modifiers'][0]['className']
-            for element in unit['modifiers'][0]['values']:
-                m = mapping.get(element['name'],None)
+            for k,v in unit['modifiers'].iteritems():
+                m = mapping.get(k,None)
                 if not m == None:
-                    value = re.compile('["= ]').sub('', element['value'])
+                    value = v
+                    value = re.compile('["= ]').sub('', value)
+                    value = re.compile('"').sub('', value)
                     result[m] = value
-        #print unitName,result
+                    
         yield (unitName,result)
     
     f.close()
