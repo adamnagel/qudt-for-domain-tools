@@ -1,67 +1,35 @@
-'''
-Created on Aug 13, 2013
-
-@author: adam
-'''
-
+#!/usr/bin/env python
 import re
 import json
 
-def ExtractUnitsFromMSL(p_mslSIUnits):
-    # Read contents of SIunits.mo
-    f_mslSIUnits = open(p_mslSIUnits,'r')
-    as_mslSIUnits_ = f_mslSIUnits.readlines()
-    f_mslSIUnits.close()
-        
-    # Remove comment lines
-    s_mslSIUnits = ''
-    for s in as_mslSIUnits_:
-        if s.find('//') == -1:
-            s_mslSIUnits += s
-        
-    # Strip out whitespace
-    s_mslSIUnits = s_mslSIUnits.replace('\n','').replace('\r','').replace('\t','').replace('  ','')
+def ExtractUnitsFromJson(jsonSIUnitsFile):
+    ''' Read contents of SIunits json file '''
+    f = open(jsonSIUnitsFile,'r')
+    jsonSIUnits = json.load(f)
     
-    # Divide into lines based on semicolon
-    d_TypeStatements = dict()
-    as_Statements = s_mslSIUnits.split(';')
-    pr_IsTypeStatement = re.compile('type.*')
-    for s in as_Statements:
-        
-        mo_IsTypeStatement = pr_IsTypeStatement.match(s)
-        if mo_IsTypeStatement != None:
-            mo = re.match(r"type (?P<type_name>\w+)",s)
-            key = mo.group(1)
-            
-            d_TypeStatements[key] = GetUnitPropDict(s)
-            d_TypeStatements[key]['ClassPath'] = 'Modelica.SIunits.' + key
+    mapping = {'quantity':'UnitQuantity', 'unit':'UnitUnit',
+               'displayUnit':'UnitDisplayUnit', 'min':'UnitMin', 
+               'start':'UnitStart'}
+    for unit in jsonSIUnits:
+       # print unit
+        if not unit['class'] == 'type': continue
+        result = {}
+        result['ClassPath'] = unit['name']
+        unitName = re.match('.*?([^\.]+)$',result['ClassPath']).group(1)
+        if unit['modifiers']:
+            for k,v in unit['modifiers'].iteritems():
+                m = mapping.get(k,None)
+                if not m == None:
+                    value = v
+                    value = re.compile('["= ]').sub('', value)
+                    value = re.compile('"').sub('', value)
+                    result[m] = value
                     
-    return d_TypeStatements
-            
-def CombineDict(d1, d2):
-    return dict(d1.items() + d2.items())
-
-# RegEXes for unit properties
-apr_DataTypeProps = []
-apr_DataTypeProps.append( re.compile('.*=\s*(?P<UnitDataType>\w+) ') )
-apr_DataTypeProps.append( re.compile('.*final quantity\s*=\s*\"(?P<UnitQuantity>\w+)\"') )
-apr_DataTypeProps.append( re.compile('.*final unit\s*=\s*\"(?P<UnitUnit>\w+)\"') )
-apr_DataTypeProps.append( re.compile('.*displayUnit\s*=\s*\"(?P<UnitDisplayUnit>\w+)\"') )
-apr_DataTypeProps.append( re.compile('.*min\s*=\s*(?P<UnitMin>\w+)') )
-apr_DataTypeProps.append( re.compile('.*start\s*=\s*(?P<UnitStart>\w+)') )
-pr_EquivalentClass = re.compile('type \S*\s*=\s*(?P<EquivalentClass>\w+)')
-def GetUnitPropDict(str):
-    d_rtn = dict()
+        yield (unitName,result)
+    
+    f.close()
         
-    for pr in apr_DataTypeProps:
-        if pr.match(str) != None:
-            d_rtn = CombineDict(d_rtn,pr.match(str).groupdict())
-    
-    if str.find('(') == -1:
-        # This is just equivalent to something else
-        d_rtn = CombineDict(d_rtn, pr_EquivalentClass.match(str).groupdict())
-    
-    return d_rtn
+     
 
 def GenerateOWLNode(s_Name, d_Unit):
     xml_OWLNode = '\n  <NamedIndividual rdf:about="http://modelica.org/msl/SIUnits/individuals#' + s_Name + '">\n'
@@ -97,16 +65,18 @@ def GenerateOWLIndividualFileContent(d_Units):
 </rdf:RDF>'''
     
     xml_Final = xml_Header
-    for key, value in d_Units.iteritems():
+    for key, value in d_Units:
         xml_Final += GenerateOWLNode(key,value)
     xml_Final += xml_Footer
     
     return xml_Final
 
-def GenerateOWLIndividualFile(p_SIUnits,p_OutputFile):
-    d_TypeStatements = ExtractUnitsFromMSL(p_SIUnits)
-    
+def GenerateOWLIndividualFile(jsonSIUnitsFile,OutputFile):
+    d_TypeStatements = ExtractUnitsFromJson(jsonSIUnitsFile)
     xml_IndividualFile = GenerateOWLIndividualFileContent(d_TypeStatements)
-    f = open(p_OutputFile,'w')
-    f.write(xml_IndividualFile)
-    f.close()
+    with open(OutputFile,'w') as f:
+        f.write(xml_IndividualFile)
+
+
+if __name__ == '__main__':
+    GenerateOWLIndividualFile('modelica_units.json','example.xml')
