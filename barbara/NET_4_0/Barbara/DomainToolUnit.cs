@@ -5,7 +5,8 @@ using System.Text;
 
 namespace qudt4dt
 {
-    public abstract class DomainToolUnit : qudt4dt.Unit
+    [ClassUri(@"http://qudt.org/schema/qudt#DomainToolUnit")]
+    public abstract class DomainToolUnit : Unit
     {
         public DomainToolUnit(Uri identity,Uri endpoint) : base(identity,endpoint)
         {

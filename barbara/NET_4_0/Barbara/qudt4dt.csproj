@@ -47,11 +47,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Barbara.cs" />
+    <Compile Include="ClassUri.cs" />
     <Compile Include="DomainToolUnit.cs" />
+    <Compile Include="Utils\Convert.cs" />
+    <Compile Include="Utils\Mapping.cs" />
     <Compile Include="ModelicaUnit.cs" />
+    <Compile Include="PrivateUtils\Query.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Qudt4dtUnit.cs" />
-    <Compile Include="Test.cs" />
     <Compile Include="QudtUnit.cs" />
     <Compile Include="Thing.cs" />
   </ItemGroup>

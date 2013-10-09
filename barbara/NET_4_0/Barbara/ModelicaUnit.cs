@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using qudt4dt;
 
-namespace qudt4dt
+namespace qudt4dt.modelica
 {
-    public class ModelicaUnit : DomainToolUnit
+    [ClassUri(@"http://modelica.org/msl/SIUnits/vocabulary#ModelicaUnitClass")]
+    public class ModelicaUnitClass : DomainToolUnit
     {
-        public ModelicaUnit(Uri identity,Uri endpoint) : base(identity,endpoint)
+        public ModelicaUnitClass(Uri identity,Uri endpoint) : base(identity,endpoint)
         {
         }
 

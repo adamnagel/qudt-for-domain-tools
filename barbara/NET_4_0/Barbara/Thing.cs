@@ -6,53 +6,72 @@ using System.Net;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using System.Reflection;
+using qudt4dt;
 
-namespace owl
+namespace qudt4dt.owl
 {
+    [ClassUri(@"http://www.w3.org/2002/07/owl#Thing")]
     public class Thing
-    {
+    {        
+        /// <summary>
+        /// Constructor for the owl.Thing class
+        /// </summary>
+        /// <param name="identity">The URI identity of the individual being instantiated</param>
+        /// <param name="endpoint">The URI of the SPARQL endpoint to be used to populate the instance</param>
         public Thing(Uri identity,Uri endpoint)
         {
-            uri = identity;
-            String newData = QuerySelf(endpoint);
+            myEndpoint = endpoint;
+            myUri = identity;
+
+            String newData = Query.RunQuery(this.query_GetDataOnThis, myEndpoint);
             SetProperties(newData);
         }
-        public Uri uri;
+        
+        protected Uri myUri;
+        /// <summary>
+        /// The URI of the individual (instance)
+        /// </summary>
+        public Uri uri { get { return myUri; } }
 
-        protected String QuerySelf(Uri endpoint)
+        /// <summary>
+        /// The SPARQL endpoint from which this individual was instantiated
+        /// </summary>
+        protected Uri myEndpoint;
+        
+        /// <summary>
+        /// This string is a SPARQL query that gets all DatatypeProperties, with their values, of the individual
+        /// </summary>
+        protected string query_GetDataOnThis
         {
-            Uri uri_query;
-            Uri.TryCreate(endpoint, "/qudt4dt/query?", out uri_query);
-
-            String query = BuildQuery_MoreDataOnThis();
-            String UrlRequest = uri_query + String.Format("query={0}&should-sponge=soft&debug=on&format=application/json&save=display&output=json", query);
-            HttpWebRequest request = WebRequest.Create(UrlRequest) as HttpWebRequest;
-            String s_Response;
-            using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+            get
             {
-                if (response.StatusCode != HttpStatusCode.OK)
-                    throw new Exception(String.Format("Server error (HTTP {0}: {1}).", response.StatusCode, response.StatusDescription));
-                using (Stream stream = response.GetResponseStream())
-                {
-                    StreamReader reader = new StreamReader(stream, Encoding.UTF8);
-                    s_Response = reader.ReadToEnd();
-                }
+                String template = @"PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+                                    SELECT ?predicate ?object 
+                                    WHERE {{ 
+                                        <{0}> ?predicate ?object . 
+                                        ?predicate a owl:DatatypeProperty
+                                    }}";
+                return String.Format(template, this.uri.ToString());
             }
-
-            return s_Response;
         }
 
-        protected String BuildQuery_MoreDataOnThis()
+        /// <summary>
+        /// The URI of the ontology class corresponding to this class
+        /// </summary>
+        public string classUri
         {
-            String template = @"PREFIX owl: <http://www.w3.org/2002/07/owl#> 
-SELECT ?predicate ?object 
-WHERE {{ 
-    <{0}> ?predicate ?object . 
-    ?predicate a owl:DatatypeProperty
-}}";
-            return String.Format(template, uri.ToString()).Replace("#", "%23");
+            get
+            {
+                Type t = this.GetType();
+                ClassUri cu = (ClassUri)Attribute.GetCustomAttribute(t, typeof(ClassUri));
+                return cu.uri;
+            }
         }
-
+        
+        /// <summary>
+        /// Given the results of "query_GetDataOnThis", set the individual's Fields
+        /// </summary>
+        /// <param name="query_result">JSON result of the "query_GetDataOnThis"</param>
         protected void SetProperties(String query_result)
         {
             JObject o = JObject.Parse(query_result);
