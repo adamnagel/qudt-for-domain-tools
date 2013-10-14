@@ -189,7 +189,7 @@ class OMCSession(object):
 
     # TODO: Open Modelica Compiler API functions. Would be nice to generate these.
     def loadFile(self, filename):
-        return self.ask('loadFile', filename)
+        return self.ask('loadFile', '"{0}"'.format(filename))
 
     def loadModel(self, className):
         return self.ask('loadModel', className)

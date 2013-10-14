@@ -1,0 +1,6 @@
+Requires pyparsing, OMPython, OMTypedParser installation.
+
+export_modelica_units.py -h
+
+Sample custom unit library to test
+export_modelica_units.py -l CustomUnitLibraryTest\package.mo -p CustomUnitLibraryTest

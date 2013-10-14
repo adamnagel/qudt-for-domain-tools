@@ -2,7 +2,8 @@ __author__ = 'Zsolt'
 
 from omc_session import OMCSession
 import json
-
+import argparse
+import os
 
 def getBaseClassModifiers(omc, modelica_class, info_modifiers):
     inheritance_cnt = omc.getInheritanceCount(modelica_class)
@@ -26,21 +27,42 @@ def getBaseClassModifiers(omc, modelica_class, info_modifiers):
 
 
 def main():
-    omc = OMCSession()
 
-    success = omc.loadModel('Modelica')
-    print success
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-l", "--library", help="External library to load.")
+    parser.add_argument("-p", "--package", help="Package name to parse like: Modelica.SIunits",
+                        default="Modelica.SIunits")
+    args = parser.parse_args()
+
+    omc = OMCSession()
+    
+    print "Loading Modelica library ..."
+    success = omc.loadModel('Modelica')    
+    if success:
+        print "[OK]"
+    else:
+        print "[FAILED]"
+        return
+        
+    if args.library:
+        print "Loading External library {0} ...".format(args.library)
+        cwd = os.getcwd()
+        dir_name = os.path.dirname(args.library)
+        os.chdir(dir_name)
+        success = success and omc.loadFile(args.library)
+        os.chdir(cwd)
+        if success:
+            print "[OK]"
+        else:
+            print "[FAILED]"
 
     if success:
-        modelica_classes = omc.getClassNames('Modelica.SIunits', recursive=True, qualified=True, sort=True)
+        print "Getting all class names for package: {0}".format(args.package)
+        modelica_classes = omc.getClassNames(args.package, recursive=True, qualified=True, sort=True)
         #print modelica_classes
 
         result = []
         for modelica_class in modelica_classes:
-            if modelica_class == 'Modelica.SIunits.IsothermalCompressibility':
-                print modelica_class + ' STOP HERE'
-                v = omc.typeNameStrings(modelica_class)
-                print v
             info = {}
             info['name'] = modelica_class
             class_restriction = omc.getClassRestriction(modelica_class)
@@ -58,9 +80,11 @@ def main():
             getBaseClassModifiers(omc, modelica_class, info['modifiers'])
 
             result.append(info)
-
-        with open('modelica_units.json', 'w') as f_p:
+        
+        output_filename = 'modelica_units.json'
+        with open(output_filename, 'w') as f_p:
             json.dump(result, f_p)
-
+        
+        print 'File was generated: {0}'.format(output_filename)
 if __name__ == '__main__':
     main()
