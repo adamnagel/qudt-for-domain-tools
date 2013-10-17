@@ -57,6 +57,30 @@ class DerivedUnit(object):
                          unit_exp = r.group(2),
                          comment = r.group(3))
 
+    def to_OWl_xml(self):
+        if self.base_unit == None:
+            result = '''<!-- http://openmdao.org/units/individuals#{unit_name} -->
+
+    <owl:NamedIndividual rdf:about="http://openmdao.org/units/individuals#{unit_name}">
+        <rdf:type rdf:resource="&units;DerivedUnit"/>
+        <units:UnitExpression>{unit_exp}</units:UnitExpression>
+        <units:UnitName>{unit_name}</units:UnitName>
+        <units:Comment>{comment}</units:Comment>
+    </owl:NamedIndividual>
+            '''
+            return result.format(unit_name = self.unit_name, unit_exp = self.unit_exp,
+                                 comment = self.comment)
+        else:
+            result = '''<owl:NamedIndividual rdf:about="http://openmdao.org/units/individuals#{unit_name}">
+        <rdf:type rdf:resource="&units;DerivedUnit"/>
+        <units:Comment>{comment}</units:Comment>
+        <units:Offset>{offset}</units:Offset>
+        <units:Factor>{factor}</units:Factor>
+        <units:BaseUnit rdf:resource="http://openmdao.org/units/individuals#{base_unit}"/>
+    </owl:NamedIndividual>
+            '''
+            return result.format(unit_name = self.unit_name, comment = self.comment, offset = self.offset, factor =  self.factor, base_unit = self.base_unit)
+            
     def set_obj(self, unit_name, comment, unit_exp = None, factor = None,
                 base_unit = None, offset = None):
         self.unit_name = unit_name
@@ -104,5 +128,5 @@ def read_unit_file(filename):
     for  t in base_unit_parser(result[base_start+1:unit_start]):
         print t.to_OWl_xml()
     for t in derived_unit_parser(result[unit_start+1:]):
-        print repr(t)
+        print t.to_OWl_xml()
 read_unit_file('unit.txt')
