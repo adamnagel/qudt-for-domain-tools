@@ -80,7 +80,8 @@ class DerivedUnit(_Unit):
         <units:BaseUnit rdf:resource="http://openmdao.org/units/individuals#{base_unit}"/>
     </owl:NamedIndividual>
             '''
-            return result.format(unit_name = self.unit_name, comment = self.comment, offset = self.offset, factor =  self.factor, base_unit = self.base_unit)
+            return result.format(unit_name = self.unit_name, comment = self.comment, offset = self.offset,
+                                 factor =  self.factor, base_unit = self.base_unit)
             
     def set_obj(self, unit_name, comment, unit_exp = None, factor = None,
                 base_unit = None, offset = None):
