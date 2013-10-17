@@ -35,8 +35,8 @@
     <!-- http://openmdao.org/units#BaseUnit -->
 
     <owl:ObjectProperty rdf:about="http://openmdao.org/units#BaseUnit">
-        <rdfs:range rdf:resource="http://openmdao.org/units#BaseUnit"/>
         <rdfs:domain rdf:resource="http://openmdao.org/units#DerivedUnit"/>
+        <rdfs:range rdf:resource="http://openmdao.org/units#OpenMdaoUnit"/>
     </owl:ObjectProperty>
     
 

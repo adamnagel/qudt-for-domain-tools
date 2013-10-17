@@ -1,5 +1,6 @@
 import re
-
+class _Unit(object):
+    pass
 class UnitPrefix(object):
     without_comment = re.compile(r'^(.+?): (.+)$')
     with_comment = re.compile(r'^(.+?): (.+?)[, ]*?(\(.+)')
@@ -16,7 +17,7 @@ class UnitPrefix(object):
         self.float_multiplier = float_multiplier
         self.comment = comment
         
-class BaseUnit(object):
+class BaseUnit(_Unit):
     regex = re.compile(r'(.+?): (.+)$')
     def __init__(self, line):
         r = BaseUnit.regex.match(line)
@@ -40,7 +41,7 @@ class BaseUnit(object):
         '''
         return result.format(unit_name = self.unit_name, quantity_name = self.quantity_name)
         
-class DerivedUnit(object):
+class DerivedUnit(_Unit):
     with_base_unit = re.compile(r'^(.+?): (.+?)\, (.+?)\, (.+?)\, (.+?)$')
     without_base = re.compile(r'^(.+?): (.+?)\, (.+?)$')
     def __init__(self, line):
@@ -90,31 +91,21 @@ class DerivedUnit(object):
         self.base_unit = base_unit
         self.offset = offset
         
-def prefix_parser(data):
-    for l in data:
-        if l == '\n': continue
-        yield UnitPrefix(l)
-
-def base_unit_parser(data):
-    for l in data:
-        if l == '\n': continue
-        yield BaseUnit(l)
-
-def derived_unit_parser(data):
-    for l in data:
-        if l == '\n': continue
-        yield DerivedUnit(l)
-        
 def read_unit_file(filename):
-    f = open(filename)
     result = []
-    for i in f:
-        if i[0] == '#':
-            continue
-        result.append(i)
+    with open(filename) as f:
+        for i in f:
+            if i[0] == '#':
+                continue
+            result.append(i)
+    return result
+
+
+    
+def find_units(content):
     point = 0
     #print result
-    for l in result:
+    for l in content:
         if l == '[prefixes]\n':
             prefix_start = point
         elif l == '[base_units]\n':
@@ -123,10 +114,53 @@ def read_unit_file(filename):
             unit_start = point
         point += 1
 
-    for t in prefix_parser(result[prefix_start+1:base_start]):
-        print repr(t)
-    for  t in base_unit_parser(result[base_start+1:unit_start]):
-        print t.to_OWl_xml()
-    for t in derived_unit_parser(result[unit_start+1:]):
-        print t.to_OWl_xml()
-read_unit_file('unit.txt')
+    result = []
+    
+    for  t in content[base_start+1:unit_start]:
+        if t == '\n': continue
+        result.append(BaseUnit(t))
+    for t in content[unit_start+1:]:
+        if t == '\n': continue
+        result.append(DerivedUnit(t))
+    return result
+    
+def xml_generator(filename):
+
+    xml_head = '''<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY units "http://openmdao.org/units#" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://openmdao.org/units/individuals#"
+     xml:base="http://openmdao.org/units/individuals"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:units="http://openmdao.org/units#">
+    <owl:Ontology rdf:about="http://openmdao.org/units/individuals">
+        <owl:imports rdf:resource="http://openmdao.org/units#"/>
+        <owl:versionIRI rdf:resource="http://openmdao.org/units/1.0.0/individuals"/>
+    </owl:Ontology>
+    
+'''
+    xml_tail = '</rdf:RDF>'
+    content = read_unit_file('unit.txt')
+    units = find_units(content)
+    result = xml_head
+    for b in units:
+        result += b.to_OWl_xml()
+        result +='\n'
+    result += xml_tail
+    with open('openMDAO-individuals.xml','w') as f:
+        f.write(result)
+
+
+xml_generator('unit.txt')
