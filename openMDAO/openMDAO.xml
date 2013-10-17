@@ -56,7 +56,7 @@
 
     <owl:DatatypeProperty rdf:about="http://openmdao.org/units#Comment">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://openmdao.org/units#OpenMdaoUnit"/>
+        <rdfs:domain rdf:resource="http://openmdao.org/units#DerivedUnit"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
     
@@ -66,7 +66,7 @@
 
     <owl:DatatypeProperty rdf:about="http://openmdao.org/units#Factor">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://openmdao.org/units#OpenMdaoUnit"/>
+        <rdfs:domain rdf:resource="http://openmdao.org/units#DerivedUnit"/>
         <rdfs:range rdf:resource="&xsd;int"/>
     </owl:DatatypeProperty>
     
@@ -76,8 +76,17 @@
 
     <owl:DatatypeProperty rdf:about="http://openmdao.org/units#Offset">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://openmdao.org/units#OpenMdaoUnit"/>
+        <rdfs:domain rdf:resource="http://openmdao.org/units#DerivedUnit"/>
         <rdfs:range rdf:resource="&xsd;int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://openmdao.org/units#QuantityName -->
+
+    <owl:DatatypeProperty rdf:about="http://openmdao.org/units#QuantityName">
+        <rdfs:domain rdf:resource="http://openmdao.org/units#BaseUnit"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
     
 
@@ -86,7 +95,7 @@
 
     <owl:DatatypeProperty rdf:about="http://openmdao.org/units#UnitExpression">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://openmdao.org/units#OpenMdaoUnit"/>
+        <rdfs:domain rdf:resource="http://openmdao.org/units#DerivedUnit"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
     
