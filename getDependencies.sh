@@ -11,6 +11,7 @@ curl 'http://qudt.org/1.1/vocab/dimensionalunit' > qudt-owl/dimensionalunit.xml
 curl 'http://qudt.org/1.1/vocab/dimension' > qudt-owl/dimension.xml
 curl 'http://qudt.org/1.1/vocab/quantity' > qudt-owl/quantity.xml
 curl 'http://qudt.org/1.1/vocab/unit' > qudt-owl/unit.xml
+echo "===== Downloading OpenMDAO Unit INI file"
 curl 'https://github.com/OpenMDAO/OpenMDAO-Framework/raw/master/openmdao.units/openmdao/units/unitLibdefault.ini' > openMDAO/unitLibdefault.ini
 
 echo "===== Downloading Jena Fuseki server ====="
