@@ -4,6 +4,8 @@ import sys
 import os
 sys.path.append(os.path.abspath('modelica'))
 import MSL2OWL
+sys.path.append(os.path.abspath('openMDAO'))
+import export_openMDAO_units
 from subprocess import Popen
 import shlex
 import urllib
@@ -15,6 +17,13 @@ import fusekiutils
 import qudt4dt
 
 p_ScriptPathRoot = os.path.dirname(__file__)
+### Generate OpenMDAO Unit Ontology
+print "Generating OpenMDAO Unit ontology"
+openMDAOUnit_path = os.path.join(p_ScriptPathRoot,'openMDAO/unitLibdefault.ini')
+openMDAOOntology_path = os.path.join(p_ScriptPathRoot,'openMDAO/openMDAO-individuals.xml')
+export_openMDAO_units.xml_generator(openMDAOUnit_path,openMDAOOntology_path)
+print 'complete'
+
 
 ### Generate Modelica Unit Ontology
 p_SIUnits = os.path.join(p_ScriptPathRoot,'modelica/modelica_units.json')

@@ -125,7 +125,7 @@ def find_units(content):
         result.append(DerivedUnit(t))
     return result
     
-def xml_generator(filename):
+def xml_generator(source,obj):
 
     xml_head = '''<?xml version="1.0"?>
 
@@ -153,15 +153,15 @@ def xml_generator(filename):
     
 '''
     xml_tail = '</rdf:RDF>'
-    content = read_unit_file('unit.txt')
+    content = read_unit_file(source)
     units = find_units(content)
     result = xml_head
     for b in units:
         result += b.to_OWl_xml()
         result +='\n'
     result += xml_tail
-    with open('openMDAO-individuals.xml','w') as f:
+    with open(obj,'w') as f:
         f.write(result)
 
-
-xml_generator('unit.txt')
+if __name__ == '__main__':
+    xml_generator('unit.txt','openMDAO-individuals.xml')
