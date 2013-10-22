@@ -83,6 +83,7 @@ def CreateOWLFilesFromCSV(sourceFilePath ,objFilePath):
 try:
     print "Creating ontologies from CSV file..."
     CreateOWLFilesFromCSV('modelica/mapping-to-qudt.csv','modelica/modelica-qudt.xml')
+    CreateOWLFilesFromCSV('openMDAO/mapping-to-qudt.csv','openMDAO/openMDAO-qudt.xml')
     print "Loading ontologies into Fuseki..."
     LoadDirectoryOfOWLFiles('qudt-owl')
     LoadDirectoryOfOWLFiles('modelica')

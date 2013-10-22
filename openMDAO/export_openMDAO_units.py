@@ -107,11 +107,11 @@ def find_units(content):
     point = 0
     #print result
     for l in content:
-        if l == '[prefixes]\n':
+        if re.search(r'\[prefixes\]',l):
             prefix_start = point
-        elif l == '[base_units]\n':
+        elif re.search(r'\[base_units\]',l):
             base_start = point
-        elif l == '[units]\n':
+        elif re.search(r'\[units\]',l):
             unit_start = point
         point += 1
 
