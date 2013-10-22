@@ -70,10 +70,11 @@ def CreateOWLFilesFromCSV(sourceFilePath ,objFilePath):
     o_file = re.search('[^/]+?\.xml',objFilePath).group()
     print 'coverting %s to %s' %(s_file, o_file)
     qudt4dt.unit_mapping.createMapping(sourceFilePath, objFilePath)
-            
+
 try:
     print "Creating ontologies from CSV file..."
-    CreateOWLFilesFromCSV('modelica/mapping-to-qudt.csv','modelica/modelica-qudt.xml')
+    CreateOWLFilesFromCSV('modelica/mapping-to-qudt-manual.csv','modelica/modelica-qudt-manual.xml')
+    CreateOWLFilesFromCSV('modelica/mapping-to-qudt-auto.csv','modelica/modelica-qudt-auto.xml')
     print "Loading ontologies into Fuseki..."
     LoadDirectoryOfOWLFiles('qudt-owl')
     LoadDirectoryOfOWLFiles('modelica')

@@ -15,6 +15,9 @@ class Barbara:
         self.__url_query = server_url + '/qudt4dt/query?'
         self.__url_update = server_url + '/qudt4dt/update?'
 
+    def perform_query(self,query):
+        return sparql.query(query,self.__url_query)
+
     def __get_num_triples_in_database(self):
         query = """
         SELECT (COUNT(*) AS ?no) { ?s ?p ?o  }
