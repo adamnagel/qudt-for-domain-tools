@@ -20,6 +20,7 @@ class UnitPrefix(object):
 class BaseUnit(_Unit):
     regex = re.compile(r'(.+?): (.+)$')
     def __init__(self, line):
+        line = line.strip()
         r = BaseUnit.regex.match(line)
         self.set_obj(r.group(1), r.group(2))
         
@@ -45,6 +46,7 @@ class DerivedUnit(_Unit):
     with_base_unit = re.compile(r'^(.+?): (.+?)\, (.+?)\, (.+?)\, (.+?)$')
     without_base = re.compile(r'^(.+?): (.+?)\, (.+?)$')
     def __init__(self, line):
+        line = line.strip()
         if len(re.findall(r'\,', line)) == 3:
             r = DerivedUnit.with_base_unit.match(line)
             self.set_obj(unit_name = r.group(1),
@@ -97,6 +99,8 @@ def read_unit_file(filename):
     with open(filename) as f:
         for i in f:
             if i[0] == '#':
+                continue
+            if i.strip() == '':
                 continue
             result.append(i)
     return result
