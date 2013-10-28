@@ -88,6 +88,7 @@ try:
     LoadDirectoryOfOWLFiles('qudt-owl')
     LoadDirectoryOfOWLFiles('modelica')
     LoadDirectoryOfOWLFiles('ontologies')
+    LoadDirectoryOfOWLFiles('openMDAO')
     print "done"
 
 finally:
