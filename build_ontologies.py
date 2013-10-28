@@ -41,13 +41,15 @@ print "complete"
 print ""
 
 ### start jena-fuseki and seed database ###
-print "Cleaning fuseki database"
 fuseki_data_path = os.getcwd() + '/fuseki-data'
-shutil.rmtree(fuseki_data_path)
-os.makedirs(fuseki_data_path)
-print "done"
+if os.path.exists(fuseki_data_path):
+    print "Cleaning fuseki database"
+    shutil.rmtree(fuseki_data_path)
+    print "done"
+    print ""
 
-print ""
+### Create fresh database folder
+os.makedirs(fuseki_data_path)
 
 fuseki_url = "http://localhost:3030"
 fuseki_upload_url = fuseki_url + '/qudt4dt/upload'
