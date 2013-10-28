@@ -13,7 +13,7 @@ curl 'http://qudt.org/1.1/vocab/quantity' > qudt-owl/quantity.xml
 curl 'http://qudt.org/1.1/vocab/unit' > qudt-owl/unit.xml
 echo "===== Downloading OpenMDAO Unit INI file"
 curl 'https://raw.github.com/OpenMDAO/OpenMDAO-Framework/master/openmdao.units/openmdao/units/unitLibdefault.ini' > openMDAO/unitLibdefault.ini
-sed -i 's/\r//' openMDAO/unitLibdefault.ini
+sed -i.bak 's/\r//' openMDAO/unitLibdefault.ini
 echo "===== Downloading Jena Fuseki server =====" 
 curl 'http://archive.apache.org/dist/jena/binaries/jena-fuseki-0.2.7-distribution.tar.gz' > jena-fuseki.tar.gz
 tar -xvf jena-fuseki.tar.gz
