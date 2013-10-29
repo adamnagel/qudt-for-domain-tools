@@ -17,6 +17,7 @@ sed -i.bak 's/\r//' openMDAO/unitLibdefault.ini
 
 echo "===== Downloading Jena Fuseki server ====="
 curl 'http://www.apache.org/dist/jena/binaries/jena-fuseki-1.0.0-distribution.tar.gz' > jena-fuseki.tar.gz
+rm -rf jena-fuseki
 tar -xvf jena-fuseki.tar.gz
 rm jena-fuseki.tar.gz
 mv jena-fuseki-1.0.0 jena-fuseki
