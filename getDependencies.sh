@@ -13,6 +13,7 @@ curl 'http://qudt.org/1.1/vocab/quantity' > qudt-owl/quantity.xml
 curl 'http://qudt.org/1.1/vocab/unit' > qudt-owl/unit.xml
 
 echo "===== Downloading Jena Fuseki server ====="
-curl 'http://www.apache.org/dist/jena/binaries/jena-fuseki-0.2.7-distribution.tar.gz' > jena-fuseki.tar.gz
+curl 'http://www.apache.org/dist/jena/binaries/jena-fuseki-1.0.0-distribution.tar.gz' > jena-fuseki.tar.gz
 tar -xvf jena-fuseki.tar.gz
 rm jena-fuseki.tar.gz
+mv jena-fuseki-1.0.0 jena-fuseki
