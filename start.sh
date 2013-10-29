@@ -1,3 +1,3 @@
 
-pushd jena-fuseki-0.2.7
+pushd jena-fuseki
 ./fuseki-server -q --loc=../fuseki-data /qudt4dt
