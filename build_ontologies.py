@@ -4,6 +4,8 @@ import sys
 import os
 sys.path.append(os.path.abspath('modelica'))
 import MSL2OWL
+sys.path.append(os.path.abspath('openMDAO'))
+import export_openMDAO_units
 from subprocess import Popen
 import shlex
 import urllib
@@ -15,6 +17,13 @@ import fusekiutils
 import qudt4dt
 
 p_ScriptPathRoot = os.path.dirname(__file__)
+### Generate OpenMDAO Unit Ontology
+print "Generating OpenMDAO Unit ontology"
+openMDAOUnit_path = os.path.join(p_ScriptPathRoot,'openMDAO/unitLibdefault.ini')
+openMDAOOntology_path = os.path.join(p_ScriptPathRoot,'openMDAO/openMDAO-individuals.xml')
+export_openMDAO_units.xml_generator(openMDAOUnit_path,openMDAOOntology_path)
+print 'complete'
+
 
 ### Generate Modelica Unit Ontology
 p_SIUnits = os.path.join(p_ScriptPathRoot,'modelica/modelica_units.json')
@@ -32,13 +41,15 @@ print "complete"
 print ""
 
 ### start jena-fuseki and seed database ###
-print "Cleaning fuseki database"
 fuseki_data_path = os.getcwd() + '/fuseki-data'
-shutil.rmtree(fuseki_data_path)
-os.makedirs(fuseki_data_path)
-print "done"
+if os.path.exists(fuseki_data_path):
+    print "Cleaning fuseki database"
+    shutil.rmtree(fuseki_data_path)
+    print "done"
+    print ""
 
-print ""
+### Create fresh database folder
+os.makedirs(fuseki_data_path)
 
 fuseki_url = "http://localhost:3030"
 fuseki_upload_url = fuseki_url + '/qudt4dt/upload'
@@ -74,10 +85,12 @@ def CreateOWLFilesFromCSV(sourceFilePath ,objFilePath):
 try:
     print "Creating ontologies from CSV file..."
     CreateOWLFilesFromCSV('modelica/mapping-to-qudt.csv','modelica/modelica-qudt.xml')
+    CreateOWLFilesFromCSV('openMDAO/mapping-to-qudt.csv','openMDAO/openMDAO-qudt.xml')
     print "Loading ontologies into Fuseki..."
     LoadDirectoryOfOWLFiles('qudt-owl')
     LoadDirectoryOfOWLFiles('modelica')
     LoadDirectoryOfOWLFiles('ontologies')
+    LoadDirectoryOfOWLFiles('openMDAO')
     print "done"
 
 finally:

@@ -1,5 +1,4 @@
 echo "===== Downloading QUDT OWL files ====="
-
 mkdir -p qudt-owl
 curl 'http://www.linkedmodel.org/1.0/schema/dtype' > qudt-owl/dtype.xml
 curl 'http://qudt.org/1.1/schema/dimension' > qudt-owl/dimension.xml
@@ -11,6 +10,10 @@ curl 'http://qudt.org/1.1/vocab/dimensionalunit' > qudt-owl/dimensionalunit.xml
 curl 'http://qudt.org/1.1/vocab/dimension' > qudt-owl/dimension.xml
 curl 'http://qudt.org/1.1/vocab/quantity' > qudt-owl/quantity.xml
 curl 'http://qudt.org/1.1/vocab/unit' > qudt-owl/unit.xml
+
+echo "===== Downloading OpenMDAO Unit INI file"
+curl 'https://raw.github.com/OpenMDAO/OpenMDAO-Framework/master/openmdao.units/openmdao/units/unitLibdefault.ini' > openMDAO/unitLibdefault.ini
+sed -i.bak 's/\r//' openMDAO/unitLibdefault.ini
 
 echo "===== Downloading Jena Fuseki server ====="
 curl 'http://www.apache.org/dist/jena/binaries/jena-fuseki-1.0.0-distribution.tar.gz' > jena-fuseki.tar.gz
