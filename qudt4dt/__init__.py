@@ -89,7 +89,7 @@ class Barbara:
         return decorate
   
     @_jsonGetUri('class')
-    def get_unit_class(self,UnitURI):
+    def get_unit_class(self,UnitURL):
         query = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
                    PREFIX owl: <http://www.w3.org/2002/07/owl#>
                    SELECT
@@ -99,12 +99,12 @@ class Barbara:
                      <%s> rdf:type ?class. 
                      FILTER NOT EXISTS{?class rdf:type owl:DeprecatedClass}
                    }"""
-        query = query %UnitURI
+        query = query %UnitURL
         result = sparql.query(query,self.__url_query)
         return result
       
     @_jsonGetUri('unit')
-    def get_units_in_class(self,ClassURI):
+    def get_units_in_class(self,ClassURL):
         query = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
                    SELECT
                    ?unit 
@@ -112,18 +112,30 @@ class Barbara:
                    {
                      ?unit rdf:type <%s> 
                    }"""
-        query = query % ClassURI
+        query = query % ClassURL
         result = sparql.query(query, self.__url_query)
         return result
   
-    def get_units_in_same_class(self,UnitURI):
+    def get_units_in_same_class(self,UnitURL):
         result = []
-        for i in self.get_unit_class(UnitURI):
+        for i in self.get_unit_class(UnitURL):
             result = result + self.get_units_in_class(i)
         return result
-
-    def convert_value(self,source_unit_uri,destination_unit_uri,source_value):
-        if not self.get_unit_class(source_unit_uri) == self.get_unit_class(destination_unit_uri):
+        
+    @_jsonGetUri('symbol')
+    def get_units_symbol(self, UnitURL):
+        query = '''
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        SELECT ?symbol
+        WHERE
+        {{ 
+        <{unitURL}> <http://qudt.org/schema/qudt#symbol> ?symbol
+        }}
+        '''
+        return sparql.query(query.format(unitURL = UnitURL),self.__url_query)
+        
+    def convert_value(self,source_unit_url,destination_unit_url,source_value):
+        if not self.get_unit_class(source_unit_url) == self.get_unit_class(destination_unit_url):
             raise ValueError
             
         query = '''
@@ -141,8 +153,8 @@ class Barbara:
                           float(x["results"]["bindings"][0]["sou_mult"]["value"]),
                           float(x["results"]["bindings"][0]["des_offset"]["value"]),
                           float(x["results"]["bindings"][0]["des_mult"]["value"]))
-        result = sparql.query(query.format(source = source_unit_uri,
-                                          destin = destination_unit_uri),self.__url_query)
+        result = sparql.query(query.format(source = source_unit_url,
+                                           destin = destination_unit_url),self.__url_query)
     
         if result["results"]["bindings"] == []: raise ValueError
         
