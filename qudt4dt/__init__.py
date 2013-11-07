@@ -3,6 +3,7 @@ __author__ = 'adam'
 import json
 import os
 import sparqlcommands as sparql
+import re
 from unit_mapping import createMapping
 
 class Barbara:
@@ -121,18 +122,40 @@ class Barbara:
         for i in self.get_unit_class(UnitURL):
             result = result + self.get_units_in_class(i)
         return result
-        
+
     @_jsonGetUri('symbol')
-    def get_units_symbol(self, UnitURL):
+    def __get_sym(self, UnitURL):
         query = '''
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX qudt: <http://qudt.org/schema/qudt#>
         SELECT ?symbol
         WHERE
         {{ 
-        <{unitURL}> <http://qudt.org/schema/qudt#symbol> ?symbol
+        <{unitURL}> qudt:quantityKind ?kind.
+        ?symbol qudt:referenceQuantity ?kind
         }}
         '''
         return sparql.query(query.format(unitURL = UnitURL),self.__url_query)
+        
+    def get_SI_symbol(self, UnitURL):
+        r = self.__get_sym(UnitURL)
+        for i in r:
+            if re.search(r'http://qudt.org/vocab/dimension#Dimension_SI_.+',i):
+                return i
+
+    @_jsonGetUri('vec')
+    def get_SI_vector(self, si_sym):
+        query = '''
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX qudt:<http://qudt.org/schema/qudt#>
+        SELECT ?vec
+        WHERE
+        {{ 
+        
+        <{si_sym}> qudt:dimensionVector ?vec
+        }}
+        '''
+        return sparql.query(query.format(si_sym = si_sym),self.__url_query)
         
     def convert_value(self,source_unit_url,destination_unit_url,source_value):
         if not self.get_unit_class(source_unit_url) == self.get_unit_class(destination_unit_url):
