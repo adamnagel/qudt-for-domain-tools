@@ -57,6 +57,7 @@
     <owl:DatatypeProperty rdf:about="http://openmdao.org/units#Comment">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
         <rdfs:domain rdf:resource="http://openmdao.org/units#DerivedUnit"/>
+        <rdfs:domain rdf:resource="http://openmdao.org/units#DynamicUnitDefinition"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
     
@@ -96,6 +97,7 @@
     <owl:DatatypeProperty rdf:about="http://openmdao.org/units#UnitExpression">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
         <rdfs:domain rdf:resource="http://openmdao.org/units#DerivedUnit"/>
+        <rdfs:domain rdf:resource="http://openmdao.org/units#DynamicUnitDefinition"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
     
@@ -133,6 +135,14 @@
     <!-- http://openmdao.org/units#DerivedUnit -->
 
     <owl:Class rdf:about="http://openmdao.org/units#DerivedUnit">
+        <rdfs:subClassOf rdf:resource="http://openmdao.org/units#OpenMdaoUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://openmdao.org/units#DynamicUnitDefinition -->
+
+    <owl:Class rdf:about="http://openmdao.org/units#DynamicUnitDefinition">
         <rdfs:subClassOf rdf:resource="http://openmdao.org/units#OpenMdaoUnit"/>
     </owl:Class>
     

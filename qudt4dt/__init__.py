@@ -152,7 +152,8 @@ class Barbara:
         WHERE
         {{ 
         
-        <{si_sym}> qudt:dimensionVector ?vec
+        <{si_sym}> qudt:dimensionVector ?vecs.
+        ?vecs qudt:basisElement ?vec.
         }}
         '''
         return sparql.query(query.format(si_sym = si_sym),self.__url_query)
