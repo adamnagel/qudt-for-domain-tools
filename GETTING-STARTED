@@ -22,6 +22,8 @@ To do #2 above:
 	- TopBraid Composer (free)
 
 RUNNING STUFF
+Run `getDependencies.py` to download the database server, raw data, and more.
+
 - For #1:
 	- run `build_ontologies.py` to load the raw data into the database. You only gotta do this once.
 	- use the qudt4dt or C# libraries to do conversions, queries, etc.
