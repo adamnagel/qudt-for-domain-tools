@@ -1,7 +1,5 @@
 __author__ = 'adam'
 
-import json
-import os
 import sparqlcommands as sparql
 from unit_mapping import createMapping
 
