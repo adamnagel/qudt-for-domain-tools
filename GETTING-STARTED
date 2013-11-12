@@ -11,7 +11,6 @@ DEPENDENCIES
 To do #1 above:
 - A Linux/Unix shell (Cygwin, Mac Terminal, etc) with the following installed:
 	- Python 2.7.x
-	- Requests for Python (http://www.python-requests.org/en/latest/user/install/#install)
 	- Java 6 or above (https://java.com/en/download/index.jsp)
 
 To do #2 above:
@@ -20,6 +19,9 @@ To do #2 above:
 - An ontology editor like:
 	- Protege 4.x (for visualizing ontology databases)
 	- TopBraid Composer (free)
+
+NOTE: If you have a 2.x version of Requests for Python installed, then `build_ontologies.py` won't work. 
+      Yeah, it's a bummer. Yeah, this should be fixed.
 
 RUNNING STUFF
 Run `getDependencies.py` to download the database server, raw data, and more.
