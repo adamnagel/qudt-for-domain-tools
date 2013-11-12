@@ -18,10 +18,11 @@ def LaunchFuseki():
     f_log = open("fuseki.log", "w")
 
     args = '%(exec)s -q --update --loc=%(data)s /qudt4dt' % {'exec': fuseki_executable, 'data': fuseki_data}
+    #try:
+    fuseki = Popen(args=shlex.split(args), cwd=fuseki_dir, stdout=f_log)
+    #except Exception:
+    #    print Exception.message()
 
-    fuseki = Popen(args=args,
-                   cwd=fuseki_dir,
-                   stdout=f_log)
     f_log.close()
 
     PollFusekiLaunch("http://localhost:3030")
