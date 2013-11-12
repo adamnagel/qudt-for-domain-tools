@@ -9,7 +9,7 @@ import urllib
 def LaunchFuseki():
     fuseki_url = "http://localhost:3030"
 
-    fuseki_dir = os.getcwd() + "/jena-fuseki-0.2.7"
+    fuseki_dir = os.getcwd() + "/jena-fuseki"
     fuseki_executable = fuseki_dir + "/fuseki-server"
     f_log = open("fuseki.log","w")
     fuseki = Popen( args=shlex.split("-q --update --loc=../fuseki-data /qudt4dt"),
