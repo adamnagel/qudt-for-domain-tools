@@ -9,22 +9,22 @@ import sys
 
 def LaunchFuseki():
     fuseki_dir = os.path.join(os.path.abspath(os.getcwd()), 'jena-fuseki')
-
-    if sys.platform == 'win32':
-        fuseki_executable = os.path.join(fuseki_dir, 'fuseki-server.bat')
-    else:
-        fuseki_executable = os.path.join(fuseki_dir, 'fuseki-server')
     fuseki_data = os.path.join('..', 'fuseki-data')
     f_log = open("fuseki.log", "w")
 
-    args = '%(exec)s -q --update --loc=%(data)s /qudt4dt' % {'exec': fuseki_executable, 'data': fuseki_data}
-    #try:
-    fuseki = Popen(args=shlex.split(args), cwd=fuseki_dir, stdout=f_log)
-    #except Exception:
-    #    print Exception.message()
+    if sys.platform == 'win32':
+        fuseki_executable = os.path.join(fuseki_dir, 'fuseki-server.bat')
+        args = '%(exec)s -q --update --loc=%(data)s /qudt4dt' % {'exec': fuseki_executable, 'data': fuseki_data}
+        fuseki = Popen(args=args,
+                       cwd=fuseki_dir,
+                       stdout=f_log)
+    else:
+        fuseki_executable = os.path.join(fuseki_dir, 'fuseki-server')
+        args = '%(exec)s -q --update --loc=%(data)s /qudt4dt' % {'exec': fuseki_executable, 'data': fuseki_data}
+        fuseki = Popen(args=shlex.split(args), cwd=fuseki_dir, stdout=f_log)
+
 
     f_log.close()
-
     PollFusekiLaunch("http://localhost:3030")
 
     return fuseki
