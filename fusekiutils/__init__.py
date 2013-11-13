@@ -8,6 +8,10 @@ import urllib
 import sys
 
 def LaunchFuseki():
+    if IsFusekiRunning('http://localhost:3030'):
+        print "Jena-Fuseki is already running"
+        return
+
     fuseki_dir = os.path.join(os.path.abspath(os.getcwd()), 'jena-fuseki')
     fuseki_data = os.path.join('..', 'fuseki-data')
     f_log = open("fuseki.log", "w")
@@ -27,6 +31,7 @@ def LaunchFuseki():
     f_log.close()
     PollFusekiLaunch("http://localhost:3030")
 
+    print "Jena-Fuseki now running (pid %(pid)s)" % {'pid': fuseki.pid}
     return fuseki
 
 def PollFusekiLaunch(fuseki_url):
