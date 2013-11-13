@@ -6,8 +6,8 @@
     <uri id="User Entered Import Resolution" name="http://qudt4dt.org/ontology" uri="file:/Users/adam/git/qudt-for-domain-tools/ontologies/qudt4dt-ontology.xml"/>
     <uri id="Imports Wizard Entry" name="http://modelica.org/msl/SIUnits/vocabulary#" uri="modelica.xml"/>
     <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
-        <uri id="Automatically generated entry, Timestamp=1384315097336" name="http://www.qudt4dt.org/ontology/modelica-qudt" uri="modelica-qudt.xml"/>
-        <uri id="Automatically generated entry, Timestamp=1384315097336" name="duplicate:http://www.w3.org/2002/07/owl" uri="modelica-individuals.xml"/>
-        <uri id="Automatically generated entry, Timestamp=1384315097336" name="duplicate:http://www.w3.org/2002/07/owl" uri="modelica.xml"/>
+        <uri id="Automatically generated entry, Timestamp=1384316290188" name="http://www.qudt4dt.org/ontology/modelica-qudt" uri="modelica-qudt.xml"/>
+        <uri id="Automatically generated entry, Timestamp=1384316290188" name="duplicate:http://www.w3.org/2002/07/owl" uri="modelica-individuals.xml"/>
+        <uri id="Automatically generated entry, Timestamp=1384316290188" name="duplicate:http://www.w3.org/2002/07/owl" uri="modelica.xml"/>
     </group>
 </catalog>

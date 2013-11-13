@@ -2,6 +2,8 @@
 import re
 import json
 
+prefix_individuals = "http://modelica.org/msl/SIUnits/individuals#"
+
 def ExtractUnitsFromJson(jsonSIUnitsFile):
     ''' Read contents of SIunits json file '''
     f = open(jsonSIUnitsFile,'r')
@@ -32,10 +34,18 @@ def ExtractUnitsFromJson(jsonSIUnitsFile):
      
 
 def GenerateOWLNode(s_Name, d_Unit):
-    xml_OWLNode = '\n  <NamedIndividual rdf:about="http://modelica.org/msl/SIUnits/individuals#' + s_Name + '">\n'
+    uri_unit = prefix_individuals + s_Name
+    xml_OWLNode = '\n  <NamedIndividual rdf:about="%(unit)s">\n' % {'unit': uri_unit}
     xml_OWLNode += '    <rdf:type rdf:resource="&modelica;ModelicaUnitClass"/>\n'
     for key,value in d_Unit.iteritems():
-        xml_OWLNode += '    <modelica:' + key + ' rdf:datatype="&xsd;string">' + value + "</modelica:" + key + ">\n"
+        xml_OWLNode += '    <modelica:%(key)s rdf:datatype="&xsd;string">%(value)s</modelica:%(key)s>\n' % \
+                       {'key': key, 'value': value}
+
+        ### If Quantity != s_Name, then we will establish a "subtypeOf" relationship to it.
+        if (key is "Quantity") and (value != s_Name):
+            uri_basetype = prefix_individuals + value
+            xml_OWLNode += '    <modelica:subtypeOf rdf:resource="%(basetype)s"/>\n' % {'basetype': uri_basetype}
+
     xml_OWLNode += '  </NamedIndividual>\n'
     
     return xml_OWLNode
