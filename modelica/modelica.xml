@@ -24,6 +24,27 @@
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://modelica.org/msl/SIUnits/vocabulary#subtypeOf -->
+
+    <ObjectProperty rdf:about="http://modelica.org/msl/SIUnits/vocabulary#subtypeOf">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdfs:range rdf:resource="http://modelica.org/msl/SIUnits/vocabulary#ModelicaClass"/>
+        <rdfs:domain rdf:resource="http://modelica.org/msl/SIUnits/vocabulary#ModelicaClass"/>
+    </ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
     // Data properties
     //
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -32,7 +53,7 @@
     
 
 
-    <!-- http://modelica.org/msl/SIUnits#ClassPath -->
+    <!-- http://modelica.org/msl/SIUnits/vocabulary#ClassPath -->
 
     <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits/vocabulary#ClassPath">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
@@ -42,7 +63,7 @@
     
 
 
-    <!-- http://modelica.org/msl/SIUnits#DataType -->
+    <!-- http://modelica.org/msl/SIUnits/vocabulary#DataType -->
 
     <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits/vocabulary#DataType">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
@@ -52,7 +73,7 @@
     
 
 
-    <!-- http://modelica.org/msl/SIUnits#DisplayUnit -->
+    <!-- http://modelica.org/msl/SIUnits/vocabulary#DisplayUnit -->
 
     <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits/vocabulary#DisplayUnit">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
@@ -62,7 +83,7 @@
     
 
 
-    <!-- http://modelica.org/msl/SIUnits#Min -->
+    <!-- http://modelica.org/msl/SIUnits/vocabulary#Min -->
 
     <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits/vocabulary#Min">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
@@ -72,7 +93,7 @@
     
 
 
-    <!-- http://modelica.org/msl/SIUnits#Quantity -->
+    <!-- http://modelica.org/msl/SIUnits/vocabulary#Quantity -->
 
     <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits/vocabulary#Quantity">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
@@ -82,7 +103,7 @@
     
 
 
-    <!-- http://modelica.org/msl/SIUnits#Start -->
+    <!-- http://modelica.org/msl/SIUnits/vocabulary#Start -->
 
     <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits/vocabulary#Start">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
@@ -92,7 +113,7 @@
     
 
 
-    <!-- http://modelica.org/msl/SIUnits#Unit -->
+    <!-- http://modelica.org/msl/SIUnits/vocabulary#Unit -->
 
     <DatatypeProperty rdf:about="http://modelica.org/msl/SIUnits/vocabulary#Unit">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
@@ -113,7 +134,7 @@
     
 
 
-    <!-- http://modelica.org/msl/SIUnits#ModelicaClass -->
+    <!-- http://modelica.org/msl/SIUnits/vocabulary#ModelicaClass -->
 
     <Class rdf:about="http://modelica.org/msl/SIUnits/vocabulary#ModelicaClass">
         <rdfs:label xml:lang="en">ModelicaClass</rdfs:label>
@@ -128,7 +149,7 @@
     
 
 
-    <!-- http://modelica.org/msl/SIUnits#ModelicaUnitClass -->
+    <!-- http://modelica.org/msl/SIUnits/vocabulary#ModelicaUnitClass -->
 
     <Class rdf:about="http://modelica.org/msl/SIUnits/vocabulary#ModelicaUnitClass">
         <rdfs:subClassOf rdf:resource="http://modelica.org/msl/SIUnits/vocabulary#ModelicaClass"/>
