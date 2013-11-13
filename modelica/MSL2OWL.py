@@ -7,9 +7,9 @@ def ExtractUnitsFromJson(jsonSIUnitsFile):
     f = open(jsonSIUnitsFile,'r')
     jsonSIUnits = json.load(f)
     
-    mapping = {'quantity':'UnitQuantity', 'unit':'UnitUnit',
-               'displayUnit':'UnitDisplayUnit', 'min':'UnitMin', 
-               'start':'UnitStart'}
+    mapping = {'quantity':'Quantity', 'unit':'Unit',
+               'displayUnit':'DisplayUnit', 'min':'Min', 
+               'start':'Start', 'max':'Max'}
     for unit in jsonSIUnits:
        # print unit
         if not unit['class'] == 'type': continue
