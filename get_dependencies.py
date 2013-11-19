@@ -6,7 +6,8 @@ import zipfile
 import tarfile
 
 ## Delete and create 'qudt-owl' fresh
-shutil.rmtree('qudt-owl')
+if os.path.exists('qudt-owl'):
+	shutil.rmtree('qudt-owl')
 os.makedirs('qudt-owl')
 
 l_owlfiles = ['http://www.linkedmodel.org/1.0/schema/dtype',
