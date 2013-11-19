@@ -9,9 +9,8 @@ Most people will only need #1.
 
 DEPENDENCIES
 To do #1 above:
-- A Linux/Unix shell (Cygwin, Mac Terminal, etc) with the following installed:
-	- Python 2.7.x
-	- Java 6 or above (https://java.com/en/download/index.jsp)
+- Python 2.7.x
+- Java 6 or above (https://java.com/en/download/index.jsp)
 
 To do #2 above:
 - See #1, plus
@@ -24,7 +23,7 @@ NOTE: If you have a 2.x version of Requests for Python installed, then `build_on
       Yeah, it's a bummer. Yeah, this should be fixed.
 
 RUNNING STUFF
-Run `getDependencies.py` to download the database server, raw data, and more.
+Run `get_dependencies.py` to download the database server, raw data, and more.
 
 - For #1:
 	- run `build_ontologies.py` to load the raw data into the database. You only gotta do this once.
