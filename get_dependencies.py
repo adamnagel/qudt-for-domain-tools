@@ -63,7 +63,8 @@ print ""
 
 print "===== Downloading Jena Fuseki server ====="
 path_jena_fuseki = 'jena-fuseki'
-shutil.rmtree(path_jena_fuseki)
+if os.path.exists(path_jena_fuseki):
+	shutil.rmtree(path_jena_fuseki)
 
 print "downloading..."
 path_fuseki_tar_gz = 'jena-fuseki.tar.gz'
