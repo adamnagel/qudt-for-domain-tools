@@ -8,7 +8,7 @@ import tarfile
 
 ## Delete and create 'qudt-owl' fresh
 if os.path.exists('qudt-owl'):
-	shutil.rmtree('qudt-owl')
+    shutil.rmtree('qudt-owl')
 os.makedirs('qudt-owl')
 
 l_owlfiles = ['http://www.linkedmodel.org/1.0/schema/dtype',
@@ -30,6 +30,14 @@ for url in l_owlfiles:
     urllib.urlretrieve(url, localfilepath)
 print ""
 
+print "===== Downloading Modelica SIunits.mo ====="
+path_moSIUnits = 'modelica/SIunits.mo'
+print "downloading..."
+urllib.urlretrieve(
+    'https://raw.github.com/modelica/ModelicaStandardLibrary/release/Modelica%203.2.1/SIunits.mo',
+    path_moSIUnits)
+print ""
+
 print "===== Downloading OpenMDAO Unit INI file ====="
 path_mdaoINI = 'openMDAO/unitLibdefault.ini'
 print "downloading..."
@@ -47,7 +55,6 @@ file_mdaoINI.writelines(content_mdaoINI)
 file_mdaoINI.close()
 print ""
 
-
 print "===== Downloading Requests v1.2.3 ====="
 if os.path.exists('requests'):
     shutil.rmtree('requests')
@@ -61,11 +68,10 @@ with zipfile.ZipFile('requests-1.2.3.zip', 'r') as zip_requests:
 os.remove('requests-1.2.3.zip')
 print ""
 
-
 print "===== Downloading Jena Fuseki server ====="
 path_jena_fuseki = 'jena-fuseki'
 if os.path.exists(path_jena_fuseki):
-	shutil.rmtree(path_jena_fuseki)
+    shutil.rmtree(path_jena_fuseki)
 
 print "downloading..."
 path_fuseki_tar_gz = 'jena-fuseki.tar.gz'
@@ -74,5 +80,5 @@ urllib.urlretrieve('http://www.apache.org/dist/jena/binaries/jena-fuseki-1.0.0-d
 print "extracting..."
 with tarfile.open(path_fuseki_tar_gz, 'r:gz') as targz_fuseki:
     targz_fuseki.extractall()
-    os.rename('jena-fuseki-1.0.0','jena-fuseki')
+    os.rename('jena-fuseki-1.0.0', 'jena-fuseki')
 os.remove(path_fuseki_tar_gz)
