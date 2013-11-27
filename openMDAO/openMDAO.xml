@@ -17,6 +17,7 @@
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
     <owl:Ontology rdf:about="http://openmdao.org/units#">
         <owl:versionIRI rdf:resource="http://openmdao.org/units/1.0.0"/>
+        <owl:imports rdf:resource="http://www.qudt4dt.org/ontology/openMDAO-qudt"/>
     </owl:Ontology>
     
 
@@ -56,9 +57,15 @@
 
     <owl:DatatypeProperty rdf:about="http://openmdao.org/units#Comment">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://openmdao.org/units#DerivedUnit"/>
-        <rdfs:domain rdf:resource="http://openmdao.org/units#DynamicUnitDefinition"/>
         <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://openmdao.org/units#DerivedUnit"/>
+                    <rdf:Description rdf:about="http://openmdao.org/units#DynamicUnitDefinition"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -77,8 +84,15 @@
 
     <owl:DatatypeProperty rdf:about="http://openmdao.org/units#Offset">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://openmdao.org/units#DerivedUnit"/>
-        <rdfs:range rdf:resource="&xsd;int"/>
+        <rdfs:range rdf:resource="&xsd;float"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://openmdao.org/units#DerivedUnit"/>
+                    <rdf:Description rdf:about="http://openmdao.org/units#DynamicUnitDefinition"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -96,9 +110,15 @@
 
     <owl:DatatypeProperty rdf:about="http://openmdao.org/units#UnitExpression">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://openmdao.org/units#DerivedUnit"/>
-        <rdfs:domain rdf:resource="http://openmdao.org/units#DynamicUnitDefinition"/>
         <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://openmdao.org/units#DerivedUnit"/>
+                    <rdf:Description rdf:about="http://openmdao.org/units#DynamicUnitDefinition"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
     </owl:DatatypeProperty>
     
 

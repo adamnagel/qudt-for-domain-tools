@@ -55,33 +55,46 @@ class OpenMdaoDynamicUnit(object):
     def __init__(self, qudtUrl):
         self.qudtUrl = qudtUrl
         self.unitName = re.match(r'^http://qudt.org/vocab/unit#(.+)$',qudtUrl).group(1)
-        factor = bara.get_mult_factor(qudtUrl)
-        if factor == []:
-            factor = ''
-        else:
-            factor = factor[0]
         symbol = bara.get_SI_symbol(qudtUrl)
         if not symbol == None:
              si = re.match(r'http://qudt.org/vocab/dimension#Dimension_SI_(.+)$',symbol).group(1)
              SI_symbol = tokens_to_unit(symbol_lex_token(si))
-        self.unitExp = '{factor}*{SI}'.format(factor = factor, SI = SI_symbol)
+        factor = bara.get_mult_factor(qudtUrl)
+        if factor == []:
+            self.unitExp = SI_symbol
+        else:
+            self.unitExp = '{factor}*{SI}'.format(factor = factor[0], SI = SI_symbol)
         offset = bara.get_offset(qudtUrl)
         if offset == []:
             self.offset = ''
         else:
             self.offset = offset[0]
+            
     def xml_str(self):
-        template = ''' <!-- http://openmdao.org/units/individuals#{unitName} -->
+        template = '''<!-- http://openmdao.org/units/individuals#{unitName} -->
 
     <owl:NamedIndividual rdf:about="http://openmdao.org/units/individuals#{unitName}">
         <rdf:type rdf:resource="&units;DynamicUnitDefinition"/>
         <units:UnitName rdf:datatype="&xsd;string">{unitName}</units:UnitName>
         <units:UnitExpression rdf:datatype="&xsd;string">{unitExp}</units:UnitExpression>
-        <units:Offset>{offset}</units:Offset>
-        <units:Comment>dynamic-unit</units:Comment>
+        <units:Offset rdf:datatype="&xsd;float">{offset}</units:Offset>
+        <units:Comment rdf:datatype="&xsd;string">dynamic-unit</units:Comment>
     </owl:NamedIndividual>
         '''
-        return template.format(unitName = self.unitName, unitExp = self.unitExp, offset = self.offset)
+        non_offset_template = '''<!-- http://openmdao.org/units/individuals#{unitName} -->
+
+    <owl:NamedIndividual rdf:about="http://openmdao.org/units/individuals#{unitName}">
+        <rdf:type rdf:resource="&units;DynamicUnitDefinition"/>
+        <units:UnitName rdf:datatype="&xsd;string">{unitName}</units:UnitName>
+        <units:UnitExpression rdf:datatype="&xsd;string">{unitExp}</units:UnitExpression>
+        <units:Comment rdf:datatype="&xsd;string">dynamic-unit</units:Comment>
+    </owl:NamedIndividual>
+        '''
+        if self.offset == '':
+            return non_offset_template.format(unitName = self.unitName, unitExp = self.unitExp)
+        else:
+            return template.format(unitName = self.unitName, unitExp = self.unitExp, offset = self.offset)
+            
     def csv_str(self):
         template = '{name},{name}\n'
         return template.format(name = self.unitName)
@@ -114,12 +127,13 @@ def xml_generator(xmlFile,csvFile):
     
 
 '''
+    csv_head='http://openmdao.org/units/individuals#,http://qudt.org/1.1/vocab/unit#\n'
+
     xml = open(xmlFile,'w')
     csv = open(csvFile,'w')
     xml.write(head)
+    csv.write(csv_head)
     unitList = bara.list_all_units()
-    # unit = OpenMdaoDynamicUnit('http://qudt.org/vocab/unit#SquareCentimeterMinute')
-    # xml.write(unit.xml_str())
     for u in unitList:
         if not bara.get_SI_symbol(u) == None:
             unit = OpenMdaoDynamicUnit(u)
