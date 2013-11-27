@@ -157,7 +157,44 @@ class Barbara:
         }}
         '''
         return sparql.query(query.format(si_sym = si_sym),self.__url_query)
+
+    def is_baseunit(self, unit):
+        offset = self.get_offset(unit)
+        mult = self.get_mult_factor(unit)
+        if offset == [u'0.0']  and (mult in [[u'1'],[u'1.0e0'],[u'1.0E6'],[u'1.0']]):
+            return True
+        else:
+            return False
         
+    @_jsonGetUri('offset')
+    def get_offset(self, unit):
+        query = '''
+        PREFIX qudt: <http://qudt.org/schema/qudt#>
+        SELECT
+        ?offset
+        WHERE
+        {{
+        <{unit}> qudt:conversionOffset ?offset.
+        }}
+        '''
+        return sparql.query(query.format(unit = unit),self.__url_query)
+
+    @_jsonGetUri('mult')
+    def get_mult_factor(self, unit):
+        query = '''
+        PREFIX qudt: <http://qudt.org/schema/qudt#>
+        SELECT
+        ?mult
+        WHERE
+        {{
+        <{unit}> qudt:conversionMultiplier ?mult
+        }}
+        '''
+        return sparql.query(query.format(unit = unit),self.__url_query)
+            
+
+
+            
     def convert_value(self,source_unit_url,destination_unit_url,source_value):
         if not self.get_unit_class(source_unit_url) == self.get_unit_class(destination_unit_url):
             raise ValueError
