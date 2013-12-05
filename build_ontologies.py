@@ -2,12 +2,6 @@
 import re
 import sys
 import os
-sys.path.append(os.path.abspath('modelica'))
-import MSL2OWL
-sys.path.append(os.path.abspath('openMDAO'))
-import export_openMDAO_units
-import export_qudt_symbol
-from subprocess import Popen
 import shlex
 import urllib
 import shutil
@@ -25,6 +19,7 @@ sys.path.append(os.path.join(dirOfThisFile, 'modelica'))
 import MSL2OWL
 
 sys.path.append(os.path.join(dirOfThisFile, 'openMDAO'))
+import export_qudt_symbol
 import export_openMDAO_units
 
 sys.path.append(os.path.join(dirOfThisFile, 'requests'))
