@@ -6,6 +6,7 @@ sys.path.append(os.path.abspath('modelica'))
 import MSL2OWL
 sys.path.append(os.path.abspath('openMDAO'))
 import export_openMDAO_units
+import export_qudt_symbol
 from subprocess import Popen
 import shlex
 import urllib
@@ -22,6 +23,8 @@ print "Generating OpenMDAO Unit ontology"
 openMDAOUnit_path = os.path.join(p_ScriptPathRoot,'openMDAO/unitLibdefault.ini')
 openMDAOOntology_path = os.path.join(p_ScriptPathRoot,'openMDAO/openMDAO-individuals.xml')
 export_openMDAO_units.xml_generator(openMDAOUnit_path,openMDAOOntology_path)
+export_qudt_symbol.xml_generator('openMDAO/openMDAO-dynamic-individuals.xml','openMDAO/openMDAO-dynamic-mapping.csv')
+
 print 'complete'
 
 
@@ -84,6 +87,7 @@ try:
     print "Creating ontologies from CSV file..."
     CreateOWLFilesFromCSV('modelica/mapping-to-qudt.csv','modelica/modelica-qudt.xml')
     CreateOWLFilesFromCSV('openMDAO/mapping-to-qudt.csv','openMDAO/openMDAO-qudt.xml')
+    CreateOWLFilesFromCSV('openMDAO/openMDAO-dynamic-mapping.csv','openMDAO-dynamic-mapping.xml')
     print "Loading ontologies into Fuseki..."
     LoadDirectoryOfOWLFiles('qudt-owl')
     LoadDirectoryOfOWLFiles('modelica')
