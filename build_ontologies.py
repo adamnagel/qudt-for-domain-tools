@@ -109,7 +109,10 @@ try:
 finally:
     print ""
     print "Terminating fuseki..."
-    fuseki.terminate()
+    if fuseki is not None:
+        fuseki.terminate()
+    else:
+        print "WARNING: Fuseki service pointer was None; Fuseki may not have launched properly, and the loaded ontology may not be correct."
     print "done"
     print ""
 
