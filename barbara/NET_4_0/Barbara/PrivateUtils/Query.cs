@@ -7,7 +7,7 @@ using System.IO;
 
 namespace qudt4dt
 {
-    class Query
+    public static class Query
     {
         /// <summary>
         /// Perform a SPARQL query on the given endpoint
@@ -20,8 +20,7 @@ namespace qudt4dt
             Uri uri_query;
             Uri.TryCreate(endpoint, "/qudt4dt/query?", out uri_query);
 
-            String safeQuery = query.Replace("#", "%23");
-            String UrlRequest = uri_query + String.Format("query={0}&should-sponge=soft&debug=on&format=application/json&save=display&output=json", safeQuery);
+            String UrlRequest = uri_query + String.Format("query={0}&should-sponge=soft&debug=on&format=application/json&save=display&output=json", Uri.EscapeDataString(query));
             HttpWebRequest request = WebRequest.Create(UrlRequest) as HttpWebRequest;
             String s_Response;
             using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
