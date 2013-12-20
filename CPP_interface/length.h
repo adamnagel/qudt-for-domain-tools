@@ -6,9 +6,10 @@ namespace qudt4dt
     class Length
     {
     private:
-        Length();
+        Length(){};
         Length(const Length&);
     };
+
 }
 
 
