@@ -7,19 +7,16 @@
 #include "sparql.h"
 #include <jsoncpp/json/json.h>
 #include <typeinfo>
-
+#include <boost/format.hpp>
 int main()
 {
     
     qudt4dt::init_qudt_server("http://127.0.0.1:3030");
-    std::string _q = "\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n                   PREFIX qudt4dt: <http://qudt4dt.org/ontology#>\n                   SELECT\n                   ?class\n                   WHERE\n                   { \n                     qudt4dt:DomainToolUnit ^rdfs:subClassOf+ ?class\n                   }";
+    std::string _q = "PREFIX qudt: <http://qudt.org/schema/qudt#>\n        SELECT\n        ?x\n        WHERE\n        {\n        <%1%> qudt:conversionMultiplier ?x.\n        }\n";
     std::vector<std::string> result;
-    qudt4dt::Query a = {
-        .query_context = _q,
-        .field_names = "class",
-    };
+    
 
-    if(!qudt4dt::query(a, result))
+    if(!qudt4dt::query((boost::format(_q) % "http://qudt.org/vocab/unit#kelvin").str(), result))
         std::cout<<"fail"<<std::endl;
     for(auto& i : result)
         std::cout<<i<<std::endl;

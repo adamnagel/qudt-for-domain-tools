@@ -5,20 +5,20 @@
 #include <vector>
 namespace qudt4dt{
     
-        struct Query
-        {
-            std::string query_context;
-            std::string field_names;
-        };
-        
-       
+    /*     struct Query */
+    /* { */
+    /*     std::string query_context; */
+    /*     std::string field_names; */
+    /* }; */
 
-        void init_qudt_server(const std::string&);
-        bool query(const Query&, std::vector<std::string>&);
+    void init_qudt_server(const std::string&);
+    bool query(const std::string&, std::vector<std::string>&);
 
         
-}
+};
 #endif
+
+
 
 
 
