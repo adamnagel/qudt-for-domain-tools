@@ -1,4 +1,4 @@
-#include "sparql.hpp"
+#include "sparql/sparql.hpp"
 #include <cassert>
 #include <iostream>
 #include <jsoncpp/json/json.h>
@@ -68,15 +68,7 @@ bool query(const string& query_context, vector<string>& ret_value)
     return true;
 }
 
-bool query_get_attr(const std::string& query_context, std::string& ret)
-{
-    std::vector<std::string> _v;
-    if(false == query(query_context, _v))
-        return false;
-         
-    ret = _v.at(0);
-    return true;
-}
+
     
 void init_qudt_server(const string& server_url)
 {
