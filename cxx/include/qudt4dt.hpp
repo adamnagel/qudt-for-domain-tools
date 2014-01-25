@@ -11,7 +11,7 @@ void init_qudt_server(const std::string& server_url);
 
 //-----------------------unit-----------------------------------
 #include "unit/qudtUnit.hpp"
-
+#include "unit/modelicaUnit.hpp"
 
 
 #endif// QUDT4DT_HPP

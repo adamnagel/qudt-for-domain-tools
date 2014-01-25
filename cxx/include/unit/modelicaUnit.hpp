@@ -1,14 +1,15 @@
 #ifndef QUDT4DT_MODELICA_MODELICAUNIT_HPP
-#define QUDT$DT_MODELICA_MODELICAUNIT_HPP
+#define QUDT4DT_MODELICA_MODELICAUNIT_HPP
 
 #include <string>
 #include <boost/format.hpp>
+#include <stdexcept>
 
 #include <utils.hpp>
-#include <sparql/sparql.h>
-#include <unit/unit.hpp>
+#include <unit/qudtUnit.hpp>
 namespace qudt4dt
 {
+
 namespace modelica
 {
 
@@ -18,7 +19,6 @@ public:
     typedef ModelicaUnit unit_type;
     
     ModelicaUnit(const std::string& url);
-    QudtUnit operator QudtUnit() const;
 
     std::string getUrl()const;
     double getMax()const;
@@ -27,7 +27,7 @@ public:
     std::string getDisplayUnit()const;
     std::string getUnit()const;
     std::string getClassPath()const;
-priveate:
+private:
     bool queryClassPath();
     bool queryUnit();
     bool queryMax();
@@ -36,13 +36,13 @@ priveate:
     bool queryDisplayUnit();
     template<class T>
     bool query_attr(const std::string&, T&);
-    maybe<std::string> Quantity;
-    maybe<std::string> Unit;
+    detail::maybe<std::string> Quantity;
+    detail::maybe<std::string> Unit;
     std::string ClassPath;
-    maybe<double> Min;
-    maybe<double> Max;
-    maybe<double> Start;
-    maybe<string> DisplayUnit;
+    detail::maybe<double> Min;
+    detail::maybe<double> Max;
+    detail::maybe<double> Start;
+    detail::maybe<std::string> DisplayUnit;
     std::string url;
 };
     
@@ -58,9 +58,23 @@ bool ModelicaUnit::query_attr(const std::string& attr_name, T& attr)
 }
 
 };//namespace modelica
+
+
+template <>
+QudtUnit unit_cast(modelica::ModelicaUnit _s)
+{
+    std::string querycontext_template = "PREFIX ontology: <http://qudt4dt.org/ontology#>\nSELECT\n?x\nWHERE\n{ \n    <%1%> ontology:equivalentOf ?x\n}";
+    std::string ret_url, _q = str(boost::format(querycontext_template) % _s.getUrl());
+    if(false == query_get_attr(_q, ret_url))
+        throw std::runtime_error("can not find corresponding qudt unit with the url:" + _s.getUrl());
+    //TODO : adding log
+    return QudtUnit(ret_url);
+}
+
+
 };//namespace qudt4dt
 
-#endif QUDT4DT_MODELICA_MODELICAUNIT_HPP
+#endif// QUDT4DT_MODELICA_MODELICAUNIT_HPP
 
 
 
@@ -73,4 +87,4 @@ bool ModelicaUnit::query_attr(const std::string& attr_name, T& attr)
 
 
 
-#endif //MODELICAUNIT_HPP
+

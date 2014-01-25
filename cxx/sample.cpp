@@ -6,15 +6,27 @@ int main(int argc, char *argv[])
 {
     
     init_qudt_server("http://127.0.0.1:3030");
+
+    std::cout<<"---------------------qudt unit and quantity caculation------------------"<<std::endl;
     QudtUnit inch("http://qudt.org/vocab/unit#Inch" );
     QudtUnit meter("http://qudt.org/vocab/unit#Meter");
+    std::cout<<inch<<std::endl;
+    std::cout<<meter<<std::endl;
+    
     auto a = Quantity<QudtUnit>(2*meter);
-    auto b = quantity_cast(inch,a);
-
-    // //qudt4dt::ModelicaQuantity m(b);
-    // //auto n = qudt4dt::ModelicaQuantity(3,"sample unit url");
     std::cout<<a<<std::endl;
-    std::cout<<b<<std::endl;
+    
+    auto b = quantity_cast(inch,a);
+    std::cout<<"2*meter = "<<b<<std::endl;
+    
+    std::cout<<"---------------------modelica unit--------------------------------------"<<std::endl;
+    modelica::ModelicaUnit mass("http://modelica.org/msl/SIUnits/individuals#Mass");
+    std::cout<<"modelica unit url: "<<mass.getUrl()<<std::endl;
+    std::cout<<"modelica unit classPath: "<<mass.getClassPath()<<std::endl;
+
+    std::cout<<"---------------------convert to qudt unit from modelica unit------------"<<std::endl;
+    auto m2q_unit = unit_cast<QudtUnit>(mass);
+    // std::cout<<m2q_unit<<std::endl;
 
     return 0;
 }
