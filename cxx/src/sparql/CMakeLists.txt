@@ -1,17 +1,26 @@
 cmake_minimum_required(VERSION 2.8)
 #-----------------------------------------------------------
-project (qudt4dt_lib)
 
 #------------------------------------------------------------
-set (libqudt4dt_sparql_src sparql.cpp)
-set (current ${CMAKE_CURRENT_SOURCE_DIR})
-set (inc_dir ${current}/../../include)
-#MESSAGE(STATUS "This dir is" ${inc_dir})
+set (sparql_src sparql.cpp)
+set (inc_dir ${PROJECT_SOURCE_DIR}/include/)
+
 #--------------------------------------------------------------
 include_directories(${inc_dir})
 
-add_library(libqudt4dt_sparql STATIC ${libqudt4dt_sparql_src})
+add_library(sparql STATIC ${sparql_src})
 #---------------------------------------------------------------
 link_directories(/usr/lib/x86_64-linux-gnu/ /usr/lib/)
-target_link_libraries(libqudt4dt_sparql libcurl.so)
-target_link_libraries(libqudt4dt_sparql libjsoncpp.so)
+
+find_package(Boost)
+if(Boost_FOUND)
+    include_directories("${Boost_INCLUDE_DIRS}/")
+    MESSAGE(STATUS "====${Boost_INCLUDE_DIRS}")
+    target_link_libraries(sparql curl jsoncpp)
+endif()
+
+#-----------------------------------------------------------------
+
+
+
+

@@ -1,7 +1,8 @@
-#include "sparql/sparql.hpp"
 #include <cassert>
 #include <iostream>
+#include <curl/curl.h>
 #include <jsoncpp/json/json.h>
+#include "sparql/sparql.hpp"
 using namespace std;
 namespace qudt4dt{
 
@@ -13,7 +14,7 @@ static struct
     string url_upload;
 }_su;
 
-// static Server_url _su;
+// Server_url;
 static string* _buf;
 
 
@@ -37,7 +38,7 @@ static bool query_raw(const string& query_str, string& ret_value)
         return false;
 
     encode_query = string(curl_easy_escape(curl, query_str.c_str(), 0));
-    opt_url = qudt4dt::_su.url_query + "query=" + encode_query;
+    opt_url = ::qudt4dt::_su.url_query + "query=" + encode_query;
     curl_easy_setopt(curl, CURLOPT_URL, opt_url.c_str());
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
     curl_easy_perform(curl);
@@ -68,15 +69,14 @@ bool query(const string& query_context, vector<string>& ret_value)
     return true;
 }
 
-
-    
 void init_qudt_server(const string& server_url)
 {
-    qudt4dt::_su.url_base = server_url;
-    qudt4dt::_su.url_upload = server_url + "/qudt4dt/upload";
-    qudt4dt::_su.url_query = server_url + "/qudt4dt/query?";
-    qudt4dt::_su.url_update = server_url + "/qudt4dt/update?";
+    ::qudt4dt::_su.url_base = server_url;
+    ::qudt4dt::_su.url_upload = server_url + "/qudt4dt/upload";
+    ::qudt4dt::_su.url_query = server_url + "/qudt4dt/query?";
+    ::qudt4dt::_su.url_update = server_url + "/qudt4dt/update?";
 };
+    
 
 };
 

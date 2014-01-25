@@ -1,10 +1,34 @@
 #ifndef QUDT4DT_HPP
 #define QUDT4DT_HPP
+#include <string>
+namespace qudt4dt
+{
+extern double LIB_VERSION;
+void init_qudt_server(const std::string& server_url);
+};
 
-
-#include "sparql/sparql.hpp"
-#include "qudtUnit.hpp"
 #include "quantity.hpp"
+
+//-----------------------unit-----------------------------------
+#include "unit/qudtUnit.hpp"
+
 
 
 #endif// QUDT4DT_HPP
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,11 +1,12 @@
-#ifndef MODELICAUNIT_HPP
-#define MODELICAUNIT_HPP
-#include "utils.hpp"
-#include "qudtUnit.hpp"
-#include <string>
+#ifndef QUDT4DT_MODELICA_MODELICAUNIT_HPP
+#define QUDT$DT_MODELICA_MODELICAUNIT_HPP
 
+#include <string>
 #include <boost/format.hpp>
 
+#include <utils.hpp>
+#include <sparql/sparql.h>
+#include <unit/unit.hpp>
 namespace qudt4dt
 {
 namespace modelica
@@ -59,7 +60,7 @@ bool ModelicaUnit::query_attr(const std::string& attr_name, T& attr)
 };//namespace modelica
 };//namespace qudt4dt
 
-
+#endif QUDT4DT_MODELICA_MODELICAUNIT_HPP
 
 
 

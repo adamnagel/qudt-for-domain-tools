@@ -1,4 +1,4 @@
-#include "qudtUnit.hpp"
+#include "unit/qudtUnit.hpp"
 
 namespace qudt4dt{
 
@@ -7,8 +7,13 @@ QudtUnit::QudtUnit(const std::string& url):url(url)
 {
     queryFactor();
     queryOffset();
+    queryUnitClass();
 };
 
+std::string QudtUnit::getUnitClass()const
+{
+    return unitClass;
+}
 std::string QudtUnit::getUrl()const
 {
     return url;
@@ -28,6 +33,14 @@ double QudtUnit::getOffset()const
 {
     return offset;
 }
+bool QudtUnit::queryUnitClass()
+{
+    std::string querycontext_template = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX owl: <http://www.w3.org/2002/07/owl#>\nSELECT\n?x \nWHERE\n{\n    <%1%> rdf:type ?x. \n    FILTER NOT EXISTS{?x rdf:type owl:DeprecatedClass}\n}";
+    std::string _q = str(boost::format(querycontext_template) % url);
+    if(false == query_get_attr(_q, unitClass))
+        return false;
+    return true;
+} 
 
 bool QudtUnit::queryOffset()
 {    

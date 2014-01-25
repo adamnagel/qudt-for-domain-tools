@@ -1,6 +1,9 @@
 #ifndef QUDT4DT_QUANTITY_HPP
 #define QUDT4DT_QUANTITY_HPP
 
+#include <stdexcept>
+
+#include <unit/qudtUnit.hpp>
 
 template <class _unit>
 class Quantity
@@ -55,6 +58,8 @@ std::ostream& operator<<(std::ostream& os,const Quantity<_unit>& _q)
 template <class _unit>
 Quantity<_unit> quantity_cast(const _unit& obj, const Quantity<_unit>& src){
     const _unit& srcu = src.getUnit();
+    if(srcu.getUnitClass() != obj.getUnitClass())
+        throw std::domain_error("convertion happened in the units with different unit classes");
     double src_factor = srcu.getFactor();
     double src_offset = srcu.getOffset();
     double obj_factor = obj.getFactor();

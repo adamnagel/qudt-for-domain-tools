@@ -1,7 +1,5 @@
+#include "unit/modelicaUnit.hpp"
 
-
-#include "modelicaUnit.hpp"
-#include "sparql/sparql.hpp"
 
 namespace qudt4dt
 {
