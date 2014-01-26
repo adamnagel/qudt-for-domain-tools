@@ -2,7 +2,6 @@
 #define SPARQL_H
 #include <string>
 #include <vector>
-#include <boost/lexical_cast.hpp>
 namespace qudt4dt{
 
 void init_qudt_server(const std::string&);

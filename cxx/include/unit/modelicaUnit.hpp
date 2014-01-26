@@ -5,7 +5,6 @@
 #include <boost/format.hpp>
 #include <stdexcept>
 
-#include <utils.hpp>
 #include <unit/qudtUnit.hpp>
 namespace qudt4dt
 {

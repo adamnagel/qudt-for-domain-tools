@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
-
+#include <boost/static_assert.hpp>
 
 namespace qudt4dt
 {
@@ -20,9 +20,11 @@ namespace detail
         }                                                               \
 } while(0)
 
-// name must be a valid identifier
-#define STATIC_ASSERT( condition, name )                                \
-    typedef char assert_failed_ ## name [ (condition) ? 1 : -1 ];
+template <class T>
+struct always_false
+{
+    enum{value = false };
+};
 
 
 template<class T>
@@ -40,13 +42,29 @@ public:
     //operator T() const{return value;};
     ~maybe(){};
 };
-
+// template<class T>
+// friend std::istream& operator>>(std::istream& ins, maybe<T>& _m)
+// {
+//     std::string input;
+//     ins>>input;
+//     if(0 == input.length())
+//     {
+//         _m.is_initialized = false;
+//     }
+//     else
+//     {
+        
+//     }
+// }
 
 };//namespace detail
 };//namespace qudt4dt
 
 
 #endif //QUDT4DT_UTILS_HPP
+
+
+
 
 
 

@@ -5,7 +5,6 @@
 
 #include <sparql/sparql.hpp>
 #include <unit/unit.hpp>
-#include <utils.hpp>
 
 namespace qudt4dt
 {

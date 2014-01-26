@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 
     std::cout<<"---------------------convert to qudt unit from modelica unit------------"<<std::endl;
     auto m2q_unit = unit_cast<QudtUnit>(mass);
-    // std::cout<<m2q_unit<<std::endl;
+    std::cout<<"corresponding qudt url:"<<m2q_unit.getUrl()<<std::endl;
 
     return 0;
 }
