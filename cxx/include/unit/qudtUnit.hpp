@@ -3,7 +3,6 @@
 #include <string>
 #include <boost/format.hpp>
 
-#include <sparql/sparql.hpp>
 #include <unit/unit.hpp>
 
 namespace qudt4dt
@@ -37,15 +36,7 @@ private:
 
 std::ostream& operator<<(std::ostream&,const QudtUnit&);
 
-template<class T>
-bool QudtUnit::query_attr(const std::string& attr_name, T& attr)
-{
-    std::string querycontext_template = "PREFIX qudt: <http://qudt.org/schema/qudt#>\nSELECT\n?x\nWHERE\n{\n    <%1%> qudt:%2% ?x.\n}\n";
-    std::string _q = str(boost::format(querycontext_template) % url % attr_name);
-    if(false == query_get_attr(_q, attr))
-        return false;
-    return true;
-}
+
 
 };//namespace qudt4dt   
 

@@ -1,0 +1,9 @@
+BUILD:
+1.gyp qudt4dt.gyp --depth=./  -fmake    (or "-fmsvc" for vs2010, "fxcode" for Mac)
+2.make
+
+
+DEPENDENCY:
+1.BOOST
+2.libcurl
+3.jsoncpp

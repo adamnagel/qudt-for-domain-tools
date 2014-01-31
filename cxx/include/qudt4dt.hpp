@@ -4,7 +4,7 @@
 namespace qudt4dt
 {
 extern double LIB_VERSION;
-void init_qudt_server(const std::string& server_url);
+void init_qudt4dt_server(const std::string& server_url);
 };
 
 #include "quantity.hpp"

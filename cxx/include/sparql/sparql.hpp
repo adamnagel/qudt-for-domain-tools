@@ -3,12 +3,11 @@
 #include <string>
 #include <vector>
 namespace qudt4dt{
-
-void init_qudt_server(const std::string&);
+namespace sparql{
+void init_server(const std::string&);
 bool query(const std::string&, std::vector<std::string>&);
-void init_qudt_server(const std::string& server_url);
-
-};
+};//namespace sparql
+};//namespace qudt4dt
 #endif
 
 

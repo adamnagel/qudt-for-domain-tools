@@ -63,4 +63,15 @@ std::ostream& operator<<(std::ostream& os,const QudtUnit& u)
     return os;
 }
 
+
+template<class T>
+bool QudtUnit::query_attr(const std::string& attr_name, T& attr)
+{
+    std::string querycontext_template = "PREFIX qudt: <http://qudt.org/schema/qudt#>\nSELECT\n?x\nWHERE\n{\n    <%1%> qudt:%2% ?x.\n}\n";
+    std::string _q = str(boost::format(querycontext_template) % url % attr_name);
+    if(false == query_get_attr(_q, attr))
+        return false;
+    return true;
+}
+
 }//namespace qudt4dt

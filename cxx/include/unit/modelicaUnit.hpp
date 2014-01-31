@@ -45,16 +45,6 @@ private:
     std::string url;
 };
     
-template<class T>
-bool ModelicaUnit::query_attr(const std::string& attr_name, T& attr)
-{
-    std::string querycontext_template = "PREFIX qudt: <http://qudt.org/schema/qudt#>\nPREFIX modelica: <http://modelica.org/msl/SIUnits/vocabulary#>\nSELECT\n?x\nWHERE\n{\n    <%1%> modelica:%2% ?x\n}";
-    std::string _q = str(boost::format(querycontext_template) % url % attr_name);
-    if(false == query_get_attr(_q, attr))
-        return false;
-    return true;
-
-}
 
 };//namespace modelica
 

@@ -15,7 +15,7 @@ namespace detail
         {                                                               \
             std::ostringstream str;                                     \
             str << msg;                                                 \
-            std::cerr << str.str()<<"at"<<__FILE__<<' '<<__LINE__;      \
+            std::cerr << str.str()<<"\n--------------------------------------\nat "<<__FILE__<<' '<<__LINE__;                        \
             std::abort();                                               \
         }                                                               \
 } while(0)
