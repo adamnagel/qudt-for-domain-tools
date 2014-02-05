@@ -31,7 +31,7 @@ for url in l_owlfiles:
 print ""
 
 print "===== Downloading Modelica SIunits.mo ====="
-path_moSIUnits = 'modelica/SIunits.mo'
+path_moSIUnits = os.path.join('modelica','SIunits.mo')
 print "downloading..."
 urllib.urlretrieve(
     'https://raw.github.com/modelica/ModelicaStandardLibrary/release/Modelica%203.2.1/SIunits.mo',
@@ -39,7 +39,7 @@ urllib.urlretrieve(
 print ""
 
 print "===== Downloading OpenMDAO Unit INI file ====="
-path_mdaoINI = 'openMDAO/unitLibdefault.ini'
+path_mdaoINI = os.path.join('openMDAO','unitLibdefault.ini')
 print "downloading..."
 urllib.urlretrieve(
     'https://raw.github.com/OpenMDAO/OpenMDAO-Framework/master/openmdao.units/openmdao/units/unitLibdefault.ini',
