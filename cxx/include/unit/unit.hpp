@@ -3,14 +3,27 @@
 #include <sparql/sparql.hpp>
 #include <boost/lexical_cast.hpp>
 #include <utils.hpp>
+#include <iostream>
+
+
+
 namespace qudt4dt
 {
-
+class QudtUnit;
 template <class _to, class _from>
-_to unit_cast(_from _s)
+_to unit_cast(const _from& _s)
 {
-    BOOST_STATIC_ASSERT_MSG(detail::always_false<_to>::value, "no corresponding unit casting");
-};
+    return unit_cast<_to>(
+    		unit_cast<QudtUnit>(_s)
+    		);
+
+}
+//TODO: eliminate the ambiguous template
+template <class T>
+T unit_cast(const T& _s)
+{
+	return T(_s);
+}
 
 
 namespace detail{
@@ -28,7 +41,7 @@ inline bool query_get_str(const std::string& query_context, std::string& ret)
 }
 };//namespace detail
 template<class T>
-bool query_get_attr(const std::string& query_context, T& ret)
+inline bool query_get_attr(const std::string& query_context, T& ret)
 {
     std::string _s;
     if(false == detail::query_get_str(query_context, _s))
@@ -39,7 +52,7 @@ bool query_get_attr(const std::string& query_context, T& ret)
 }
 
 template<class T>
-bool query_get_attr(const std::string& query_context, detail::maybe<T>& ret)
+inline bool query_get_attr(const std::string& query_context, detail::maybe<T>& ret)
 {
     std::string _s;
     if(false == detail::query_get_str(query_context, _s))

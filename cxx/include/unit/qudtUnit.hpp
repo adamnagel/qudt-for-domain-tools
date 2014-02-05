@@ -7,6 +7,8 @@
 
 namespace qudt4dt
 {
+
+
 class QudtUnit
 {
 public:
@@ -35,7 +37,6 @@ private:
 };
 
 std::ostream& operator<<(std::ostream&,const QudtUnit&);
-
 
 
 };//namespace qudt4dt   

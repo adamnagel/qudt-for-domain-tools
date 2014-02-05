@@ -50,7 +50,7 @@ private:
 
 
 template <>
-QudtUnit unit_cast(modelica::ModelicaUnit _s)
+inline QudtUnit unit_cast(const modelica::ModelicaUnit& _s)
 {
     std::string querycontext_template = "PREFIX ontology: <http://qudt4dt.org/ontology#>\nSELECT\n?x\nWHERE\n{ \n    <%1%> ontology:equivalentOf ?x\n}";
     std::string ret_url, _q = str(boost::format(querycontext_template) % _s.getUrl());
@@ -60,7 +60,16 @@ QudtUnit unit_cast(modelica::ModelicaUnit _s)
     return QudtUnit(ret_url);
 }
 
-
+template <>
+inline modelica::ModelicaUnit unit_cast(const QudtUnit& _s)
+{
+    std::string querycontext_template = "PREFIX ontology: <http://qudt4dt.org/ontology#>\nSELECT\n?x\nWHERE\n{ \n    ?x ontology:equivalentOf <%1%>.\n    ?x a <http://modelica.org/msl/SIUnits/vocabulary#ModelicaUnitClass>\n}";
+    std::string ret_url, _q = str(boost::format(querycontext_template) % _s.getUrl());
+    if(false == query_get_attr(_q, ret_url))
+        throw std::runtime_error("can not find corresponding qudt unit with the url:" + _s.getUrl());
+    //TODO : adding log
+    return modelica::ModelicaUnit(ret_url);
+}
 };//namespace qudt4dt
 
 #endif// QUDT4DT_MODELICA_MODELICAUNIT_HPP

@@ -75,10 +75,10 @@ if os.path.exists(path_jena_fuseki):
 
 print "downloading..."
 path_fuseki_tar_gz = 'jena-fuseki.tar.gz'
-urllib.urlretrieve('http://www.apache.org/dist/jena/binaries/jena-fuseki-1.0.0-distribution.tar.gz', path_fuseki_tar_gz)
+urllib.urlretrieve('http://www.apache.org/dist/jena/binaries/jena-fuseki-1.0.1-distribution.tar.gz', path_fuseki_tar_gz)
 
 print "extracting..."
 with tarfile.open(path_fuseki_tar_gz, 'r:gz') as targz_fuseki:
     targz_fuseki.extractall()
-    os.rename('jena-fuseki-1.0.0', 'jena-fuseki')
+    os.rename('jena-fuseki-1.0.1', 'jena-fuseki')
 os.remove(path_fuseki_tar_gz)

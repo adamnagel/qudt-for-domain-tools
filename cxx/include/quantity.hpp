@@ -4,7 +4,8 @@
 #include <stdexcept>
 
 #include <unit/qudtUnit.hpp>
-
+namespace qudt4dt
+{
 template <class _unit>
 class Quantity
 {
@@ -17,8 +18,8 @@ public:
     const double& getNum()const;
     virtual ~Quantity(){};
 private:
-    double num;
     const _unit u;
+    double num;
 };
 
 
@@ -26,7 +27,7 @@ template <class _unit>
 Quantity<_unit>::Quantity(const _unit& u, double num):u(u), num(num){};
 
 template <class _unit>
-Quantity<_unit>::Quantity(const Quantity<_unit>& rhs):num(rhs.num), u(rhs.u){};
+Quantity<_unit>::Quantity(const Quantity<_unit>& rhs):u(rhs.u), num(rhs.num){};
 
 template <class _unit>
 const _unit& Quantity<_unit>::getUnit()const
@@ -68,7 +69,16 @@ Quantity<_unit> quantity_cast(const _unit& obj, const Quantity<_unit>& src){
     return Quantity<_unit>(obj, num);
 }
     
+template<class _to, class _from>
+typename qudt4dt::Quantity<_to> unit_cast(const Quantity<_from>& _qs)
+{
+	return Quantity<_to>(
+			unit_cast<_to>(_qs.getUnit()),
+			_qs.getNum());
 
+}
+
+}; //namespace qudt4dt
 #endif //QUDT4DT_QUANTITY_HPP
 
 

@@ -1,33 +1,61 @@
 #include <iostream>
-
+#include <cassert>
 #include <qudt4dt.hpp>
 using namespace qudt4dt;
+
+
+bool AreDoubleSame(double dFirstVal, double dSecondVal)
+{
+    return std::fabs(dFirstVal - dSecondVal) < 1E-3;
+}
+
 int main(int argc, char *argv[])
 {
     
     init_qudt4dt_server("http://127.0.0.1:3030");
 
-    std::cout<<"---------------------qudt unit and quantity caculation------------------"<<std::endl;
+    //---------------------qudt unit and quantity caculation-----------------------
     QudtUnit inch("http://qudt.org/vocab/unit#Inch" );
     QudtUnit meter("http://qudt.org/vocab/unit#Meter");
-    std::cout<<"QudtUnit inch = "<<inch<<std::endl;
-    std::cout<<"QudtUnit meter = "<<meter<<std::endl;
+    assert("http://qudt.org/vocab/unit#Inch" == inch.getUrl());
+    assert("http://qudt.org/vocab/unit#Meter" == meter.getUrl());
     
-    Quantity<QudtUnit> a = Quantity<QudtUnit>(2* meter);
-    std::cout<<"2* meter = "<<a<<std::endl;
+    Quantity<QudtUnit> two_meters = Quantity<QudtUnit>(2* meter);
+    assert(2 == two_meters.getNum() && "http://qudt.org/vocab/unit#Meter" == two_meters.getUnit().getUrl());
 
-    auto b = quantity_cast(inch,a);
-    std::cout<<"2* meter = "<<b<<std::endl;
+    auto two_meters_to_inch = quantity_cast(inch,two_meters);
+    assert(AreDoubleSame(78.7402, two_meters_to_inch.getNum()) );
+    assert("http://qudt.org/vocab/unit#Inch" == two_meters_to_inch.getUnit().getUrl());
     
-    std::cout<<"---------------------modelica unit--------------------------------------"<<std::endl;
+    //---------------------modelica unit---------------------------------------------
     modelica::ModelicaUnit mass("http://modelica.org/msl/SIUnits/individuals#Mass");
-    std::cout<<"ModelicaUnit mass =  "<<mass.getUrl()<<std::endl;
-    std::cout<<"mass.getClassPath() = "<<mass.getClassPath()<<std::endl;
+    assert("http://modelica.org/msl/SIUnits/individuals#Mass" == mass.getUrl());
+    assert("Modelica.SIunits.Mass" == mass.getClassPath());
 
-    std::cout<<"---------------------convert to qudt unit from modelica unit------------"<<std::endl;
-    auto m2q_unit = unit_cast<QudtUnit>(mass);
-    std::cout<<"unit_cast<QudtUnit>(mass) = "<<m2q_unit.getUrl()<<std::endl;
 
+    //---------------------convert to qudt unit from modelica unit-------------------
+    auto qudt_mass = unit_cast<QudtUnit>(mass);
+    assert("http://qudt.org/vocab/unit#Kilogram" == qudt_mass.getUrl());
+
+    auto modelica_meter = unit_cast<modelica::ModelicaUnit>(meter);
+    assert("http://modelica.org/msl/SIUnits/individuals#Length" == modelica_meter.getUrl());
+
+    auto modelica_two_meters = unit_cast<modelica::ModelicaUnit>(two_meters);
+    assert("http://modelica.org/msl/SIUnits/individuals#Length" == modelica_two_meters.getUnit().getUrl());
+    //---------------------mdao unit--------------------------------------------------
+    mdao::MdaoUnit m("http://openmdao.org/units/individuals#m");
+    auto qudt_m = unit_cast<QudtUnit>(m);
+    auto mdao_meter = unit_cast<mdao::MdaoUnit>(meter);
+    assert(meter.getUrl() == qudt_m.getUrl());
+    assert(m.getUrl() == mdao_meter.getUrl());
+
+    //--------------------between mdao and modelica ----------------------------------
+    auto modelica_m = unit_cast<modelica::ModelicaUnit>(m);
+    auto mdao_mass = unit_cast<mdao::MdaoUnit>(mass);
+    assert("http://modelica.org/msl/SIUnits/individuals#Length" == modelica_m.getUrl());
+    assert("http://openmdao.org/units/individuals#kg" == mdao_mass.getUrl());
+    //---
+    std::cout<<"all green\n";
     return 0;
 }
 
