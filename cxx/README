@@ -1,3 +1,12 @@
+ON WINDOWS:
+Download & build GYP manually (if you don't have it):
+svn co http://gyp.googlecode.com/svn/trunk build/gyp
+python build/gyp/setup.py install
+
+Substitute step #1 below with:
+build/gyp/gyp qudt4dt.gyp --depth=./
+
+
 BUILD:
 1.gyp qudt4dt.gyp --depth=./  -fmake    (or "-fmsvc" for vs2010, "fxcode" for Mac)
 2.make
