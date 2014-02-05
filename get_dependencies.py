@@ -31,7 +31,7 @@ for url in l_owlfiles:
 print ""
 
 print "===== Downloading Modelica SIunits.mo ====="
-path_moSIUnits = 'modelica/SIunits.mo'
+path_moSIUnits = os.path.join('modelica','SIunits.mo')
 print "downloading..."
 urllib.urlretrieve(
     'https://raw.github.com/modelica/ModelicaStandardLibrary/release/Modelica%203.2.1/SIunits.mo',
@@ -39,7 +39,7 @@ urllib.urlretrieve(
 print ""
 
 print "===== Downloading OpenMDAO Unit INI file ====="
-path_mdaoINI = 'openMDAO/unitLibdefault.ini'
+path_mdaoINI = os.path.join('openMDAO','unitLibdefault.ini')
 print "downloading..."
 urllib.urlretrieve(
     'https://raw.github.com/OpenMDAO/OpenMDAO-Framework/master/openmdao.units/openmdao/units/unitLibdefault.ini',
@@ -82,3 +82,4 @@ with tarfile.open(path_fuseki_tar_gz, 'r:gz') as targz_fuseki:
     targz_fuseki.extractall()
     os.rename('jena-fuseki-1.0.1', 'jena-fuseki')
 os.remove(path_fuseki_tar_gz)
+
