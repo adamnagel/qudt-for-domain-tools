@@ -60,7 +60,8 @@ def main():
         
     finally:
         print "Terminating fuseki..."
-        fuseki.terminate()
+        if not fuseki == None:
+            fuseki.terminate()
 
 if __name__ == '__main__':
     main()
