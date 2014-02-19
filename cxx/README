@@ -16,3 +16,5 @@ DEPENDENCY:
 1.BOOST
 2.libcurl
 3.jsoncpp
+
+For MSVS, the libcurl.dll is buggy and the better way is to use the static link, which means you need add all the lib files that below in ./lib/win to your project

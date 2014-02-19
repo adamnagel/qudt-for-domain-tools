@@ -2,7 +2,7 @@
     'targets': [
     {
         'target_name': 'libqudt4dt',
-        'type': 'shared_library',
+        'type': 'static_library',
         'cflags':['-fPIC'],
         'include_dirs': [
           './include/',
@@ -14,11 +14,6 @@
           './src/modelicaUnit.cpp',
           './src/mdaoUnit.cpp',
         ],
-        'link_settings': {
-            'libraries': [
-                '/usr/lib/libjsoncpp.so', '/usr/lib/x86_64-linux-gnu/libcurl.so',
-            ],
-        },
     },
     {
         'target_name': 'sample',
