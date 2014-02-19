@@ -59,7 +59,28 @@ class Barbara:
             classURI = item["class"]["value"]
             unitClasses.append( classURI )
         return unitClasses
-        
+
+
+    def get_data_properties_for_class(self, classuri):
+        query = """ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                    PREFIX owl: <http://www.w3.org/2002/07/owl#>
+                    SELECT
+                    ?datatypeproperty
+                    WHERE
+                    {{
+                    ?datatypeproperty a owl:DatatypeProperty .
+                    ?datatypeproperty rdfs:domain <{classuri}>
+                    }}""".format(classuri=classuri)
+
+        result = sparql.query(query, self.__url_query)
+        datatypeproperties = []
+        for item in result["results"]["bindings"]:
+            classURI = item["datatypeproperty"]["value"]
+            datatypeproperties.append( classURI )
+
+        return datatypeproperties
+
+
     def list_domain_tool_unit_classes(self):
         query = """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
                    PREFIX qudt4dt: <http://qudt4dt.org/ontology#>
@@ -75,6 +96,23 @@ class Barbara:
             classURI = item["class"]["value"]
             unitClasses.append( classURI )
         return unitClasses
+
+    def list_all_qudt4dt_derived_unit_classes(self):
+        query = """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                   PREFIX qudt4dt: <http://qudt4dt.org/ontology#>
+                   SELECT
+                   ?class
+                   WHERE
+                   {
+                     qudt4dt:Unit ^rdfs:subClassOf+ ?class
+                   }"""
+        result = sparql.query(query, self.__url_query)
+        unitClasses = []
+        for item in result["results"]["bindings"]:
+            classURI = item["class"]["value"]
+            unitClasses.append( classURI )
+        return unitClasses
+
 
     def _jsonGetUri(name):
         def decorate(func):
@@ -189,8 +227,6 @@ class Barbara:
         }}
         '''
         return sparql.query(query.format(unit = unit),self.__url_query)
-            
-
 
             
     def convert_value(self,source_unit_url,destination_unit_url,source_value):
