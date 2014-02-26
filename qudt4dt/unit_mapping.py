@@ -1,20 +1,21 @@
 import csv
-import sys
 import re
+
+
 class UnitMapping(object):
     """
     Create a UnitMapping from 3rd part unit lib to QUDT
     """
-    
-    def __init__(self, sourceFile, objFile, libName = None):
+
+    def __init__(self, sourceFile, objFile, libName=None):
         """
         init XML template
         """
-        self.reader = csv.reader(file(sourceFile,'rU'))
+        self.reader = csv.reader(file(sourceFile, 'rU'))
         if libName == None: self.libName = re.search("([^/]+?)\.xml", objFile).group(1)
         print self.libName
         self.objFile = objFile
-        self.sourceClassURI = '' 
+        self.sourceClassURI = ''
         self.objClassURI = ''
         self.head = '''<?xml version="1.0"?>
 
@@ -42,7 +43,7 @@ class UnitMapping(object):
     </owl:Ontology>
     
 '''
-        self.body='''
+        self.body = '''
     <!-- {sourceUnitURI} -->
 
     <rdf:Description rdf:about="{sourceUnitURI}">
@@ -50,7 +51,7 @@ class UnitMapping(object):
     </rdf:Description>
 
 '''
-        
+
     def __getClassURI(self):
         firstLn = self.reader.next()
         self.sourceClassURI = firstLn[0]
@@ -61,24 +62,24 @@ class UnitMapping(object):
         classname = self.libName
         s_uri = self.sourceClassURI
         o_uri = self.objClassURI
-        with open(filename,'w') as f:
-            f.write(self.head.format(libName = self.libName,sourceClassURI = s_uri,objClassURI = o_uri))
+        with open(filename, 'w') as f:
+            f.write(self.head.format(libName=self.libName, sourceClassURI=s_uri, objClassURI=o_uri))
             for line in self.reader:
                 s_unit = s_uri + line[0]
                 o_unit = o_uri + line[1]
-                f.write(self.body.format(sourceUnitURI = s_unit, objUnitURI = o_unit))
+                f.write(self.body.format(sourceUnitURI=s_unit, objUnitURI=o_unit))
             f.write("</rdf:RDF>")
-            
+
     def run(self):
         self.__getClassURI()
         self.__createOWL()
 
 
-def createMapping(sourceFile, objFile, libName = None):
+def createMapping(sourceFile, objFile, libName=None):
     mapping = UnitMapping(sourceFile, objFile, libName)
     mapping.run()
 
-    
+
 if __name__ == '__main__':
     #filename = sys.argv[1]
-    createMapping("../modelica/mapping-to-qudt.csv","../../modelica-qudt.xml")
+    createMapping("../ontologies/modelica/mapping-to-qudt.csv", "../ontologies/modelica/modelica-qudt.xml")

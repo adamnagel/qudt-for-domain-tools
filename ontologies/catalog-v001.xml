@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
-    <uri id="Imports Wizard Entry" name="http://modelica.org/msl/SIUnits/vocabulary#" uri="file:/Users/adam/git/qudt-for-domain-tools/modelica/modelica.xml"/>
-    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
-        <uri id="Automatically generated entry, Timestamp=1380262023407" name="http://qudt4dt.org/classes" uri="qudt4dt-ontology.xml"/>
-    </group>
-</catalog>

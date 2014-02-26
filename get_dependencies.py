@@ -7,9 +7,9 @@ import zipfile
 import tarfile
 
 ## Delete and create 'qudt-owl' fresh
-if os.path.exists('qudt-owl'):
-    shutil.rmtree('qudt-owl')
-os.makedirs('qudt-owl')
+if os.path.exists('ontologies/qudt-owl'):
+    shutil.rmtree('ontologies/qudt-owl')
+os.makedirs('ontologies/qudt-owl')
 
 l_owlfiles = ['http://www.linkedmodel.org/1.0/schema/dtype',
               'http://qudt.org/1.1/schema/dimension',
@@ -25,13 +25,13 @@ l_owlfiles = ['http://www.linkedmodel.org/1.0/schema/dtype',
 print "===== Downloading QUDT OWL files ====="
 for url in l_owlfiles:
     localfilename = url.rsplit('/', 1)[1] + '.xml'
-    localfilepath = os.path.join('qudt-owl', localfilename)
+    localfilepath = os.path.join('ontologies', 'qudt-owl', localfilename)
     print url + ": " + localfilepath
     urllib.urlretrieve(url, localfilepath)
 print ""
 
 print "===== Downloading Modelica SIunits.mo ====="
-path_moSIUnits = os.path.join('modelica','SIunits.mo')
+path_moSIUnits = os.path.join('ontologies', 'modelica', 'SIunits.mo')
 print "downloading..."
 urllib.urlretrieve(
     'https://raw.github.com/modelica/ModelicaStandardLibrary/release/Modelica%203.2.1/SIunits.mo',
@@ -39,7 +39,7 @@ urllib.urlretrieve(
 print ""
 
 print "===== Downloading OpenMDAO Unit INI file ====="
-path_mdaoINI = os.path.join('openMDAO','unitLibdefault.ini')
+path_mdaoINI = os.path.join('ontologies', 'openMDAO', 'unitLibdefault.ini')
 print "downloading..."
 urllib.urlretrieve(
     'https://raw.github.com/OpenMDAO/OpenMDAO-Framework/master/openmdao.units/openmdao/units/unitLibdefault.ini',
