@@ -1,0 +1,9 @@
+message qudtUnit {
+    required string url = 1;
+    required string unitName =2; 
+    required string symbol = 3;
+    required string unitClass = 4;
+    required string abbreviation = 5;
+    optional float factor = 6;
+    optional float offset = 7;
+};
