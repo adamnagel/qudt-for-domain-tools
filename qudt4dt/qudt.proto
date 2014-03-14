@@ -1,4 +1,4 @@
-message qudtUnit {
+message QudtUnit {
     required string url = 1;
     required string unitName =2; 
     required string symbol = 3;
@@ -6,4 +6,25 @@ message qudtUnit {
     required string abbreviation = 5;
     optional float factor = 6;
     optional float offset = 7;
+};
+
+message ModelicaUnit {
+    required string classPath = 1;
+    optional float max = 2;
+    optional float min = 3;
+    optional float start = 4;
+    optional string displayUnit = 5;
+    required string quantity = 6;
+};
+
+message MdaoUnit {
+    required string name = 1;
+    optional string expression = 2;
+    optional string comment = 3;
+};
+
+message Unit {
+    required QudtUnit qudt_unit = 1;
+    optional ModelicaUnit modelica_unit = 2;
+    optional MdaoUnit mdao_unit = 3;
 };
