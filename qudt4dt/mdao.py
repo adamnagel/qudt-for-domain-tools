@@ -26,4 +26,9 @@ class MdaoUnit(Unit):
     def queryComment(self):
         return self.query_attr('Comment')
     
-    
+    def createInstance(self, result):
+        #result = qudt_pb2.MdaoUnit()
+        result.name = self.queryName()[0]
+        result.expression = self.queryExpression()[0]
+        result.comment = self.queryComment()[0]
+        return result

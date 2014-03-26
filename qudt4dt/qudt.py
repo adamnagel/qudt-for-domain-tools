@@ -8,7 +8,7 @@ class Unit(object):
     
 class QudtUnit(Unit):
     def __init__(self,_server, _url):
-        super(_server,_url)
+        super(QudtUnit, self).__init__(_server, _url)
         
     def query_attr(self, attribute):
         query_template = '''
@@ -36,18 +36,17 @@ class QudtUnit(Unit):
         ?key
         WHERE
         {{
-        {_url} rdf:type ?key. 
+        <{_url}> rdf:type ?key. 
         FILTER NOT EXISTS{{?key rdf:type owl:DeprecatedClass}}
         }}'''
-        
+        #print query_template.format(_url = self.url)
         return self.query.make_query(query_template.format(_url = self.url))
     
-    def createInstance(self):
-        result = qudt_pb2.qudtUnit
+    def createInstance(self, result):
+        #result = qudt_pb2.QudtUnit()
         result.url = self.url
-        result.unitClass = self.getUnitClass()
-        result.offser = self.getOffset()
-        result.factor = self.getFactor()
-        return result
+        result.unitClass = self.getUnitClass()[0]
+        result.offset = float (self.getOffset()[0])
+        result.factor = float (self.getFactor()[0])
         
         
