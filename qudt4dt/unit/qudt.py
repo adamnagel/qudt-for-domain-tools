@@ -1,3 +1,4 @@
+import sys sys.path.append("..")
 import qudt_pb2 
 import barbara as bar
 class Unit(object):
@@ -46,7 +47,9 @@ class QudtUnit(Unit):
         #result = qudt_pb2.QudtUnit()
         result.url = self.url
         result.unitClass = self.getUnitClass()[0]
-        result.offset = float (self.getOffset()[0])
-        result.factor = float (self.getFactor()[0])
+        if not len(self.getOffset()) == 0:
+            result.offset = self.getOffset()[0]
+        if not len(self.getFactor()) == 0:
+            result.factor = self.getFactor()[0] 
         
         

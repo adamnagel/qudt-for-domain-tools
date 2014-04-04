@@ -1,3 +1,4 @@
+import sys sys.path.append("..")
 import barbara as bar
 from qudt import Unit
 class ModelicaUnit(Unit):
@@ -48,9 +49,13 @@ class ModelicaUnit(Unit):
     def createInstance(self, result):
         #result = qudt_pb2.ModelicaUnit()
         result.classPath = self.queryClassPath()[0]
-        result.max = float(self.queryMax()[0])
-        result.min = float(self.queryMin()[0])
-        result.start = float(self.queryStart()[0])
-        result.displayUnit = self.queryDisplayUnit()[0]
+        if not len(self.queryMax()) == 0:
+            result.max = self.queryMax()[0] 
+        if not len(self.queryMin()) == 0:
+            result.min = self.queryMin()[0] 
+        if not len(self.queryStart()) == 0:
+            result.start = self.queryStart()[0] 
+        if not len(self.queryDisplayUnit()) == 0:
+            result.displayUnit = self.queryDisplayUnit()[0] 
         result.quantity = self.queryQuantity()[0]
         return result

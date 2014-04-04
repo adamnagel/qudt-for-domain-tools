@@ -2,7 +2,7 @@ __author__ = 'adam'
 
 import sparqlcommands as sparql
 import re
-from unit_mapping import createMapping
+
 
 class Barbara:
     def __init__(self,server_url):
