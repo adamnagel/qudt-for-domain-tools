@@ -1,4 +1,5 @@
-import sys sys.path.append("..")
+import sys 
+sys.path.append("..")
 import barbara as bar
 from qudt import Unit
 

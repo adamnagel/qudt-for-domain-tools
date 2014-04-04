@@ -1,4 +1,5 @@
-import sys sys.path.append("..")
+import sys 
+sys.path.append("..")
 import qudt_pb2 
 import barbara as bar
 class Unit(object):
