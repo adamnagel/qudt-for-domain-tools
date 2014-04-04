@@ -1,6 +1,6 @@
 import sys 
 sys.path.append("..")
-import barbara as bar
+from qudt4dt import barbara as bar
 from qudt import Unit
 
 class MdaoUnit(Unit):
