@@ -15,7 +15,12 @@ class ModelicaUnit(Unit):
         ?key a <http://modelica.org/msl/SIUnits/vocabulary#ModelicaUnitClass>
         }}'''
         print querycontext_template.format(url = _url)
-        self.url = self.query.make_query(querycontext_template.format(url = _url))[0]
+        tmp = self.query.make_query(querycontext_template.format(url = _url))
+        if not len(tmp) == 0:
+            self.url = tmp[0]
+        else:
+            self.url = ''
+
     def query_attr(self, attribute):
         query_template = '''
         PREFIX modelica: <http://modelica.org/msl/SIUnits/vocabulary#>
@@ -49,6 +54,10 @@ class ModelicaUnit(Unit):
     
     def createInstance(self, result):
         #result = qudt_pb2.ModelicaUnit()
+        if self.url == '':
+            return
+        
+        result.url = self.url
         result.classPath = self.queryClassPath()[0]
         if not len(self.queryMax()) == 0:
             result.max = self.queryMax()[0] 

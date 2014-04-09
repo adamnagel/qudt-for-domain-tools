@@ -9,18 +9,20 @@ message QudtUnit {
 };
 
 message ModelicaUnit {
-    required string classPath = 1;
-    optional string max = 2;
-    optional string min = 3;
-    optional string start = 4;
-    optional string displayUnit = 5;
-    required string quantity = 6;
+    required string url = 1;
+    required string classPath = 2;
+    optional string max = 3;
+    optional string min = 4;
+    optional string start = 5;
+    optional string displayUnit = 6;
+    required string quantity = 7;
 };
 
 message MdaoUnit {
-    required string name = 1;
-    optional string expression = 2;
-    optional string comment = 3;
+    required string url = 1;
+    required string name = 2;
+    optional string expression = 3;
+    optional string comment = 4;
 };
 
 message Unit {

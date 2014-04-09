@@ -18,7 +18,11 @@ class MdaoUnit(Unit):
         ?key a ?class
         }}'''
         print querycontext_template.format(url = _url)
-        self.url = self.query.make_query(querycontext_template.format(url = _url))[0]
+        tmp = self.query.make_query(querycontext_template.format(url = _url))
+        if not len(tmp) == 0:
+            self.url = tmp[0]
+        else:
+            self.url = ''
         
     def query_attr(self, attribute):
         query_template = '''
@@ -44,6 +48,9 @@ class MdaoUnit(Unit):
     
     def createInstance(self, result):
         #result = qudt_pb2.MdaoUnit()
+        if self.url == '':
+            return
+        result.url = self.url
         result.name = self.queryName()[0]
         if not len(self.queryExpression())== 0:
             result.expression = self.queryExpression()[0]
