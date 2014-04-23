@@ -26,7 +26,7 @@ message MdaoUnit {
 };
 
 message Unit {
-    required QudtUnit qudt_unit = 1;
+    optional QudtUnit qudt_unit = 1;
     optional ModelicaUnit modelica_unit = 2;
     optional MdaoUnit mdao_unit = 3;
 };

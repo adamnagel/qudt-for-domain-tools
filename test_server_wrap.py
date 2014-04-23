@@ -50,7 +50,7 @@ class TestServerWrap(unittest.TestCase):
 
         fp = open(os.devnull, 'w')
         cls._wrap = Popen(shlex.split('python qudt4dt/server/server_warp.py'), stdout=fp)
-        time.sleep(2)
+        #time.sleep(2)
 
     @classmethod
     def tearDownClass(cls):
@@ -93,7 +93,7 @@ if __name__ == '__main__':
         test = test_generator(t)
         setattr(TestServerWrap, test_name, test)
 
-    #unittest.main()
+    unittest.main()
     suite = unittest.TestLoader().loadTestsFromTestCase(TestServerWrap)
     unittest.TextTestRunner(verbosity=2).run(suite)
 

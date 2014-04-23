@@ -1,5 +1,6 @@
 import sys 
 sys.path.append("../..")
+sys.path.append("./")
 import socket
 import qudt4dt
 
