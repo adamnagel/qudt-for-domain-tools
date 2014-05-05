@@ -52,7 +52,8 @@ class QudtUnit(Unit):
         if '@empty_url' == self.url:
             return
         result.url = self.url
-        result.unitClass = self.getUnitClass()[0]
+        if not len(self.getUnitClass()) == 0:
+            result.unitClass = self.getUnitClass()[0]
         if not len(self.getOffset()) == 0:
             result.offset = self.getOffset()[0]
         if not len(self.getFactor()) == 0:

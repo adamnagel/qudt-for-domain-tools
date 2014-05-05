@@ -2,7 +2,7 @@ message QudtUnit {
     required string url = 1;
     optional string unitName =2; 
     optional string symbol = 3;
-    required string unitClass = 4;
+    optional string unitClass = 4;
     optional string abbreviation = 5;
     optional string factor = 6;
     optional string offset = 7;
