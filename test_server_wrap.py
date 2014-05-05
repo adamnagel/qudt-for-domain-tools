@@ -62,7 +62,7 @@ def test_generator(url):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         sock.connect(('localhost', 3031))
-        time.sleep(2)
+        #time.sleep(2)
         unit = url
         send_len = len(unit)
         sock.send(struct.pack('!i', send_len) + unit)
