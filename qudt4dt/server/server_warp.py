@@ -3,7 +3,7 @@ sys.path.append("../..")
 sys.path.append("./")
 import socket
 import qudt4dt
-
+import struct
 
 
 def create_message(url):
@@ -29,13 +29,20 @@ def daemon():
         connection,address = sock.accept()  
         try:  
             connection.settimeout(5)  
-            buf = connection.recv(1024)  
+            buf_len = connection.recv(struct.calcsize('!i'))        
+            buf_len = struct.unpack('!i', buf_len)[0]
+            print buf_len
+            count = 0
+            buf = ''
+            while count < buf_len:
+                _buf = connection.recv(1024)
+                count += len(_buf)
+                buf += _buf
             print buf
             ins = create_message(buf)
             data = ins.SerializeToString()
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
-            s.connect(('localhost', 3032))  
-            s.send(data)
+            length = len(data)
+            connection.send(struct.pack('!i', length) + data)
         except socket.timeout:  
             print 'time out'  
         connection.close()   

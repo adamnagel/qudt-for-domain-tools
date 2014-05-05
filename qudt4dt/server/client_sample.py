@@ -3,24 +3,26 @@ sys.path.append("../../")
 import socket  
 import time 
 import qudt4dt
+import struct
 def get_instance(url):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
     sock.connect(('localhost', 3031))  
     time.sleep(2)  
     unit = url 
-    sock.send(unit)
-    
-    back = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
-    back.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
-    back.bind(('localhost', 3032))  
-    back.listen(10)  
+    send_len = len(unit)
+    sock.send(struct.pack('!i', send_len) + unit)
+
+    rec_len = sock.recv(struct.calcsize('!i'))
+    rec_len = struct.unpack('!i', rec_len)[0]
     buf = ''
-    connection,address = back.accept() 
-    buf = connection.recv(1024)
-    #print length
+    count = 0
+    while count < rec_len:
+        _buf = sock.recv(1024)
+        count += len(_buf)
+        buf += _buf    
+    
     ins = qudt4dt.qudt_pb2.Unit()
     ins.ParseFromString(buf)
-    back.close()
     sock.close() 
     return ins
     
@@ -42,7 +44,7 @@ def value_conversion(src_url, obj_url, value):
     
 if __name__ == '__main__':
     fack = u'http://www.fakenamespace.org/thing#fakeunit'
-    t = get_instance(fack)
+    #t = get_instance(fack)
     meter = u'http://qudt.org/vocab/unit#Meter'
     m_unit = from_qudt_to_modelica(meter)
     print m_unit.url

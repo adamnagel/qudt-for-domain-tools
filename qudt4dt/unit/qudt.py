@@ -6,9 +6,9 @@ class Unit(object):
     def __init__(self, _server, _url):
         self.url = _url
         self.query = bar.Barbara(_server)
-        all_unit = self.query.list_all_units()
-        if not self.url in all_unit:
-            self.url = '@empty_url'
+        #all_unit = self.query.list_all_units()
+        #if not self.url in all_unit:
+        #..    self.url = '@empty_url'
 
     
 class QudtUnit(Unit):
@@ -51,6 +51,7 @@ class QudtUnit(Unit):
         #result = qudt_pb2.QudtUnit()
         if '@empty_url' == self.url:
             return
+        result.url = self.url
         result.unitClass = self.getUnitClass()[0]
         if not len(self.getOffset()) == 0:
             result.offset = self.getOffset()[0]

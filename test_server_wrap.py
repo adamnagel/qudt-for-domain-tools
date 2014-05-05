@@ -9,7 +9,7 @@ import os
 from qudt4dt import sparql
 import qudt4dt
 import fusekiutils
-
+import struct
 
 def EnumerateAllUnitIndividuals():
     server_url = "http://localhost:3030"
@@ -50,7 +50,7 @@ class TestServerWrap(unittest.TestCase):
 
         fp = open(os.devnull, 'w')
         cls._wrap = Popen(shlex.split('python qudt4dt/server/server_warp.py'), stdout=fp)
-        #time.sleep(2)
+        time.sleep(2)
 
     @classmethod
     def tearDownClass(cls):
@@ -60,22 +60,24 @@ class TestServerWrap(unittest.TestCase):
 def test_generator(url):
     def test(self):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         sock.connect(('localhost', 3031))
         time.sleep(2)
         unit = url
-        sock.send(unit)
+        send_len = len(unit)
+        sock.send(struct.pack('!i', send_len) + unit)
 
-        back = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        back.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        back.bind(('localhost', 3032))
-        back.listen(10)
+        rec_len = sock.recv(struct.calcsize('!i'))
+        rec_len = struct.unpack('!i', rec_len)[0]
         buf = ''
-        connection, address = back.accept()
-        buf = connection.recv(1024)
-        #print length
+        count = 0
+        while count < rec_len:
+            _buf = sock.recv(1024)
+            count += len(_buf)
+            buf += _buf
+        #print buf
         ins = qudt4dt.qudt_pb2.Unit()
         ins.ParseFromString(buf)
-        back.close()
         sock.close()
 
         self.assertTrue(ins is not None)
