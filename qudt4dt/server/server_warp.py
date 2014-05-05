@@ -23,7 +23,7 @@ def daemon():
     
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
     sock.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
-    sock.bind(('localhost', 3031))  
+    sock.bind(('', 3031))  
     sock.listen(5)  
     while True:  
         connection,address = sock.accept()  
