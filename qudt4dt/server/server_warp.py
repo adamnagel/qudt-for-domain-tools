@@ -29,8 +29,8 @@ def daemon():
         connection,address = sock.accept()  
         try:  
             connection.settimeout(5)  
-            buf_len = connection.recv(struct.calcsize('!i'))        
-            buf_len = struct.unpack('!i', buf_len)[0]
+            buf_len = connection.recv(struct.calcsize('i'))        
+            buf_len = struct.unpack('i', buf_len)[0]
             print buf_len
             count = 0
             buf = ''
@@ -42,10 +42,13 @@ def daemon():
             ins = create_message(buf)
             data = ins.SerializeToString()
             length = len(data)
-            connection.send(struct.pack('!i', length) + data)
+            connection.send(struct.pack('i', length) + data)
         except socket.timeout:  
-            print 'time out'  
-        connection.close()   
+            print 'time out'
+        except struct.error:
+            print 'incomplete data package'
+        finally:
+            connection.close()   
 
 if __name__ == '__main__':  
     daemon()
