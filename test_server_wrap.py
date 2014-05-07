@@ -1,11 +1,9 @@
 __author__ = 'adam'
 import unittest
 import socket
-import time
 from subprocess import Popen
 import shlex
 import os
-from multiprocessing import Process
 from multiprocessing import Pool
 import time
 
@@ -60,10 +58,10 @@ def test_url(url):
     #time.sleep(2)
     unit = url
     send_len = len(unit)
-    sock.send(struct.pack('!i', send_len) + unit)
+    sock.send(struct.pack('i', send_len) + unit)
 
-    rec_len = sock.recv(struct.calcsize('!i'))
-    rec_len = struct.unpack('!i', rec_len)[0]
+    rec_len = sock.recv(struct.calcsize('i'))
+    rec_len = struct.unpack('i', rec_len)[0]
     buf = ''
     count = 0
     while count < rec_len:
