@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE paradigm SYSTEM "edf.dtd">
+
+<paradigm name="qudtUnit" guid="{FBBDB662-E086-4057-8964-36D70144D2AB}" cdate="Thu May 22 16:31:38 2014" mdate="Thu May 22 16:31:38 2014" >
+
+	<comment></comment>
+
+	<author></author>
+
+	<folder name = "RootFolder" metaref = "1000"  rootobjects = "Main" >
+		<attrdef name="UnitName" metaref = "1001" valuetype = "string" defvalue = "">
+		</attrdef>
+		<attrdef name="Value" metaref = "1002" valuetype = "string" defvalue = "">
+		</attrdef>
+		<atom name = "Node" metaref = "1003"  attributes = "UnitName Value">
+				<regnode name = "namePosition" value ="4"></regnode>
+		</atom>
+		<connection name = "Edge" metaref = "1004" >
+				<regnode name = "color" value ="0x000000"></regnode>
+				<regnode name = "dstStyle" value ="butt"></regnode>
+				<regnode name = "srcStyle" value ="butt"></regnode>
+				<regnode name = "lineType" value ="solid"></regnode>
+			<connjoint>
+				<pointerspec name = "src">
+					<pointeritem desc = "Node"></pointeritem>
+				</pointerspec>
+				<pointerspec name = "dst">
+					<pointeritem desc = "Node"></pointeritem>
+				</pointerspec>
+			</connjoint>
+		</connection>
+		<model name = "Main" metaref = "1005" >
+				<regnode name = "namePosition" value ="4"></regnode>
+				<regnode name = "isTypeInfoShown" value ="true"></regnode>
+			<role name = "Edge" metaref = "1006" kind = "Edge"></role>
+			<role name = "Node" metaref = "1007" kind = "Node"></role>
+			<aspect name = "Aspect" metaref = "1008" >
+				<part metaref = "1009" role = "Edge" primary = "yes" linked = "no"></part>
+				<part metaref = "1010" role = "Node" primary = "yes" linked = "no"></part>
+			</aspect>
+		</model>
+	</folder>
+</paradigm>
