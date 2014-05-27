@@ -12,6 +12,7 @@ namespace qudt4dt
         {
             private Qudt4dt.Client _client;
             private const String defaultAddress = "localhost";
+            private TTransport _transport;
 
             public Client(String address)
             {
@@ -25,15 +26,25 @@ namespace qudt4dt
                 }
             }
 
+            ~Client()
+            {
+                _transport.Close();
+            }
+
             public Client() : this(defaultAddress) { }
 
             private void init(String address)
             {
-                TTransport transport = new TSocket(address, 9090);
-                transport.Open();
+                _transport = new TSocket(address, 9090);
+                _transport.Open();
 
-                TProtocol protocol = new TBinaryProtocol(transport);
+                TProtocol protocol = new TBinaryProtocol(_transport);
                 _client = new Qudt4dt.Client(protocol);
+            }
+
+            public qudt4dt.thrift.Unit query(string url)
+            {
+                return _client.query(url);
             }
 
 

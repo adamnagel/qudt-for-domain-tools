@@ -8,7 +8,7 @@ using GME.CSharp;
 using GME;
 using GME.MGA;
 using GME.MGA.Core;
-
+using qudtUnit = ISIS.GME.Dsml.qudtUnit;
 namespace qudt4dtUnitConversion
 {
     /// <summary>
@@ -44,7 +44,7 @@ namespace qudt4dtUnitConversion
         {
             // TODO: Add your initialization code here...            
         }
-
+        private qudt4dt.CSClient.Client _client;
         /// <summary>
         /// The main entry point of the interpreter. A transaction is already open,
         /// GMEConsole is available. A general try-catch block catches all the exceptions
@@ -77,9 +77,28 @@ namespace qudt4dtUnitConversion
             //  Add a Reference in this project to the other project
             //  Add "using [ParadigmName] = ISIS.GME.Dsml.[ParadigmName].Classes.Interfaces;" to the top of this file
             // if (currentobj.Meta.Name == "KindName")
-            // [ParadigmName].[KindName] dsCurrentObj = ISIS.GME.Dsml.[ParadigmName].Classes.[KindName].Cast(currentobj);			
+            // [ParadigmName].[KindName] dsCurrentObj = ISIS.GME.Dsml.[ParadigmName].Classes.[KindName].Cast(currentobj);
+	        _client = new qudt4dt.CSClient.Client();
+            valueConvert(currentobj);
+            
         }
 
+        private void valueConvert(MgaFCO current)
+        {
+            qudtUnit.Interfaces.Main main = qudtUnit.Classes.Main.Cast(current);
+            var edges = main.Children.EdgeCollection;
+            foreach (var e in edges)
+            {
+                var src = e.SrcEnds.Node;
+                var dst = e.DstEnds.Node;
+                var src_u = _client.query(src.Attributes.UnitName);
+                var dst_u = _client.query(dst.Attributes.UnitName);
+                var _value = ((src_u.Qudt_u.Offset - dst_u.Qudt_u.Offset) + Double.Parse(src.Attributes.Value)) *
+                    src_u.Qudt_u.Factor / dst_u.Qudt_u.Factor;
+                dst.Attributes.Value = _value.ToString();
+                
+            }
+        }
         #region IMgaComponentEx Members
 
         MgaGateway MgaGateway { get; set; }
