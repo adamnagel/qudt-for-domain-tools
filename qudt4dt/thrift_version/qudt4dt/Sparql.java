@@ -7,12 +7,10 @@ import com.hp.hpl.jena.query.ResultSet;
  */
 
 public class Sparql {
-    private String ontology_service;
-    public Sparql (){
-        this.ontology_service = "http://localhost:3030/qudt4dt/query?";
-    }
-    public Sparql(String _ontology_service){
-        this.ontology_service = _ontology_service;
+    private String ontology_server_address;
+
+    public Sparql(String _ontology_server_address){
+        this.ontology_server_address = _ontology_server_address;
     }
 
 
@@ -26,7 +24,7 @@ public class Sparql {
 //                        "                    { <http://qudt.org/schema/qudt#Unit> ^rdfs:subClassOf+ ?class\n" +
 //                        "                    }\n";
 
-        QueryExecution x = QueryExecutionFactory.sparqlService(ontology_service, query);
+        QueryExecution x = QueryExecutionFactory.sparqlService(ontology_server_address, query);
         ResultSet result = x.execSelect();
         return result;
         //ResultSetFormatter.out(System.out, result);

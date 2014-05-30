@@ -1,8 +1,6 @@
 package qudt4dt.factory;
 
 
-import qudt4dt.Sparql;
-import qudt4dt.thrift.QudtUnit;
 import qudt4dt.thrift.Unit;
 
 /**
@@ -10,23 +8,30 @@ import qudt4dt.thrift.Unit;
  */
 public class UnitFactory extends Factory{
     private String qudt_url;
-    public UnitFactory(String _url){
-        super(_url);
-        init();
-    }
-    public UnitFactory(String _url, String _ontology_service){
-        super(_url, _ontology_service);
+
+    public UnitFactory(String _url, String _ontology_server_address){
+        super(_ontology_server_address);
+        self_url = _url;
         init();
     }
     public void init(){
-        qudt_url = url;
+        qudt_url = self_url;
         //TODO:: acception for non qudt unit
     }
     public Unit create_ins(){
         Unit result = new Unit();
-        QudtUnitFactory q = new QudtUnitFactory(qudt_url);
-        result.url = url;
-        result.qudt_u = q.create_ins();
+
+        result.setUrl(self_url);
+
+        QudtUnitFactory q = new QudtUnitFactory(qudt_url, ontology_server_address);
+        result.setQudt_u(q.create_ins());
+
+        ModelicaUnitFactory m = new ModelicaUnitFactory(qudt_url, ontology_server_address);
+        result.setModelica_u(m.create_ins());
+
+        MdaoUnitFactory md = new MdaoUnitFactory(qudt_url, ontology_server_address);
+        result.setMdao_u(md.create_ins());
+
         return result;
     }
 }

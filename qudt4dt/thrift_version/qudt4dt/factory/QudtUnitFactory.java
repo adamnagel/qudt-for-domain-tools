@@ -8,16 +8,14 @@ import qudt4dt.thrift.QudtUnit;
  * Created by yli on 5/8/14.
  */
 public class QudtUnitFactory extends Factory {
-    public QudtUnitFactory(String _url){
-        super(_url);
-        init();
-    }
-    public QudtUnitFactory(String _url, String _ontology_service){
-        super(_url, _ontology_service);
+
+    public QudtUnitFactory(String _url, String _ontology_server_address){
+        super(_ontology_server_address);
+        self_url = _url;
         init();
     }
 
-    public RDFNode query_attr(String attribute){
+    private RDFNode query_attr(String attribute){
         String query_template = "PREFIX qudt: <http://qudt.org/schema/qudt#>\n" +
                 "        SELECT\n" +
                 "        ?key\n" +
@@ -25,8 +23,8 @@ public class QudtUnitFactory extends Factory {
                 "        {\n" +
                 "        <%s> qudt:%s ?key.\n" +
                 "        }\n";
-        System.out.print(String.format(query_template, url, attribute));
-        ResultSet rs = ontology.query(String.format(query_template, url, attribute));
+        //System.out.print(String.format(query_template, self_url, attribute));
+        ResultSet rs = ontology.query(String.format(query_template, self_url, attribute));
         if(false == rs.hasNext())
             return null;
         return rs.next().get("key");
@@ -57,24 +55,24 @@ public class QudtUnitFactory extends Factory {
                 "        <%s> rdf:type ?key. \n" +
                 "        FILTER NOT EXISTS{?key rdf:type owl:DeprecatedClass}\n" +
                 "        }\n";
-        //System.out.print(String.format(query_template, url));
-        ResultSet rs = ontology.query(String.format(query_template, url));
-        if(0 == rs.getRowNumber())
+        //System.out.print(String.format(query_template, self_url));
+        ResultSet rs = ontology.query(String.format(query_template, self_url));
+        if(false == rs.hasNext())
             return null;
-        return rs.next().get("key").asLiteral().getString();
+        return rs.next().get("key").toString();
     }
 
 
-    public void init(){
-        ;//TODO:: checking the invalid url
+    private void init(){
+        ;//TODO:: checking the invalid self_url
     }
 
     //TODO:: symbol, abbreviation
 
-
+    @Override
     public QudtUnit create_ins(){
         QudtUnit result = new QudtUnit();
-        result.setUrl(url);
+        result.setUrl(self_url);
         Object tmp;
         tmp = getOffset();
         if(null != tmp)

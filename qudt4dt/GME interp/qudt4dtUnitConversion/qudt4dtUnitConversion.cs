@@ -68,7 +68,7 @@ namespace qudt4dtUnitConversion
 			
 			// Get RootFolder
 			IMgaFolder rootFolder = project.RootFolder;
-			GMEConsole.Out.WriteLine(rootFolder.Name);
+			//GMEConsole.Out.WriteLine(rootFolder.Name);
             
             // To use the domain-specific API:
             //  Create another project with the same name as the paradigm name
@@ -78,9 +78,13 @@ namespace qudt4dtUnitConversion
             //  Add "using [ParadigmName] = ISIS.GME.Dsml.[ParadigmName].Classes.Interfaces;" to the top of this file
             // if (currentobj.Meta.Name == "KindName")
             // [ParadigmName].[KindName] dsCurrentObj = ISIS.GME.Dsml.[ParadigmName].Classes.[KindName].Cast(currentobj);
-	        _client = new qudt4dt.CSClient.Client();
-            valueConvert(currentobj);
+            System.Diagnostics.Stopwatch sw = System.Diagnostics.Stopwatch.StartNew();
+
             
+	        _client = new qudt4dt.CSClient.Client("10.67.68.239");
+            valueConvert(currentobj);
+            sw.Stop();
+            GMEConsole.Out.WriteLine("Time taken: {0}ms", sw.Elapsed.TotalMilliseconds);
         }
 
         private void valueConvert(MgaFCO current)
@@ -93,12 +97,21 @@ namespace qudt4dtUnitConversion
                 var dst = e.DstEnds.Node;
                 var src_u = _client.query(src.Attributes.UnitName);
                 var dst_u = _client.query(dst.Attributes.UnitName);
+                if(!(src_u.Qudt_u.UnitClass == dst_u.Qudt_u.UnitClass))
+                    GMEConsole.Error.WriteLine(String.Format("incompatible units : %s, %s", src_u.Url, dst_u.Url));
+
+                GMEConsole.Out.WriteLine(String.Format("{0} : {1}, {2}", src_u.Qudt_u.Url, src_u.Modelica_u.Url, src_u.Mdao_u.Url));
+                GMEConsole.Out.WriteLine(String.Format("{0} : {1}, {2}", dst_u.Qudt_u.Url, dst_u.Modelica_u.Url, dst_u.Mdao_u.Url));
+
                 var _value = ((src_u.Qudt_u.Offset - dst_u.Qudt_u.Offset) + Double.Parse(src.Attributes.Value)) *
                     src_u.Qudt_u.Factor / dst_u.Qudt_u.Factor;
                 dst.Attributes.Value = _value.ToString();
                 
             }
         }
+
+    
+
         #region IMgaComponentEx Members
 
         MgaGateway MgaGateway { get; set; }

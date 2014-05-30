@@ -39,6 +39,10 @@
     <AssemblyOriginatorKeyFile>AssemblySignature.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ISIS.GME.Common, Version=1.0.4.0, Culture=neutral, PublicKeyToken=1321e6b92842fe54, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Windows\Microsoft.NET\assembly\GAC_MSIL\ISIS.GME.Common\v4.0_1.0.4.0__1321e6b92842fe54\ISIS.GME.Common.dll</HintPath>
+    </Reference>
     <Reference Include="ISIS.GME.Dsml.qudtUnit">
       <HintPath>..\model\ISIS.GME.Dsml.qudtUnit.dll</HintPath>
     </Reference>

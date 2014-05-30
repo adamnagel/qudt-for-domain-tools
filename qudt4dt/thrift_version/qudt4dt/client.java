@@ -41,8 +41,9 @@ public class client {
     {
 
         System.out.println("quering ...\n");
-        Unit rs = client.query("http://qudt.org/vocab/unit#DegreeCelsius");
-        QudtUnit rs1 = rs.qudt_u;
-        System.out.println("factor :" + rs);
+        Unit rs = client.query("http://qudt.org/vocab/unit#Meter");
+        System.out.println("qudt :" + rs.qudt_u);
+        System.out.println("mdao :" + rs.mdao_u);
+        System.out.println("modelica: " + rs.modelica_u);
     }
 }

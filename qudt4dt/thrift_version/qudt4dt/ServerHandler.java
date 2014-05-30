@@ -9,23 +9,15 @@ import qudt4dt.thrift.Unit;
  */
 public class ServerHandler implements Qudt4dt.Iface{
 
-    private String ontology_service;
+    private String ontology_server_address;
 
-    public ServerHandler(){
-        ontology_service = null;
+    public ServerHandler(String _ontology_server_address){
+        ontology_server_address = _ontology_server_address;
     }
 
-    public ServerHandler(String _ontology_service){
-        ontology_service = _ontology_service;
-    }
-
+    @Override
     public Unit query(String url){
-        UnitFactory rs;
-        if(null == ontology_service)
-            rs = new UnitFactory(url);
-        else
-            rs = new UnitFactory(url, ontology_service);
-
+        UnitFactory rs = new UnitFactory(url, ontology_server_address);
         return rs.create_ins();
     }
 

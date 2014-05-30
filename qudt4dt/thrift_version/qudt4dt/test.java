@@ -7,7 +7,7 @@ import com.hp.hpl.jena.rdf.model.Literal;
  */
 public class test {
     public static void main(String[] args){
-        Sparql q = new Sparql();
+        Sparql q = new Sparql("http://localhost:3030/qudt4dt/query?");
         String query =
                 "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
                         "                    SELECT\n" +

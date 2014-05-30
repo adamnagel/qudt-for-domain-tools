@@ -53,7 +53,7 @@ namespace qudt4dt
             {
                 try
                 {
-                    TTransport transport = new TSocket("10.67.29.212", 9090);
+                    TTransport transport = new TSocket("10.67.68.239", 9090);
                     transport.Open();
 
 
