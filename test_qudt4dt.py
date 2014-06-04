@@ -5,7 +5,7 @@ __author__ = 'adam'
 #from subprocess import Popen
 #import shlex
 #import os
-import fusekiutils
+from qudt4dt import fusekiutils
 import qudt4dt
 import unittest
 

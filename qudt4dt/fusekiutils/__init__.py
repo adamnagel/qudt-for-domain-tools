@@ -43,11 +43,11 @@ def PollFusekiLaunch(fuseki_url):
             time.sleep(1)
 
 def IsFusekiRunning(fuseki_url):
-        try:
-            urllib.urlopen(fuseki_url)
-            return True
-        except IOError:
-            return False
+    try:
+        urllib.urlopen(fuseki_url)
+        return True
+    except IOError:
+        return False
 
 if __name__ == "__main__":
-	LaunchFuseki()
+    LaunchFuseki()

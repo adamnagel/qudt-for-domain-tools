@@ -4,8 +4,8 @@ import sys
 import os
 import shutil
 import glob
-import fusekiutils
 import qudt4dt
+from qudt4dt import fusekiutils
 
 ### Import stuff that's in our repo (in various places)
 ### SO UGLY
