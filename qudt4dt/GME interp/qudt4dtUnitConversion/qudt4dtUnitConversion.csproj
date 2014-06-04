@@ -63,11 +63,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="client\MdaoUnit.cs" />
-    <Compile Include="client\ModelicaUnit.cs" />
+    <Compile Include="client\InvalidOperation.cs" />
+    <Compile Include="client\MdaoAttr.cs" />
+    <Compile Include="client\ModelicaAttr.cs" />
     <Compile Include="client\Program.cs" />
-    <Compile Include="client\Qudt4dt.cs" />
-    <Compile Include="client\QudtUnit.cs" />
+    <Compile Include="client\Quantity.cs" />
+    <Compile Include="client\Qudt4dt_base.cs" />
+    <Compile Include="client\QudtAttr.cs" />
     <Compile Include="client\Unit.cs" />
     <Compile Include="ComponentConfig.cs" />
     <Compile Include="qudt4dtUnitConversion.cs" />

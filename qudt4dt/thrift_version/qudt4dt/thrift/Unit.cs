@@ -24,9 +24,8 @@ namespace qudt4dt.thrift
   public partial class Unit : TBase
   {
     private string _url;
-    private QudtUnit _qudt_u;
-    private ModelicaUnit _modelica_u;
-    private MdaoUnit _mdao_u;
+    private string _qudt_url;
+    private QudtAttr _qudt_attr;
 
     public string Url
     {
@@ -41,42 +40,29 @@ namespace qudt4dt.thrift
       }
     }
 
-    public QudtUnit Qudt_u
+    public string Qudt_url
     {
       get
       {
-        return _qudt_u;
+        return _qudt_url;
       }
       set
       {
-        __isset.qudt_u = true;
-        this._qudt_u = value;
+        __isset.qudt_url = true;
+        this._qudt_url = value;
       }
     }
 
-    public ModelicaUnit Modelica_u
+    public QudtAttr Qudt_attr
     {
       get
       {
-        return _modelica_u;
+        return _qudt_attr;
       }
       set
       {
-        __isset.modelica_u = true;
-        this._modelica_u = value;
-      }
-    }
-
-    public MdaoUnit Mdao_u
-    {
-      get
-      {
-        return _mdao_u;
-      }
-      set
-      {
-        __isset.mdao_u = true;
-        this._mdao_u = value;
+        __isset.qudt_attr = true;
+        this._qudt_attr = value;
       }
     }
 
@@ -87,9 +73,8 @@ namespace qudt4dt.thrift
     #endif
     public struct Isset {
       public bool url;
-      public bool qudt_u;
-      public bool modelica_u;
-      public bool mdao_u;
+      public bool qudt_url;
+      public bool qudt_attr;
     }
 
     public Unit() {
@@ -115,25 +100,16 @@ namespace qudt4dt.thrift
             }
             break;
           case 2:
-            if (field.Type == TType.Struct) {
-              Qudt_u = new QudtUnit();
-              Qudt_u.Read(iprot);
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 3:
-            if (field.Type == TType.Struct) {
-              Modelica_u = new ModelicaUnit();
-              Modelica_u.Read(iprot);
+            if (field.Type == TType.String) {
+              Qudt_url = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 4:
             if (field.Type == TType.Struct) {
-              Mdao_u = new MdaoUnit();
-              Mdao_u.Read(iprot);
+              Qudt_attr = new QudtAttr();
+              Qudt_attr.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -159,28 +135,20 @@ namespace qudt4dt.thrift
         oprot.WriteString(Url);
         oprot.WriteFieldEnd();
       }
-      if (Qudt_u != null && __isset.qudt_u) {
-        field.Name = "qudt_u";
-        field.Type = TType.Struct;
+      if (Qudt_url != null && __isset.qudt_url) {
+        field.Name = "qudt_url";
+        field.Type = TType.String;
         field.ID = 2;
         oprot.WriteFieldBegin(field);
-        Qudt_u.Write(oprot);
+        oprot.WriteString(Qudt_url);
         oprot.WriteFieldEnd();
       }
-      if (Modelica_u != null && __isset.modelica_u) {
-        field.Name = "modelica_u";
-        field.Type = TType.Struct;
-        field.ID = 3;
-        oprot.WriteFieldBegin(field);
-        Modelica_u.Write(oprot);
-        oprot.WriteFieldEnd();
-      }
-      if (Mdao_u != null && __isset.mdao_u) {
-        field.Name = "mdao_u";
+      if (Qudt_attr != null && __isset.qudt_attr) {
+        field.Name = "qudt_attr";
         field.Type = TType.Struct;
         field.ID = 4;
         oprot.WriteFieldBegin(field);
-        Mdao_u.Write(oprot);
+        Qudt_attr.Write(oprot);
         oprot.WriteFieldEnd();
       }
       oprot.WriteFieldStop();
@@ -196,23 +164,17 @@ namespace qudt4dt.thrift
         __sb.Append("Url: ");
         __sb.Append(Url);
       }
-      if (Qudt_u != null && __isset.qudt_u) {
+      if (Qudt_url != null && __isset.qudt_url) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Qudt_u: ");
-        __sb.Append(Qudt_u== null ? "<null>" : Qudt_u.ToString());
+        __sb.Append("Qudt_url: ");
+        __sb.Append(Qudt_url);
       }
-      if (Modelica_u != null && __isset.modelica_u) {
+      if (Qudt_attr != null && __isset.qudt_attr) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Modelica_u: ");
-        __sb.Append(Modelica_u== null ? "<null>" : Modelica_u.ToString());
-      }
-      if (Mdao_u != null && __isset.mdao_u) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("Mdao_u: ");
-        __sb.Append(Mdao_u== null ? "<null>" : Mdao_u.ToString());
+        __sb.Append("Qudt_attr: ");
+        __sb.Append(Qudt_attr== null ? "<null>" : Qudt_attr.ToString());
       }
       __sb.Append(")");
       return __sb.ToString();

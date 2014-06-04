@@ -4,13 +4,15 @@ using Thrift.Protocol;
 using Thrift.Server;
 using Thrift.Transport;
 using qudt4dt.thrift;
+
+using System.Collections.Generic;
 namespace qudt4dt
 {
     namespace CSClient
     {
         public class Client
         {
-            private Qudt4dt.Client _client;
+            private Qudt4dt_base.Client _client;
             private const String defaultAddress = "localhost";
             private TTransport _transport;
 
@@ -39,7 +41,7 @@ namespace qudt4dt
                 _transport.Open();
 
                 TProtocol protocol = new TBinaryProtocol(_transport);
-                _client = new Qudt4dt.Client(protocol);
+                _client = new Qudt4dt_base.Client(protocol);
             }
 
             public qudt4dt.thrift.Unit query(string url)
@@ -47,6 +49,15 @@ namespace qudt4dt
                 return _client.query(url);
             }
 
+            public qudt4dt.thrift.Quantity quantity_convert(qudt4dt.thrift.Quantity src, string dst_url)
+            {
+                return _client.quantity_convert(src, dst_url);
+            }
+
+            public Dictionary<String, Quantity> list_domain_unitset(Quantity input)
+            {
+                return _client.list_domain_unitset(input);
+            }
 
             //client sample
             public static void Main()
@@ -58,7 +69,7 @@ namespace qudt4dt
 
 
                     TProtocol protocol = new TBinaryProtocol(transport);
-                    Qudt4dt.Client client = new Qudt4dt.Client(protocol);
+                    Qudt4dt_base.Client client = new Qudt4dt_base.Client(protocol);
 
 
                     perform(client);
@@ -72,13 +83,12 @@ namespace qudt4dt
             }
 
 
-            private static void perform(Qudt4dt.Client client)
+            private static void perform(Qudt4dt_base.Client client)
             {
 
                 Console.WriteLine("quering ...");
                 Unit rs = client.query("http://qudt.org/vocab/unit#DegreeCelsius");
-                QudtUnit rs1 = rs.Qudt_u;
-                Console.WriteLine(rs1.ToString());
+                Console.WriteLine(rs.ToString());
             }
         }
     }

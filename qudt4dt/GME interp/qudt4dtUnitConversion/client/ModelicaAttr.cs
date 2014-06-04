@@ -21,28 +21,14 @@ namespace qudt4dt.thrift
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class ModelicaUnit : TBase
+  public partial class ModelicaAttr : TBase
   {
-    private string _url;
     private string _classPath;
     private double _max;
     private double _min;
     private double _start;
     private string _displayUnit;
     private string _quantity;
-
-    public string Url
-    {
-      get
-      {
-        return _url;
-      }
-      set
-      {
-        __isset.url = true;
-        this._url = value;
-      }
-    }
 
     public string ClassPath
     {
@@ -128,7 +114,6 @@ namespace qudt4dt.thrift
     [Serializable]
     #endif
     public struct Isset {
-      public bool url;
       public bool classPath;
       public bool max;
       public bool min;
@@ -137,7 +122,7 @@ namespace qudt4dt.thrift
       public bool quantity;
     }
 
-    public ModelicaUnit() {
+    public ModelicaAttr() {
       this._displayUnit = "";
       this.__isset.displayUnit = true;
       this._quantity = "";
@@ -158,47 +143,40 @@ namespace qudt4dt.thrift
         {
           case 1:
             if (field.Type == TType.String) {
-              Url = iprot.ReadString();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 2:
-            if (field.Type == TType.String) {
               ClassPath = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 3:
+          case 2:
             if (field.Type == TType.Double) {
               Max = iprot.ReadDouble();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 4:
+          case 3:
             if (field.Type == TType.Double) {
               Min = iprot.ReadDouble();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 5:
+          case 4:
             if (field.Type == TType.Double) {
               Start = iprot.ReadDouble();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 6:
+          case 5:
             if (field.Type == TType.String) {
               DisplayUnit = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 7:
+          case 6:
             if (field.Type == TType.String) {
               Quantity = iprot.ReadString();
             } else { 
@@ -215,21 +193,13 @@ namespace qudt4dt.thrift
     }
 
     public void Write(TProtocol oprot) {
-      TStruct struc = new TStruct("ModelicaUnit");
+      TStruct struc = new TStruct("ModelicaAttr");
       oprot.WriteStructBegin(struc);
       TField field = new TField();
-      if (Url != null && __isset.url) {
-        field.Name = "url";
-        field.Type = TType.String;
-        field.ID = 1;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteString(Url);
-        oprot.WriteFieldEnd();
-      }
       if (ClassPath != null && __isset.classPath) {
         field.Name = "classPath";
         field.Type = TType.String;
-        field.ID = 2;
+        field.ID = 1;
         oprot.WriteFieldBegin(field);
         oprot.WriteString(ClassPath);
         oprot.WriteFieldEnd();
@@ -237,7 +207,7 @@ namespace qudt4dt.thrift
       if (__isset.max) {
         field.Name = "max";
         field.Type = TType.Double;
-        field.ID = 3;
+        field.ID = 2;
         oprot.WriteFieldBegin(field);
         oprot.WriteDouble(Max);
         oprot.WriteFieldEnd();
@@ -245,7 +215,7 @@ namespace qudt4dt.thrift
       if (__isset.min) {
         field.Name = "min";
         field.Type = TType.Double;
-        field.ID = 4;
+        field.ID = 3;
         oprot.WriteFieldBegin(field);
         oprot.WriteDouble(Min);
         oprot.WriteFieldEnd();
@@ -253,7 +223,7 @@ namespace qudt4dt.thrift
       if (__isset.start) {
         field.Name = "start";
         field.Type = TType.Double;
-        field.ID = 5;
+        field.ID = 4;
         oprot.WriteFieldBegin(field);
         oprot.WriteDouble(Start);
         oprot.WriteFieldEnd();
@@ -261,7 +231,7 @@ namespace qudt4dt.thrift
       if (DisplayUnit != null && __isset.displayUnit) {
         field.Name = "displayUnit";
         field.Type = TType.String;
-        field.ID = 6;
+        field.ID = 5;
         oprot.WriteFieldBegin(field);
         oprot.WriteString(DisplayUnit);
         oprot.WriteFieldEnd();
@@ -269,7 +239,7 @@ namespace qudt4dt.thrift
       if (Quantity != null && __isset.quantity) {
         field.Name = "quantity";
         field.Type = TType.String;
-        field.ID = 7;
+        field.ID = 6;
         oprot.WriteFieldBegin(field);
         oprot.WriteString(Quantity);
         oprot.WriteFieldEnd();
@@ -279,14 +249,8 @@ namespace qudt4dt.thrift
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("ModelicaUnit(");
+      StringBuilder __sb = new StringBuilder("ModelicaAttr(");
       bool __first = true;
-      if (Url != null && __isset.url) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("Url: ");
-        __sb.Append(Url);
-      }
       if (ClassPath != null && __isset.classPath) {
         if(!__first) { __sb.Append(", "); }
         __first = false;

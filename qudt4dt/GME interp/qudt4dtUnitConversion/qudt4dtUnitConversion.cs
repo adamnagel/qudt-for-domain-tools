@@ -9,6 +9,8 @@ using GME;
 using GME.MGA;
 using GME.MGA.Core;
 using qudtUnit = ISIS.GME.Dsml.qudtUnit;
+
+
 namespace qudt4dtUnitConversion
 {
     /// <summary>
@@ -81,7 +83,7 @@ namespace qudt4dtUnitConversion
             System.Diagnostics.Stopwatch sw = System.Diagnostics.Stopwatch.StartNew();
 
             
-	        _client = new qudt4dt.CSClient.Client("10.67.68.239");
+	        _client = new qudt4dt.CSClient.Client("10.67.103.212");
             valueConvert(currentobj);
             sw.Stop();
             GMEConsole.Out.WriteLine("Time taken: {0}ms", sw.Elapsed.TotalMilliseconds);
@@ -93,23 +95,34 @@ namespace qudt4dtUnitConversion
             var edges = main.Children.EdgeCollection;
             foreach (var e in edges)
             {
+                //query
                 var src = e.SrcEnds.Node;
                 var dst = e.DstEnds.Node;
-                var src_u = _client.query(src.Attributes.UnitName);
-                var dst_u = _client.query(dst.Attributes.UnitName);
-                if(!(src_u.Qudt_u.UnitClass == dst_u.Qudt_u.UnitClass))
-                    GMEConsole.Error.WriteLine(String.Format("incompatible units : %s, %s", src_u.Url, dst_u.Url));
-
-                GMEConsole.Out.WriteLine(String.Format("{0} : {1}, {2}", src_u.Qudt_u.Url, src_u.Modelica_u.Url, src_u.Mdao_u.Url));
-                GMEConsole.Out.WriteLine(String.Format("{0} : {1}, {2}", dst_u.Qudt_u.Url, dst_u.Modelica_u.Url, dst_u.Mdao_u.Url));
-
-                var _value = ((src_u.Qudt_u.Offset - dst_u.Qudt_u.Offset) + Double.Parse(src.Attributes.Value)) *
-                    src_u.Qudt_u.Factor / dst_u.Qudt_u.Factor;
-                dst.Attributes.Value = _value.ToString();
+                var src_unit = _client.query(src.Attributes.UnitName);
+                var dst_url = dst.Attributes.UnitName;
+               
+                //convert
+                var src_quantity = new qudt4dt.thrift.Quantity();
+                src_quantity.Unit = src_unit;
+                src_quantity.Value = Double.Parse(src.Attributes.Value);
+                var dst_quantity = _client.quantity_convert(src_quantity, dst_url);
+                dst.Attributes.Value = dst_quantity.Value.ToString();
                 
+                //list
+                var src_dict = _client.list_domain_unitset(src_quantity);
+                var dst_dict = _client.list_domain_unitset(dst_quantity);
+                pretty_print_dict(src_dict);
+                pretty_print_dict(dst_dict);
             }
         }
 
+        private void pretty_print_dict(Dictionary<String, qudt4dt.thrift.Quantity> domain_unitset)
+        {
+            foreach (KeyValuePair<String, qudt4dt.thrift.Quantity> i in domain_unitset)
+                GMEConsole.Out.WriteLine(String.Format("{0} : ({1}|{2})", i.Key, i.Value.Value, i.Value.Unit.Url));
+        }
+
+        
     
 
         #region IMgaComponentEx Members

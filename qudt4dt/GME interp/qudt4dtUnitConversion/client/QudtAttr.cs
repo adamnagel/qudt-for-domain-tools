@@ -21,28 +21,14 @@ namespace qudt4dt.thrift
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class QudtUnit : TBase
+  public partial class QudtAttr : TBase
   {
-    private string _url;
     private string _unitName;
     private string _symbol;
     private string _unitClass;
     private string _abbreviation;
     private double _factor;
     private double _offset;
-
-    public string Url
-    {
-      get
-      {
-        return _url;
-      }
-      set
-      {
-        __isset.url = true;
-        this._url = value;
-      }
-    }
 
     public string UnitName
     {
@@ -128,7 +114,6 @@ namespace qudt4dt.thrift
     [Serializable]
     #endif
     public struct Isset {
-      public bool url;
       public bool unitName;
       public bool symbol;
       public bool unitClass;
@@ -137,7 +122,7 @@ namespace qudt4dt.thrift
       public bool offset;
     }
 
-    public QudtUnit() {
+    public QudtAttr() {
       this._unitName = "";
       this.__isset.unitName = true;
       this._symbol = "";
@@ -162,47 +147,40 @@ namespace qudt4dt.thrift
         {
           case 1:
             if (field.Type == TType.String) {
-              Url = iprot.ReadString();
+              UnitName = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 2:
             if (field.Type == TType.String) {
-              UnitName = iprot.ReadString();
+              Symbol = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 3:
             if (field.Type == TType.String) {
-              Symbol = iprot.ReadString();
+              UnitClass = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 4:
             if (field.Type == TType.String) {
-              UnitClass = iprot.ReadString();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 5:
-            if (field.Type == TType.String) {
               Abbreviation = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 6:
+          case 5:
             if (field.Type == TType.Double) {
               Factor = iprot.ReadDouble();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 7:
+          case 6:
             if (field.Type == TType.Double) {
               Offset = iprot.ReadDouble();
             } else { 
@@ -219,21 +197,13 @@ namespace qudt4dt.thrift
     }
 
     public void Write(TProtocol oprot) {
-      TStruct struc = new TStruct("QudtUnit");
+      TStruct struc = new TStruct("QudtAttr");
       oprot.WriteStructBegin(struc);
       TField field = new TField();
-      if (Url != null && __isset.url) {
-        field.Name = "url";
-        field.Type = TType.String;
-        field.ID = 1;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteString(Url);
-        oprot.WriteFieldEnd();
-      }
       if (UnitName != null && __isset.unitName) {
         field.Name = "unitName";
         field.Type = TType.String;
-        field.ID = 2;
+        field.ID = 1;
         oprot.WriteFieldBegin(field);
         oprot.WriteString(UnitName);
         oprot.WriteFieldEnd();
@@ -241,7 +211,7 @@ namespace qudt4dt.thrift
       if (Symbol != null && __isset.symbol) {
         field.Name = "symbol";
         field.Type = TType.String;
-        field.ID = 3;
+        field.ID = 2;
         oprot.WriteFieldBegin(field);
         oprot.WriteString(Symbol);
         oprot.WriteFieldEnd();
@@ -249,7 +219,7 @@ namespace qudt4dt.thrift
       if (UnitClass != null && __isset.unitClass) {
         field.Name = "unitClass";
         field.Type = TType.String;
-        field.ID = 4;
+        field.ID = 3;
         oprot.WriteFieldBegin(field);
         oprot.WriteString(UnitClass);
         oprot.WriteFieldEnd();
@@ -257,7 +227,7 @@ namespace qudt4dt.thrift
       if (Abbreviation != null && __isset.abbreviation) {
         field.Name = "abbreviation";
         field.Type = TType.String;
-        field.ID = 5;
+        field.ID = 4;
         oprot.WriteFieldBegin(field);
         oprot.WriteString(Abbreviation);
         oprot.WriteFieldEnd();
@@ -265,7 +235,7 @@ namespace qudt4dt.thrift
       if (__isset.factor) {
         field.Name = "factor";
         field.Type = TType.Double;
-        field.ID = 6;
+        field.ID = 5;
         oprot.WriteFieldBegin(field);
         oprot.WriteDouble(Factor);
         oprot.WriteFieldEnd();
@@ -273,7 +243,7 @@ namespace qudt4dt.thrift
       if (__isset.offset) {
         field.Name = "offset";
         field.Type = TType.Double;
-        field.ID = 7;
+        field.ID = 6;
         oprot.WriteFieldBegin(field);
         oprot.WriteDouble(Offset);
         oprot.WriteFieldEnd();
@@ -283,14 +253,8 @@ namespace qudt4dt.thrift
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("QudtUnit(");
+      StringBuilder __sb = new StringBuilder("QudtAttr(");
       bool __first = true;
-      if (Url != null && __isset.url) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("Url: ");
-        __sb.Append(Url);
-      }
       if (UnitName != null && __isset.unitName) {
         if(!__first) { __sb.Append(", "); }
         __first = false;

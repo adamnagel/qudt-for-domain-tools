@@ -21,25 +21,11 @@ namespace qudt4dt.thrift
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class MdaoUnit : TBase
+  public partial class MdaoAttr : TBase
   {
-    private string _url;
     private string _name;
     private string _expression;
     private string _comment;
-
-    public string Url
-    {
-      get
-      {
-        return _url;
-      }
-      set
-      {
-        __isset.url = true;
-        this._url = value;
-      }
-    }
 
     public string Name
     {
@@ -86,13 +72,12 @@ namespace qudt4dt.thrift
     [Serializable]
     #endif
     public struct Isset {
-      public bool url;
       public bool name;
       public bool expression;
       public bool comment;
     }
 
-    public MdaoUnit() {
+    public MdaoAttr() {
       this._expression = "";
       this.__isset.expression = true;
       this._comment = "";
@@ -113,26 +98,19 @@ namespace qudt4dt.thrift
         {
           case 1:
             if (field.Type == TType.String) {
-              Url = iprot.ReadString();
+              Name = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 2:
             if (field.Type == TType.String) {
-              Name = iprot.ReadString();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 3:
-            if (field.Type == TType.String) {
               Expression = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 4:
+          case 3:
             if (field.Type == TType.String) {
               Comment = iprot.ReadString();
             } else { 
@@ -149,21 +127,13 @@ namespace qudt4dt.thrift
     }
 
     public void Write(TProtocol oprot) {
-      TStruct struc = new TStruct("MdaoUnit");
+      TStruct struc = new TStruct("MdaoAttr");
       oprot.WriteStructBegin(struc);
       TField field = new TField();
-      if (Url != null && __isset.url) {
-        field.Name = "url";
-        field.Type = TType.String;
-        field.ID = 1;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteString(Url);
-        oprot.WriteFieldEnd();
-      }
       if (Name != null && __isset.name) {
         field.Name = "name";
         field.Type = TType.String;
-        field.ID = 2;
+        field.ID = 1;
         oprot.WriteFieldBegin(field);
         oprot.WriteString(Name);
         oprot.WriteFieldEnd();
@@ -171,7 +141,7 @@ namespace qudt4dt.thrift
       if (Expression != null && __isset.expression) {
         field.Name = "expression";
         field.Type = TType.String;
-        field.ID = 3;
+        field.ID = 2;
         oprot.WriteFieldBegin(field);
         oprot.WriteString(Expression);
         oprot.WriteFieldEnd();
@@ -179,7 +149,7 @@ namespace qudt4dt.thrift
       if (Comment != null && __isset.comment) {
         field.Name = "comment";
         field.Type = TType.String;
-        field.ID = 4;
+        field.ID = 3;
         oprot.WriteFieldBegin(field);
         oprot.WriteString(Comment);
         oprot.WriteFieldEnd();
@@ -189,14 +159,8 @@ namespace qudt4dt.thrift
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("MdaoUnit(");
+      StringBuilder __sb = new StringBuilder("MdaoAttr(");
       bool __first = true;
-      if (Url != null && __isset.url) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("Url: ");
-        __sb.Append(Url);
-      }
       if (Name != null && __isset.name) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
