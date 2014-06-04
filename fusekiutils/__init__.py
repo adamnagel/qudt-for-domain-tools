@@ -48,3 +48,6 @@ def IsFusekiRunning(fuseki_url):
             return True
         except IOError:
             return False
+
+if __name__ == "__main__":
+	LaunchFuseki()
