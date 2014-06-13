@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+
+<!-- build.xml - For qudt4dt server -->
+<project name="qudt4dt server" default="compile" basedir=".">
+
+	<presetdef name="javac">
+    	<javac includeantruntime="false" />
+    </presetdef>
+	<!-- The directory containing source code -->
+	<property name="src.dir" value="src"/>
+	<property name="test.dir" value="test"/>
+	<!-- Temporary build directories -->
+	<property name="build.dir" value="build"/>
+	<property name="build.classes" value="${build.dir}/classes"/>
+	<property name="build.test" value="${build.dir}/test"/>
+	<property name="dist" value="dist"/>
+	<property name="jarfile" value="${dist}/qudt4dtServer.jar"/>
+
+	<!-- External lib path -->
+	<path id="build.classpath">
+		<fileset dir="lib/" includes="*.jar"/>
+	</path>
+
+	<!-- Target to create the build directories prior to the compile targe. -->
+	<target name="prepare">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${build.classes}"/>
+		<mkdir dir="${dist}"/>
+	</target>
+
+	<target name="clean" description="Removes all generated files.">
+		<delete dir="${build.dir}"/>
+		<delete dir="${dist}"/>
+	</target>
+
+	<target name="compile" depends="prepare" description="Compiles all source code.">
+		<javac srcdir="${src.dir}" destdir="${build.classes}">
+			<classpath refid="build.classpath"/>
+		</javac>
+	</target>
+
+	<target name="run" depends="compile" description="Run qudt4dt server">
+		<!--java jar="${jarfile}" fork="true"/-->
+		<java classname="qudt4dt.Server">
+			<classpath>
+				<pathelement location="${build.classes}"/>
+			</classpath>
+			<classpath refid="build.classpath"/>
+		</java>
+	</target>
+
+	<target name="jar" depends="compile" description="Generates qudt4dtServer.jar in 'dist' directory">
+		<!-- Set the manifestclasspath -->
+		<manifestclasspath property="jar.classpath" jarfile="${jarfile}">
+			<classpath refid="build.classpath"/>
+		</manifestclasspath>
+
+		<!-- Copy the external lib -->
+		<copy todir="${dist}">
+			<fileset dir="lib/" includes="*.jar"/>
+		</copy>
+
+		<!-- Excluede unit tests from the final JAR file -->
+		<jar jarfile="${jarfile}" basedir="${build.classes}">
+			<manifest>
+				<attribute name="Main-Class" value="qudt4dt.Server"/>
+				<attribute name="Class-Path" value="${jar.classpath}"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="compile test" depends="compile" description="Compiles test code.">
+		<mkdir dir="${build.test}"/>
+		<javac srcdir="${test.dir}" destdir="${build.test}">
+			<classpath>
+				<pathelement location="${build.classes}"/>
+			</classpath>
+			<classpath refid="build.classpath"/>
+		</javac>
+	</target>
+
+	<target name="test" depends="compile test" description="Run unit test">
+		<!--java jar="${jarfile}" fork="true"/-->
+		<junit  showoutput="false" fork="true">
+			<classpath>
+				<pathelement location="${build.classes}"/>
+				<pathelement location="${build.test}"/>
+			</classpath>
+			<classpath refid="build.classpath"/>
+			<test name="qudt4dt.TestFactoryUlits"/>
+			<test name="qudt4dt.TestServerHandle"/>
+		</junit>
+	</target>
+
+	<target name="all" depends="clean,jar"
+		description="Cleans, compiles, then builds the JAR file."/>
+</project>
