@@ -81,7 +81,7 @@
 
 	<target name="test" depends="compile test" description="Run unit test">
 		<!--java jar="${jarfile}" fork="true"/-->
-		<junit  showoutput="false" fork="true">
+		<junit  showoutput="false" fork="true" printsummary="true">
 			<classpath>
 				<pathelement location="${build.classes}"/>
 				<pathelement location="${build.test}"/>
