@@ -1,6 +1,5 @@
 import sys 
 sys.path.append("..")
-from qudt4dt import qudt_pb2 
 from qudt4dt import barbara as bar
 class Unit(object):
     def __init__(self, _server, _url):

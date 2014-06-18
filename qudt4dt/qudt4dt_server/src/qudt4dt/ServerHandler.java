@@ -52,7 +52,7 @@ public class ServerHandler implements Qudt4dt_base.Iface{
         result.put("qudt", new Quantity(_q, input.value));
 
         for(String _d : FactoryUtils.domain){
-            Class _c = FactoryUtils.class;
+            Class<FactoryUtils> _c = FactoryUtils.class;
             Method get_domain_unit;
             Unit _u;
 

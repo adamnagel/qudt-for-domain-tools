@@ -3,7 +3,6 @@ package qudt4dt.factory;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import qudt4dt.thrift.QudtAttr;
-import qudt4dt.thrift.QudtUnit;
 
 /**
  * Created by yli on 5/8/14.
