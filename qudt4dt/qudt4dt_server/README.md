@@ -7,4 +7,4 @@
 ###Instructions
 - use 'ant run' to start the server.
 - use 'ant -p' to show the whole command set.
-- to create a war package for servlet, run 'ant war' and the servlet is tested successfully on jetty.
+- to create a war package for servlet, run 'ant war' and we recommand using Jetty as web server.
