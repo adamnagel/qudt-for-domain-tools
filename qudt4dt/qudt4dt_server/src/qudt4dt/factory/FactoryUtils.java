@@ -10,6 +10,8 @@ import qudt4dt.thrift.Unit;
 public final class FactoryUtils {
     static public String ontology_server_address;
     static public Sparql ontology;
+    
+    //TODO:: use annotation to sign domain function
     static public final String domain[] = {"modelica", "mdao"};
 
     static public Unit getunit_modelica(Unit input){
