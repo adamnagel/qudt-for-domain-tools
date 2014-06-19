@@ -10,5 +10,9 @@ public class WebServlet extends TServlet{
 				new ServerHandler("http://localhost:3030/qudt4dt/query?")
 				),
 				new TJSONProtocol.Factory());
+		addCustomHeader("Access-Control-Allow-Origin", "*");
+		//addCustomHeader("Access-Control-Allow-Methods", "POST,GET,OPTIONS,PUT,DELETE,HEAD");
+		//addCustomHeader("Access-Control-Allow-Headers", "X-PINGOTHER,Origin,X-Requdsted-With,Content-Type,Accept");
+		//addCustomHeader("Access-Control-Max-Age","1728000");
 	}
 }
