@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="thrift.js"></script>
+    <script src="gen-js/protocal_types.js"></script>
+    <script src="gen-js/Qudt4dt_base.js"></script>
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        function findServer(url)
+        {
+            var transport = new Thrift.Transport(url);
+            var protocol  = new Thrift.Protocol(transport);
+            var client    = new qudt4dt.thrift.Qudt4dt_baseClient(protocol);
+            return client;
+        }
+
+        function convert(srcVal, srcUrl, dstUrl)
+        {
+            var client = findServer("http://localhost:8080/servlet/unit");
+            var srcUnit = client.query(srcUrl);
+            var srcQuantity = new qudt4dt.thrift.Quantity();
+            srcQuantity.unit = srcUnit;
+            srcQuantity.value = srcVal;
+            var srcInfo = client.list_domain_unitset(srcQuantity);
+            var dstQuantity = client.quantity_convert(srcQuantity, dstUrl);
+            var dstInfo = client.list_domain_unitset(dstQuantity);
+            $('#info').val(JSON.stringify(srcInfo) + JSON.stringify(dstInfo));
+            return dstQuantity.value;
+        }
+
+    </script>
+</head>
+<body>
+
+<FORM NAME="Calc">
+    <b>Value 1</b>
+    <INPUT TYPE="text" NAME="Value1" Size="16"/>
+    <b>Unit 1</b>
+    <INPUT TYPE="text" NAME="Unit1" Size="60"/>
+    <br/>
+    <b>Value 2</b>
+    <INPUT TYPE="text" NAME="Value2" Size="16" readonly/>
+    <b>Unit 2</b>
+    <INPUT TYPE="text" NAME="Unit2" Size="60"/>
+    <br/>
+    <INPUT TYPE="button" NAME="Process" VALUE="Convert"
+        OnClick="Calc.Value2.value = convert(Calc.Value1.value, Calc.Unit1.value, Calc.Unit2.value);"/>
+    <br/>
+    <b>Related Units to Quantity 1</b><br/>
+    <INPUT TYPE="text"
+           NAME="RelatedUnits"
+           ID="info"
+           readonly
+           style="height:200px;
+                  width:500px;
+                  font-size:10pt;
+                  font-family:courier;
+                  vertical-align: top;"
+           />
+</FORM>
+
+</body>
+</html>

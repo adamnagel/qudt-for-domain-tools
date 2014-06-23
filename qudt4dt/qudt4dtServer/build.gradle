@@ -1,0 +1,60 @@
+allprojects {
+    apply plugin: 'java'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compile files("${rootProject.projectDir}/lib/libthrift-1.0.0.jar")
+        testCompile group: 'junit', name: 'junit', version: '4.+'
+    }
+
+    version = '1.0'
+}
+
+
+project(':core') {
+    sourceSets {
+      main.java.srcDirs += "${rootProject.projectDir}/../thrift/gen-java/"
+    }
+
+
+    dependencies {
+        compile     group: 'org.apache.jena', name: 'jena-fuseki',     version: '1.0.2'
+    }
+
+}
+
+project(':server') {
+    apply plugin:'application'
+    dependencies {
+        compile project(':core')
+    }
+
+    mainClassName = "qudt4dt.Server"
+    jar {
+        manifest { attributes 'Main-Class': 'qudt4dt.Server' }
+    }
+
+}
+
+project(':servlet') {
+    apply plugin: 'war'
+    apply plugin: 'jetty'
+
+    dependencies {
+        compile project(':core')
+    }
+
+    war {
+        webXml = file('src/web.xml') // copies a file to WEB-INF/web.xml
+    }
+
+    httpPort = 8080
+    stopPort = 9451
+    stopKey = 'foo'
+    jettyRunWar.stopPort = 8090
+    jettyRunWar.stopKey = 'stopKey'
+
+}
