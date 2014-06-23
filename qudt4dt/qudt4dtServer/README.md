@@ -7,4 +7,4 @@
 ###Instructions
 - use `gradle run` to start the server.
 - use `gradle jettyRun` to start the servlet on Jetty(web server).
-- use `gradle war` or `gradle jar` to distribute.
+- use `gradle jar` and `gradle jar` to distribute.
