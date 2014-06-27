@@ -27,7 +27,7 @@
             var srcInfo = client.list_domain_unitset(srcQuantity);
             var dstQuantity = client.quantity_convert(srcQuantity, dstUrl);
             var dstInfo = client.list_domain_unitset(dstQuantity);
-            $('#info').val(JSON.stringify(srcInfo) + JSON.stringify(dstInfo));
+            $('#info').val(JSON.stringify(srcInfo) + '\n' + JSON.stringify(dstInfo));
             return dstQuantity.value;
         }
 

@@ -45,10 +45,17 @@ project(':servlet') {
 
     dependencies {
         compile project(':core')
+        compile group: 'org.eclipse.jetty'   , name: 'jetty-servlets', version: '8.+'
+        compile group: 'org.springframework' , name: 'spring'        , version: '2.+'
     }
 
     war {
         webXml = file('src/web.xml') // copies a file to WEB-INF/web.xml
+    }
+
+    jettyRun {
+        reload ="automatic"
+        scanIntervalSeconds = 1
     }
 
     httpPort = 8080
