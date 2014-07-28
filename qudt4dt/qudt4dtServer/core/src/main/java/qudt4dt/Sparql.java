@@ -2,6 +2,7 @@ package qudt4dt;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.query.ResultSetFormatter;
 /**
  * Created by yli on 5/8/14.
  */
@@ -25,11 +26,12 @@ public class Sparql {
 //                        "                    }\n";
 
         QueryExecution x = QueryExecutionFactory.sparqlService(ontology_server_address, query);
-        if(-1 == x.getTimeout1())
-            System.err.print("no ontology service");
+        // if(-1 == x.getTimeout1())
+        //    System.err.print("no ontology service");
         ResultSet result = x.execSelect();
-        return result;
         //ResultSetFormatter.out(System.out, result);
+        return result;
+        
 
     }
 

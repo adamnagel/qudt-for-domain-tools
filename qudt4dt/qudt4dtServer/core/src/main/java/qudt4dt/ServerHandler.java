@@ -1,5 +1,7 @@
 package qudt4dt;
 
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
 import qudt4dt.factory.FactoryUtils;
 import qudt4dt.factory.UnitFactory;
 import qudt4dt.thrift.InvalidOperation;
@@ -50,34 +52,26 @@ public class ServerHandler implements Qudt4dt_base.Iface{
         Map<String, Quantity> result = new HashMap<String, Quantity>();
         Unit _q = new Unit(input.unit.qudt_url, input.unit.qudt_url, input.unit.qudt_attr);
         result.put("qudt", new Quantity(_q, input.value));
+        ResultSet domain_SI = FactoryUtils.get_SI_domain_unit(input.unit);
 
-        for(String _d : FactoryUtils.domain){
-            Class<FactoryUtils> _c = FactoryUtils.class;
-            Method get_domain_unit;
-            Unit _u;
+        if(false == domain_SI.hasNext())
+            return null;
 
-            try{
-                get_domain_unit = _c.getDeclaredMethod("getunit_" + _d, new Class[] {Unit.class});
-                Object _r = get_domain_unit.invoke(null, input.unit);
-                if(null == _r){
-                    Unit SI = FactoryUtils.get_SI_unit(input.unit);
+        QuerySolution q = domain_SI.next();
+        Unit modelica = new Unit();
+        modelica.setUrl(q.get("modelica").toString());
+        modelica.setQudt_url(input.unit.getQudt_url());
+        modelica.setQudt_attr(input.unit.getQudt_attr());
 
-                    if(null == SI)
-                        throw new InvalidOperation("fail to get SI unit");
+        Unit mdao     = new Unit();
+        mdao.setUrl(q.get("mdao").toString());
+        mdao.setQudt_url(input.unit.getQudt_url());
+        mdao.setQudt_attr(input.unit.getQudt_attr());
 
-                    _r = get_domain_unit.invoke(null, SI);
-                }
-                _u = (Unit) _r;
-
-            }catch (Exception e){
-                throw new InvalidOperation("Invalid domain name");
-            }
-
-            Quantity _tmp = quantity_convert(new Quantity(input), _u.qudt_url);
-            result.put(_d,
-                    new Quantity(_u, _tmp.value));
-
-        }
+        Quantity tmp = quantity_convert(input, modelica.qudt_url);
+        result.put("modelica", new Quantity(modelica, tmp.value));
+        tmp = quantity_convert(input, mdao.qudt_url);
+        result.put("mdao", new Quantity(mdao, tmp.value));
         return result;
     }
 
