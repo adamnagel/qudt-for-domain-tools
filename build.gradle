@@ -1,0 +1,102 @@
+apply plugin: 'download-task'
+
+
+task GetJenaFuseki {
+	doLast {
+		def f = new File('jena-fuseki')
+		if (!f.exists())
+		{
+			download {
+				src 'http://www.apache.org/dist/jena/binaries/jena-fuseki-1.1.0-distribution.tar.gz'
+				dest 'jena-fuseki.tar.gz'
+			}
+			copy {
+				from tarTree(resources.gzip('jena-fuseki.tar.gz'))
+				into getProjectDir()
+			}
+			file("jena-fuseki-1.1.0").renameTo(file("jena-fuseki"))
+		}
+	}
+}
+
+task FetchRequests() {
+	doLast {
+		// Get a specific, older version of the Requests Python library 
+		download {
+			src 'https://github.com/kennethreitz/requests/archive/v1.2.3.zip'
+			dest 'requests-1.2.3.zip'
+		}
+		copy {
+			from zipTree('requests-1.2.3.zip')
+			into getProjectDir()			
+		}
+		file("requests-1.2.3").renameTo(file("requests"))
+		delete {
+			delete 'requests-1.2.3.zip'
+		}
+	}
+}
+
+//import de.undercouch.gradle.tasks.download.Download
+
+task FetchQUDT {
+	doLast {
+		// Delete existing folder
+		delete {
+			new File('qudt-owl')
+		}
+		// Download QUDT files
+		download {
+			def dirQudtOwl = new File('qudt-owl')
+			dirQudtOwl.mkdirs()
+			src(['http://www.linkedmodel.org/1.0/schema/dtype',
+		         'http://qudt.org/1.1/schema/dimension',
+		         'http://qudt.org/1.1/schema/quantity',
+		         'http://qudt.org/1.1/schema/qudt',
+		         'http://www.linkedmodel.org/1.2/schema/vaem',
+		         'http://voag.linkedmodel.org/1.0/schema/voag',
+		         'http://qudt.org/1.1/vocab/dimensionalunit',
+		         'http://qudt.org/1.1/vocab/dimension',
+		         'http://qudt.org/1.1/vocab/quantity',
+		         'http://qudt.org/1.1/vocab/unit'
+		    ])
+		    dest 'qudt-owl'
+		}
+		// Add '.xml' extension to files while copying them
+		copy {
+			from 'qudt-owl'
+			into 'qudt-owl'
+		    rename '(.*)', '$1.xml'
+		}		
+		// Delete the originals
+		delete {
+			delete fileTree(dir: 'qudt-owl', exclude: '*xml')
+		}
+
+		// Get Modelica's SIunits.mo
+		download {
+			src 'https://raw.github.com/modelica/ModelicaStandardLibrary/release/Modelica%203.2.1/SIunits.mo'
+			dest 'ontologies/modelica/SIunits.mo'
+		}
+
+		// Get OpenMDAO's unit definitions 
+		download {
+			src 'https://raw.github.com/OpenMDAO/OpenMDAO-Framework/master/openmdao.units/openmdao/units/unitLibdefault.ini'
+			dest 'ontologies/openMDAO/unitLibdefault.ini'
+		}
+	}
+}
+
+task GetDependencies () {
+
+}
+GetDependencies.dependsOn GetJenaFuseki, FetchQUDT, FetchRequests
+
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath 'de.undercouch:gradle-download-task:1.0'
+	}
+}
