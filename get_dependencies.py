@@ -31,7 +31,7 @@ for url in l_owlfiles:
 print ""
 
 print "===== Downloading Modelica SIunits.mo ====="
-path_moSIUnits = os.path.join('modelica','SIunits.mo')
+path_moSIUnits = os.path.join('ontologies','modelica','SIunits.mo')
 print "downloading..."
 urllib.urlretrieve(
     'https://raw.github.com/modelica/ModelicaStandardLibrary/release/Modelica%203.2.1/SIunits.mo',

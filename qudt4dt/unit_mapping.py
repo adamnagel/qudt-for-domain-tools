@@ -81,4 +81,4 @@ def createMapping(sourceFile, objFile, libName = None):
     
 if __name__ == '__main__':
     #filename = sys.argv[1]
-    createMapping("../modelica/mapping-to-qudt.csv","../../modelica-qudt.xml")
+    createMapping("../ontologies/modelica/mapping-to-qudt.csv","../ontologies/modelica/modelica-qudt.xml")

@@ -14,7 +14,7 @@ import inspect
 pathOfThisFile = inspect.getfile(inspect.currentframe())
 dirOfThisFile = os.path.split(pathOfThisFile)[0]
 
-sys.path.append(os.path.join(dirOfThisFile, 'modelica'))
+sys.path.append(os.path.join(dirOfThisFile, 'ontologies', 'modelica'))
 import MSL2OWL
 
 sys.path.append(os.path.join(dirOfThisFile, 'ontologies', 'openMDAO'))
@@ -35,12 +35,12 @@ print 'complete'
 
 
 ### Generate Modelica Unit Ontology
-p_SIUnits = os.path.join(p_ScriptPathRoot,'modelica/modelica_units.json')
-p_ModelicaUnitOntology = os.path.join(p_ScriptPathRoot,'modelica/modelica-individuals.xml')
+p_SIUnits = os.path.join(p_ScriptPathRoot,'ontologies','modelica/modelica_units.json')
+p_ModelicaUnitOntology = os.path.join(p_ScriptPathRoot,'ontologies','modelica/modelica-individuals.xml')
 
 if not os.path.exists(p_SIUnits):
     print "Generating Modelica ast json file"
-    os.system('cd modelica&&python export_modelica_units.py')
+    os.system('cd ontologies/modelica&&python export_modelica_units.py')
     print "done"
     
 print "Generating Modelica Unit ontology"
@@ -92,11 +92,11 @@ def CreateOWLFilesFromCSV(sourceFilePath, objFilePath):
             
 try:
     print "Creating ontologies from CSV file..."
-    CreateOWLFilesFromCSV('modelica/mapping-to-qudt.csv','modelica/modelica-qudt.xml')
+    CreateOWLFilesFromCSV('ontologies/modelica/mapping-to-qudt.csv','ontologies/modelica/modelica-qudt.xml')
     CreateOWLFilesFromCSV('ontologies/openMDAO/mapping-to-qudt.csv','ontologies/openMDAO/openMDAO-qudt.xml')
     print "Loading ontologies into Fuseki..."
     LoadDirectoryOfOWLFiles('qudt-owl')
-    LoadDirectoryOfOWLFiles('modelica')
+    LoadDirectoryOfOWLFiles('ontologies/modelica')
     LoadDirectoryOfOWLFiles('ontologies')
     LoadDirectoryOfOWLFiles('ontologies/openMDAO')
     print "done"
