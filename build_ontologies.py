@@ -17,7 +17,7 @@ dirOfThisFile = os.path.split(pathOfThisFile)[0]
 sys.path.append(os.path.join(dirOfThisFile, 'modelica'))
 import MSL2OWL
 
-sys.path.append(os.path.join(dirOfThisFile, 'openMDAO'))
+sys.path.append(os.path.join(dirOfThisFile, 'ontologies', 'openMDAO'))
 import export_openMDAO_units
 
 sys.path.append(os.path.join(dirOfThisFile, 'requests'))
@@ -28,8 +28,8 @@ import requests
 p_ScriptPathRoot = os.path.dirname(__file__)
 ### Generate OpenMDAO Unit Ontology
 print "Generating OpenMDAO Unit ontology"
-openMDAOUnit_path = os.path.join(p_ScriptPathRoot,'openMDAO/unitLibdefault.ini')
-openMDAOOntology_path = os.path.join(p_ScriptPathRoot,'openMDAO/openMDAO-individuals.xml')
+openMDAOUnit_path = os.path.join(p_ScriptPathRoot,'ontologies','openMDAO/unitLibdefault.ini')
+openMDAOOntology_path = os.path.join(p_ScriptPathRoot,'ontologies','openMDAO/openMDAO-individuals.xml')
 export_openMDAO_units.xml_generator(openMDAOUnit_path,openMDAOOntology_path)
 print 'complete'
 
@@ -93,12 +93,12 @@ def CreateOWLFilesFromCSV(sourceFilePath, objFilePath):
 try:
     print "Creating ontologies from CSV file..."
     CreateOWLFilesFromCSV('modelica/mapping-to-qudt.csv','modelica/modelica-qudt.xml')
-    CreateOWLFilesFromCSV('openMDAO/mapping-to-qudt.csv','openMDAO/openMDAO-qudt.xml')
+    CreateOWLFilesFromCSV('ontologies/openMDAO/mapping-to-qudt.csv','ontologies/openMDAO/openMDAO-qudt.xml')
     print "Loading ontologies into Fuseki..."
     LoadDirectoryOfOWLFiles('qudt-owl')
     LoadDirectoryOfOWLFiles('modelica')
     LoadDirectoryOfOWLFiles('ontologies')
-    LoadDirectoryOfOWLFiles('openMDAO')
+    LoadDirectoryOfOWLFiles('ontologies/openMDAO')
     print "done"
 
 finally:

@@ -39,7 +39,7 @@ urllib.urlretrieve(
 print ""
 
 print "===== Downloading OpenMDAO Unit INI file ====="
-path_mdaoINI = os.path.join('openMDAO','unitLibdefault.ini')
+path_mdaoINI = os.path.join('ontologies','openMDAO','unitLibdefault.ini')
 print "downloading..."
 urllib.urlretrieve(
     'https://raw.github.com/OpenMDAO/OpenMDAO-Framework/master/openmdao.units/openmdao/units/unitLibdefault.ini',
