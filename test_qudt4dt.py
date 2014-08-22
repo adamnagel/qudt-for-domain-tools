@@ -5,6 +5,8 @@ __author__ = 'adam'
 #from subprocess import Popen
 #import shlex
 #import os
+import sys
+sys.path.append('ontologies/python')
 import fusekiutils
 import qudt4dt
 import unittest

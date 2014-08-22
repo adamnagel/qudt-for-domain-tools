@@ -7,6 +7,8 @@ import os
 from multiprocessing import Pool
 import time
 
+import sys
+sys.path.append('ontologies/python')
 from qudt4dt import sparql
 import qudt4dt
 import fusekiutils

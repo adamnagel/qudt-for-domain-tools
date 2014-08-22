@@ -2,10 +2,9 @@
 import re
 import sys
 import os
-import shlex
-import urllib
 import shutil
 import glob
+sys.path.append('ontologies/python')
 import fusekiutils
 import qudt4dt
 
@@ -19,7 +18,6 @@ sys.path.append(os.path.join(dirOfThisFile, 'modelica'))
 import MSL2OWL
 
 sys.path.append(os.path.join(dirOfThisFile, 'openMDAO'))
-import export_qudt_symbol
 import export_openMDAO_units
 
 sys.path.append(os.path.join(dirOfThisFile, 'requests'))
@@ -33,7 +31,6 @@ print "Generating OpenMDAO Unit ontology"
 openMDAOUnit_path = os.path.join(p_ScriptPathRoot,'openMDAO/unitLibdefault.ini')
 openMDAOOntology_path = os.path.join(p_ScriptPathRoot,'openMDAO/openMDAO-individuals.xml')
 export_openMDAO_units.xml_generator(openMDAOUnit_path,openMDAOOntology_path)
-
 print 'complete'
 
 
@@ -95,12 +92,10 @@ def CreateOWLFilesFromCSV(sourceFilePath, objFilePath):
             
 try:
     print "Creating ontologies from CSV file..."
-    LoadDirectoryOfOWLFiles('qudt-owl')
-    export_qudt_symbol.xml_generator('openMDAO/openMDAO-dynamic-individuals.xml','openMDAO/openMDAO-dynamic-mapping.csv')
     CreateOWLFilesFromCSV('modelica/mapping-to-qudt.csv','modelica/modelica-qudt.xml')
     CreateOWLFilesFromCSV('openMDAO/mapping-to-qudt.csv','openMDAO/openMDAO-qudt.xml')
-    CreateOWLFilesFromCSV('openMDAO/openMDAO-dynamic-mapping.csv','openMDAO-dynamic-mapping.xml')
     print "Loading ontologies into Fuseki..."
+    LoadDirectoryOfOWLFiles('qudt-owl')
     LoadDirectoryOfOWLFiles('modelica')
     LoadDirectoryOfOWLFiles('ontologies')
     LoadDirectoryOfOWLFiles('openMDAO')
@@ -108,12 +103,9 @@ try:
 
 finally:
     print ""
-    print "Terminating fuseki..."
-    if fuseki is not None:
-        fuseki.terminate()
-    else:
-        print "WARNING: Fuseki service pointer was None; Fuseki may not have launched properly, and the loaded ontology may not be correct."
-    print "done"
+    # print "Terminating fuseki..."
+    # fuseki.terminate()
+    # print "done"
     print ""
 
 print "finished"
