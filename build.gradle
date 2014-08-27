@@ -1,7 +1,7 @@
+defaultTasks 'build'
 apply plugin: 'download-task'
 
-
-task GetJenaFuseki {
+task fetchJenaFuseki {
 	doLast {
 		def f = new File('jena-fuseki')
 		if (!f.exists())
@@ -16,30 +16,40 @@ task GetJenaFuseki {
 			}
 			file("jena-fuseki-1.1.0").renameTo(file("jena-fuseki"))
 		}
+		else
+		{
+			println 'jena-fuseki already installed; skipping download'
+		}
 	}
 }
 
-task FetchRequests() {
+task fetchRequests {
 	doLast {
-		// Get a specific, older version of the Requests Python library 
-		download {
-			src 'https://github.com/kennethreitz/requests/archive/v1.2.3.zip'
-			dest 'requests-1.2.3.zip'
+		def f = new File('requests')
+		if (!f.exists())
+		{
+			// Get a specific, older version of the Requests Python library 
+			download {
+				src 'https://github.com/kennethreitz/requests/archive/v1.2.3.zip'
+				dest 'requests-1.2.3.zip'
+			}
+			copy {
+				from zipTree('requests-1.2.3.zip')
+				into getProjectDir()			
+			}
+			file("requests-1.2.3").renameTo(file("requests"))
+			delete {
+				delete 'requests-1.2.3.zip'
+			}
 		}
-		copy {
-			from zipTree('requests-1.2.3.zip')
-			into getProjectDir()			
-		}
-		file("requests-1.2.3").renameTo(file("requests"))
-		delete {
-			delete 'requests-1.2.3.zip'
+		else
+		{
+			println 'python "requests" library already installed; skipping download'
 		}
 	}
 }
 
-//import de.undercouch.gradle.tasks.download.Download
-
-task FetchQUDT {
+task fetchQUDT {
 	doLast {
 		// Delete existing folder
 		delete {
@@ -87,10 +97,17 @@ task FetchQUDT {
 	}
 }
 
-task GetDependencies () {
+task fetchDependencies {}
+fetchDependencies.dependsOn fetchJenaFuseki, fetchQUDT, fetchRequests
 
+task buildOntologies(type:Exec, dependsOn: fetchDependencies) {
+	args 'build_ontologies.py'
+	executable 'python'
 }
-GetDependencies.dependsOn GetJenaFuseki, FetchQUDT, FetchRequests
+
+task build {}
+build.dependsOn buildOntologies
+
 
 buildscript {
 	repositories {
