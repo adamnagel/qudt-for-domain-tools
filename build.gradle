@@ -104,11 +104,29 @@ task buildOntologies(type:Exec, dependsOn: fetchDependencies) {
 	args 'build_ontologies.py'
 	executable 'python'
 }
+/*
+task buildThrift() {
 
+}
+
+task genThriftCode(type:Exec) {
+	commandLine '../../thrift-0.9.1/compiler/cpp/thrift'
+	args '--gen cpp --gen csharp --gen py --gen java protocal.thrift'
+	workingDir './qudt4dt/thrift'
+}
+*/
 task build {}
 build.dependsOn buildOntologies
 
-
+task runFuseki(type:Exec) {
+	args 'start_fuseki.py'
+	executable 'python'
+}
+/*
+task runQudt4dtServer(type:Exec, dependsOn: runFuseki) {
+	executable 'ls'
+}
+*/
 buildscript {
 	repositories {
 		mavenCentral()
