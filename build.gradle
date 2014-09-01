@@ -28,19 +28,20 @@ task fetchRequests {
 		def f = new File('requests')
 		if (!f.exists())
 		{
+			String nameZip = 'requests-1.2.3.zip'
 			// Get a specific, older version of the Requests Python library 
 			download {
 				src 'https://github.com/kennethreitz/requests/archive/v1.2.3.zip'
-				dest 'requests-1.2.3.zip'
+				dest nameZip
 			}
 			copy {
 				from zipTree('requests-1.2.3.zip')
 				into getProjectDir()			
 			}
 			file("requests-1.2.3").renameTo(file("requests"))
-			delete {
-				delete './requests-1.2.3.zip'
-			}
+			//delete {
+			//	delete file(nameZip)
+			//}
 		}
 		else
 		{
@@ -97,6 +98,16 @@ task buildOntologies(type:Exec, dependsOn: fetchDependencies) {
 
 task build (dependsOn: buildOntologies) {
 	println 'build complete'
+}
+
+task startFuseki (type:Exec) {
+	args 'start_fuseki.py'
+	executable 'python'
+}
+
+task startQudt4dtServer (type: GradleBuild, dependsOn: startFuseki) {
+	buildFile = 'qudt4dt/qudt4dtServer/build.gradle'
+	tasks = ['run']
 }
 
 
