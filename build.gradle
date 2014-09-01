@@ -39,7 +39,7 @@ task fetchRequests {
 			}
 			file("requests-1.2.3").renameTo(file("requests"))
 			delete {
-				delete 'requests-1.2.3.zip'
+				delete './requests-1.2.3.zip'
 			}
 		}
 		else
@@ -72,16 +72,6 @@ task fetchQUDT {
 		    ])
 		    dest 'qudt-owl'
 		}
-		// Add '.xml' extension to files while copying them
-		copy {
-			from 'qudt-owl'
-			into 'qudt-owl'
-		    rename '(.*)', '$1.xml'
-		}		
-		// Delete the originals
-		delete {
-			delete fileTree(dir: 'qudt-owl', exclude: '*xml')
-		}
 
 		// Get Modelica's SIunits.mo
 		download {
@@ -105,8 +95,9 @@ task buildOntologies(type:Exec, dependsOn: fetchDependencies) {
 	executable 'python'
 }
 
-task build {}
-build.dependsOn buildOntologies
+task build (dependsOn: buildOntologies) {
+	println 'build complete'
+}
 
 
 buildscript {

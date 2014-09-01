@@ -21,3 +21,38 @@ The mission of this project is to:
 - Provide software libraries, in a variety of languages, for retrieving mappings
   and performing transformations
 
+
+
+GETTING STARTED
+---------------
+This project is still pretty new, so there are a few different parts you will have to pull together to begin working.
+
+There are two main things you might be interested in doing:
+1. Use the database to convert quantities between units, and discover equivalent units across domain tools.
+2. Re-generate the database, add new units, or add whole domains to the system.
+
+Most people will only need #1.
+
+### DEPENDENCIES
+To do #1 above:
+- Python 2.7.x
+- Java Development Kit, Version 6 or above (https://java.com/en/download/index.jsp)
+- Gradle (http://www.gradle.org)
+
+To do #2 above:
+- See #1, plus
+- OpenModelica 1.9.x (to work with Modelica database)
+- An ontology editor like:
+	- Protege 4.x (for visualizing ontology databases)
+	- TopBraid Composer (free)
+
+### RUNNING STUFF
+Run `gradle fetchDependencies` to download the database server, raw data, and more.
+
+- For #1:
+	- run `python build_ontologies.py` to load the raw data into the database. You only gotta do this once.
+	- use the qudt4dt or C# libraries to do conversions, queries, etc.
+		- run `start.sh` to get the server started first. It will be located at http://localhost:3030
+		- You may need to modify the constructors to point the correct server location
+- For #2:
+	- UNDOCUMENTED WILD WEST. GOOD LUCK.
