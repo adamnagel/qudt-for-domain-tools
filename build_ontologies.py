@@ -69,12 +69,15 @@ print "done"
 
 print ""
 
-def LoadDirectoryOfOWLFiles(path):
+def LoadDirectoryOfOWLFiles(path, filter='*.xml'):
     # Load QUDT data
-    ap_XMLFiles = glob.glob(path + '/*.xml')
+    ap_XMLFiles = glob.glob(path + '/' + filter)
     for filename in ap_XMLFiles:
         # Skip Protege's "catalog" files
         if filename.find('catalog-') != -1:
+            continue
+        # Don't try to process directories
+        if os.path.isdir(filename):
             continue
 
         print 'Loading', filename
@@ -95,10 +98,10 @@ try:
     CreateOWLFilesFromCSV('ontologies/modelica/mapping-to-qudt.csv','ontologies/modelica/modelica-qudt.xml')
     CreateOWLFilesFromCSV('ontologies/openMDAO/mapping-to-qudt.csv','ontologies/openMDAO/openMDAO-qudt.xml')
     print "Loading ontologies into Fuseki..."
-    LoadDirectoryOfOWLFiles('qudt-owl')
+    LoadDirectoryOfOWLFiles('qudt-owl', '*')
     LoadDirectoryOfOWLFiles('ontologies/modelica')
-    LoadDirectoryOfOWLFiles('ontologies')
     LoadDirectoryOfOWLFiles('ontologies/openMDAO')
+    LoadDirectoryOfOWLFiles('ontologies/qudt4dt')
     print "done"
 
 finally:
