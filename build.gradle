@@ -28,19 +28,20 @@ task fetchRequests {
 		def f = new File('requests')
 		if (!f.exists())
 		{
+			String nameZip = 'requests-1.2.3.zip'
 			// Get a specific, older version of the Requests Python library 
 			download {
 				src 'https://github.com/kennethreitz/requests/archive/v1.2.3.zip'
-				dest 'requests-1.2.3.zip'
+				dest nameZip
 			}
 			copy {
 				from zipTree('requests-1.2.3.zip')
 				into getProjectDir()			
 			}
 			file("requests-1.2.3").renameTo(file("requests"))
-			delete {
-				delete 'requests-1.2.3.zip'
-			}
+			//delete {
+			//	delete file(nameZip)
+			//}
 		}
 		else
 		{
@@ -72,16 +73,6 @@ task fetchQUDT {
 		    ])
 		    dest 'qudt-owl'
 		}
-		// Add '.xml' extension to files while copying them
-		copy {
-			from 'qudt-owl'
-			into 'qudt-owl'
-		    rename '(.*)', '$1.xml'
-		}		
-		// Delete the originals
-		delete {
-			delete fileTree(dir: 'qudt-owl', exclude: '*xml')
-		}
 
 		// Get Modelica's SIunits.mo
 		download {
@@ -104,29 +95,21 @@ task buildOntologies(type:Exec, dependsOn: fetchDependencies) {
 	args 'build_ontologies.py'
 	executable 'python'
 }
-/*
-task buildThrift() {
 
+task build (dependsOn: buildOntologies) {
+	println 'build complete'
 }
 
-task genThriftCode(type:Exec) {
-	commandLine '../../thrift-0.9.1/compiler/cpp/thrift'
-	args '--gen cpp --gen csharp --gen py --gen java protocal.thrift'
-	workingDir './qudt4dt/thrift'
-}
-*/
-task build {}
-build.dependsOn buildOntologies
-
-task runFuseki(type:Exec) {
+task startFuseki (type:Exec) {
 	args 'start_fuseki.py'
 	executable 'python'
 }
-/*
-task runQudt4dtServer(type:Exec, dependsOn: runFuseki) {
-	executable 'ls'
+
+task startQudt4dtServer (type: GradleBuild, dependsOn: startFuseki) {
+	buildFile = 'qudt4dt/qudt4dtServer/build.gradle'
+	tasks = ['run']
 }
-*/
+
 buildscript {
 	repositories {
 		mavenCentral()
