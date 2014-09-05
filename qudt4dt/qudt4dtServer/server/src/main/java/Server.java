@@ -26,21 +26,21 @@ public class Server {
     public static ServerHandler handler;
     public static TProcessor processor;
     public static void main(String[] args){
-      //  try{
+        try{
             handler = new ServerHandler("http://localhost:3030/qudt4dt/query?");
             processor = new Qudt4dt_base.Processor<ServerHandler>(handler);
             //System.out.print(handler.query("http://qudt.org/vocab/unit#DegreeCelsius").qudt_u);
-            performance();
+           // performance();
             //simple(processor);
-//            Runnable t1 = new Runnable(){
-//                public void run(){
-//                    simple(processor);
-//                }
-//            };
-//            new Thread(t1).start();
-       // } catch (org.apache.thrift.transport.TTransportException x) {
-         //   x.printStackTrace();
-       // }
+            Runnable t1 = new Runnable(){
+                public void run(){
+                    simple(processor);
+                }
+           };
+            new Thread(t1).start();
+        } catch (Exception x) {
+            x.printStackTrace();
+        }
     }
 
     public static void performance(){
