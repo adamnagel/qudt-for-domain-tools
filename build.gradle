@@ -7,14 +7,14 @@ task fetchJenaFuseki {
 		if (!f.exists())
 		{
 			download {
-				src 'http://www.apache.org/dist/jena/binaries/jena-fuseki-1.1.0-distribution.tar.gz'
+				src 'http://www.apache.org/dist/jena/binaries/jena-fuseki-1.1.1-distribution.tar.gz'
 				dest 'jena-fuseki.tar.gz'
 			}
 			copy {
 				from tarTree(resources.gzip('jena-fuseki.tar.gz'))
 				into getProjectDir()
 			}
-			file("jena-fuseki-1.1.0").renameTo(file("jena-fuseki"))
+			file("jena-fuseki-1.1.1").renameTo(file("jena-fuseki"))
 		}
 		else
 		{
