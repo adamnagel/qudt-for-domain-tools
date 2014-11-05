@@ -9,9 +9,13 @@ import qudt4dt.thrift.Quantity;
 import qudt4dt.thrift.Qudt4dt_base;
 import qudt4dt.thrift.Unit;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by yli on 5/8/14.
@@ -73,6 +77,26 @@ public class ServerHandler implements Qudt4dt_base.Iface{
         tmp = quantity_convert(input, mdao.qudt_url);
         result.put("mdao", new Quantity(mdao, tmp.value));
         return result;
+    }
+    @Override
+    public String unitExp(String exp, String dstUnit) throws InvalidOperation{
+        ProcessBuilder pb = new ProcessBuilder("units", "\"" + exp + "\"", dstUnit);
+        String result = "";
+        try{
+            Process p = pb.start();
+            BufferedReader is = new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+            String line;
+            while ((line = is.readLine()) != null)
+                result += line;
+        } catch (Exception x) {
+            x.printStackTrace();
+        }
+        Pattern p = Pattern.compile("[\\d\\.]+");
+        Matcher m = p.matcher(result);
+        m.find();
+        return m.group();
+
     }
 
 
